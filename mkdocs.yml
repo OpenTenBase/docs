@@ -93,23 +93,24 @@ nav:
 plugins:
   - search
   - i18n:
-      default_language: zh
-      material_alternate: true
+      docs_structure: suffix
       languages:
-        zh:
+        - locale: zh
+          default: true
           name: 中文
-        en:
+          build: true
+        - locale: en
           name: English
-      nav_translations:
-        en:
-          首页: Home
-          快速入门: Quick Start
-          基本使用: Usage
-          用户指南: Guide
-          基础配置: Configuation
-          版本说明: Releases
-          常见问题: FAQ
-          参与贡献: Contributing
-          如何贡献: How to contribute
-          文档库格式手册: Documentation format guide
-          下载: Download
+          build: true
+          nav_translations:
+              首页: Home
+              快速入门: Quick Start
+              基本使用: Usage
+              用户指南: Guide
+              基础配置: Configuation
+              版本说明: Releases
+              常见问题: FAQ
+              参与贡献: Contributing
+              如何贡献: How to contribute
+              文档库格式手册: Documentation format guide
+              下载: Download
