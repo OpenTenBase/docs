@@ -78,11 +78,23 @@ theme:
 nav:
   - 首页: index.md
   - 用户指南:
-    - 快速入门: guide/quickstart.md
-    - 基本使用: guide/use.md
+    - 快速入门: guide/01-quickstart.md
+    - 应用接入: guide/02-access.md
+    - 基本使用: guide/03-basic-use.md
+    - 高级使用: guide/04-advanced-use.md
+    - 组件安装及管理: guide/05-component.md
+    - 主备切换: guide/06-switching.md
+    - 用户权限管理: guide/07-user-rights.md
+    - 数据导入导出: guide/08-data-dump-restore.md
+    - 问题定位及性能优化: guide/09-problem-performance.md
+    - V2.3.0升级特性pg_clean使用说明: guide/10-pg_clean.md
+    - V2.3.0升级特性pg_unlock使用说明: guide/11-pg_unlock.md
+    - V2.3.0升级特性opentenbase_subscription使用说明: guide/12-opentenbase_subscription.md
   - 版本说明:
-    - v2.5.0: release/v2.5.0.md
-    - v2.4.0: release/v2.4.0.md
+    - v2.5.0: release/v2-5-0.md
+    - v2.4.0: release/v2-4-0.md
+    - v2.3.0: release/v2-3-0.md
+    - v2.2.0: release/v2-2-0.md
   - 常见问题: faq.md
   - 参与贡献:
     - 如何贡献: contribution/how-to.md
@@ -104,10 +116,19 @@ plugins:
           build: true
           nav_translations:
               首页: Home
-              快速入门: Quick Start
-              基本使用: Usage
               用户指南: Guide
-              基础配置: Configuation
+              快速入门: Quick Start
+              应用接入: Application Access
+              基本使用: Basic Usage
+              高级使用: Advanced Usage
+              组件安装及管理: Components
+              主备切换: Switching
+              用户权限管理: User Rights Management
+              数据导入导出: Data Dump and Restore
+              问题定位及性能优化: Problem tracking and Performance Optimization
+              V2.3.0升级特性pg_clean使用说明: V2.3.0 Feature pg_clean
+              V2.3.0升级特性pg_unlock使用说明: V2.3.0 Feature pg_unlock
+              V2.3.0升级特性opentenbase_subscription使用说明: V2.3.0 Feature opentenbase_subscription
               版本说明: Releases
               常见问题: FAQ
               参与贡献: Contributing

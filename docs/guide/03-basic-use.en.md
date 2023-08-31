@@ -1,19 +1,23 @@
-在[《快速入门》](quickstart.md)文章中我们介绍了OpenTenBase的架构、源码编译安装、集群运行状态、启动停止等内容。本篇将介绍OpenTenBase中特有的shard表、冷热分区表、复制表的创建，和基本的DML操作。
+# Basic Usage
 
-# 1、创建数据表
-## 1.1、创建shard普通表
-![OpenTenBase_shard普通表](images/1.1shard.jpg)
-![OpenTenBase_shard普通表续](images/1.1shard_2.jpg)
-![OpenTenBase_shard普通表说明](images/1.1shard_3.jpg)
-说明： 
+>In [Quick Start](01-quickstart.en.md) article, we introduced opentenbase architecture, source code compilation and installation, cluster running status, startup and stop, etc.
+>
+>This article will introduce the creation of shard table, hot and cold partition table, replication table and basic DML operation in opentenbase.
+
+## 1、Create table
+### 1.1、Create shard table
+![OpenTenBase_shard_table_1](images/1.1shard.EN.png)
+![OpenTenBase_shard_table_2](images/1.1shard_2.EN.png)
+![OpenTenBase_shard_table_3](images/1.1shard_3.EN.png)
+Explain： 
  
-- distribute by shard(x) 用于指定分布键，数据分布于那个节点就是根据这个字段值来计算分片。  
-- to group xxx 用于指定存储组（每个存储组可以有多个节点）。  
-- 分布键字段值不能修改，字段长度不能修改，字段类型不能修改。 
+- distribute by shard (x) is used to specify the distribution key. Based on the value of this field, calculate which node the partition data is distributed to . 
+- to group XXX is used to specify storage groups (each storage group can have multiple nodes).
+- distribution key field value cannot be modified, field length cannot be modified, and field type cannot be modified. 
  
-## 1.2、创建shard普通分区表
-![OpenTenBase_shard分区表](images/1.2shard_part.jpg) 
-![OpenTenBase_shard分区表续](images/1.2shard_part_2.jpg)
+### 1.2、Create partition shard table
+![OpenTenBase_shard_partition_table_1](images/1.2shard_part.EN.png) 
+![OpenTenBase_shard_partition_table_2](images/1.2shard_part_2.EN.png)
 
 ```
 [opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U opentenbase
@@ -55,17 +59,17 @@ Partition By: RANGE(f2)
 postgres=#  
 
 ```
-说明：
+Explain：
 
-- partition by range (x) 用于指定分区键，支持timesamp,int类型，数据分布于那个子表就是根据这个字段值来计算分区。
-- begin( xxx )指定开始分区的时间点。
-- step(xxx)指定分区有周期
-- partions(xx)初始化时建立分区子表个数。
-- 增加分区子表的方法ALTER TABLE public.t1_pt ADD PARTITIONS 2;  
+- partition by range (x) is used to specify the partition key. It supports the type of timesamp and int. according to this field value, it calculates which sub table the partition data is distributed in.
+- begin( xxx ) is used to specifies the time point to start the partition。
+- step(xxx) is used to specified partition has period
+- partions(xx) is used to establish the number of partition sub tables during initialization.
+- Method of adding partition sub table: ALTER TABLE public.t1_pt ADD PARTITIONS 2;  
 
-## 1.3、创建shard冷热分区表
-![OpenTenBase_shard冷热分区表](images/1.3shard_cold_hot.jpg)
-![OpenTenBase_shard冷热分区表续](images/1.3shard_cold_hot_2.jpg)
+### 1.3、Create hot and cold partition shard table
+![OpenTenBase_shard_hot_and_cold_partition_table_1](images/1.3shard_cold_hot.EN.png)
+![OpenTenBase_shard_hot_and_cold_partition_table_2](images/1.3shard_cold_hot_2.EN.png)
  
 ``` 
 [opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U opentenbase
@@ -105,12 +109,12 @@ postgres=#
 
 ```
 
-说明：
+Explain：
 
-- Distribute By SHARD(f1,f2)，冷热分区表需要指定两个字段来做路由，分别是分布键和分区键。
-- to group default_group cold_group，需要指定两个存储组，第一个是热数据存储组，第二个是冷存储组。
+- distribute By SHARD(f1,f2) : The hot and cold partition table needs to specify two fields for routing, namely distribution key and partition key.
+- to group default\_group cold\_group: You need to specify two storage groups, the first is hot data storage group and the second is cold storage group。
 
-创建时间范围冷热分区表需要有两个group，冷数据的cold_group对应的节点需要标识为冷节点，如下所示
+Two groups are required to create the time range cold and hot partition table, and the nodes contained in the cold\_group storing cold data need to be identified as cold nodes:
  
 ```
  
@@ -126,7 +130,7 @@ postgres=#  select pg_set_node_cold_access();
 
 ```
 
-冷热分区表需要在postgresql.conf中配置冷热分区时间参数和分区级别，如下所示
+The hot and cold partition table needs to configure the hot and cold partition time parameters and partition level in postgresql.conf:
 
 ``` 
 
@@ -136,8 +140,8 @@ manual_hot_date = '2019-01-01'
 
 ```
 
-## 1.4、创建复制表
-![OpenTenBase_shard冷热分区表](images/1.4repilication.jpg) 
+### 1.4、Create repilication table
+![OpenTenBase_replicaiton_table](images/1.4repilication.EN.png) 
 
 ```
 
@@ -156,17 +160,17 @@ to group default_group;
 CREATE TABLE
 
 ```
-说明：
+Explain：
 
-- 经常要跨库JOIN的小数据量表可以考虑使用复制表。
-- 复制表是所有节点都有全量数据，对于大数据量的数据表不适合。
-- 复制表更新性能较低。  
+- Replication tables can be considered for small data scales that often need to join across nodes
+- Replication table means that every DN has full data, which is not suitable for large data tables.
+- Replication table update performance is low.  
 
 
-# 2、DML相关操作
-## 2.1、INSERT
+## 2、DML related operations
+### 2.1、INSERT
 
-- 插入多条记录
+- Insert multiple records
 
 ```
 CREATE TABLE public.t1_insert_mul 
@@ -182,7 +186,7 @@ INSERT 0 2
 ```
 
 
-- 插入更新
+- Insert for updating
 
 ```
 create table public.t1_conflict 
@@ -206,7 +210,7 @@ insert into t1_conflict values(1,'opentenbase',2) ON CONFLICT (f1,f2)  DO UPDATE
  
 ``` 
 
-- 插入返回
+- Insert for returning
 
 ```
 create table public.t1_insert_return 
@@ -226,15 +230,15 @@ postgres=# insert into t1_insert_return values(1) returning *;
  
 ```
 
-- INSERT更多的使用方法请参考Postgresql用法
+- For more usage of insert, please refer to PostgreSQL usage
 
 ```
 http://www.postgres.cn/docs/10/sql-insert.html
 ```
 
-## 2.2、UPDATE
+### 2.2、UPDATE
 
-- 基于分布键条件更新
+- Update based on distribution key condition
 
 ```
 create table public.t1_update_pkey 
@@ -252,64 +256,64 @@ postgres=# explain UPDATE t1_update_pkey SET f2='opentenbase' where f1=1;
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
         Node/s: dn001    
         ->  Update on t1_update_pkey  (cost=0.15..4.17 rows=1 width=154)          
-  	    ->  Index Scan using t1_update_pkey_pkey on t1_update_pkey  (cost=0.15..4.17 rows=1 width=154)                
-  		    Index Cond: (f1 = 1) 
+        ->  Index Scan using t1_update_pkey_pkey on t1_update_pkey  (cost=0.15..4.17 rows=1 width=154)                
+            Index Cond: (f1 = 1) 
 
 ```
-性能最优，扩展性好
+Best performance, good scalability
 
-- 非分布键更新
+- Update based on non-distribution key condition
 
 ```
-postgres=# explain UPDATE t1_update_pkey SET f2='opentenbase' where f3='pg';                                  											QUERY PLAN 
+postgres=# explain UPDATE t1_update_pkey SET f2='opentenbase' where f3='pg';                                                                              QUERY PLAN 
 ----------------------------------------------------------------------------------    
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
-	Node/s: dn001, dn002    
-	->  Update on t1_update_pkey  (cost=0.00..15.12 rows=2 width=154)          
-		->  Seq Scan on t1_update_pkey  (cost=0.00..15.12 rows=2 width=154)
-			Filter: ((f3)::text = 'pg'::text) 
+    Node/s: dn001, dn002    
+    ->  Update on t1_update_pkey  (cost=0.00..15.12 rows=2 width=154)          
+        ->  Seq Scan on t1_update_pkey  (cost=0.00..15.12 rows=2 width=154)
+            Filter: ((f3)::text = 'pg'::text) 
 (5 rows) 
 
 ```
-更新语句发往所有节点
+UPDATE statement will send to all nodes.
 
-- 分区表带分区条件更新
+- Update partition table based on partition condition
 
 ```
 create table public.t1_pt_update 
 (  f1 int not null,f2 timestamp not null,f3 varchar(20),primary key(f1)  )  
 partition by range (f2) begin (timestamp without time zone '2019-01-01 0:0:0') step (interval '1 month') partitions (2) distribute by shard(f1) to group default_group; 
 
-postgres=# explain update t1_pt_update set f3='opentenbase' where f1=1 and f2>'2019-01-01' and f2<'2019-02-01';                                                                                										QUERY PLAN
+postgres=# explain update t1_pt_update set f3='opentenbase' where f1=1 and f2>'2019-01-01' and f2<'2019-02-01';                                                                                                                       QUERY PLAN
 -----------------------------------------------------------------------------------
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
         Node/s: dn001    
-	->  Update on t1_pt_update_part_0  (cost=0.15..4.17 rows=1 width=80)          
-		->  Index Scan using t1_pt_update_pkey_part_0 on t1_pt_update_part_0  (cost=0.15..4.17 rows=1 width=80)                
-			Index Cond: (f1 = 1)                
-			Filter: ((f2 > '2019-01-01 00:00:00'::timestamp without time zone) AND (f2 < '2019-02-01 00:00:00'::timestamp without time zone)) 
+    ->  Update on t1_pt_update_part_0  (cost=0.15..4.17 rows=1 width=80)          
+        ->  Index Scan using t1_pt_update_pkey_part_0 on t1_pt_update_part_0  (cost=0.15..4.17 rows=1 width=80)                
+            Index Cond: (f1 = 1)                
+            Filter: ((f2 > '2019-01-01 00:00:00'::timestamp without time zone) AND (f2 < '2019-02-01 00:00:00'::timestamp without time zone)) 
 ```
 
-带分区条件更新，性能最优，扩展性好
+Update based on partition condition，best performance, good scalability
 
-- 分区表不带分区条件更新
+- Update partition table without partition condition
 
 ```
-postgres=# explain update t1_pt_update set f3='opentenbase' where f1=1;                                                                          										QUERY PLAN
+postgres=# explain update t1_pt_update set f3='opentenbase' where f1=1;                                                                                                               QUERY PLAN
 ------------------------------------------------------------------------------------
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
-	Node/s: dn001    
-	->  Update on t1_pt_update  (cost=0.15..4.17 rows=1 width=80)          
-		->  Index Scan using t1_pt_update_pkey_part_0 on t1_pt_update (partition sequence: 0, name: t1_pt_update_part_0)  (cost=0.15..2.08 rows=0 width=80)                
-			Index Cond: (f1 = 1)          
-		->  Index Scan using t1_pt_update_pkey_part_1 on t1_pt_update (partition sequence: 1, name: t1_pt_update_part_1)  (cost=0.15..2.08 rows=0 width=80)               
-			Index Cond: (f1 = 1) 
+    Node/s: dn001    
+    ->  Update on t1_pt_update  (cost=0.15..4.17 rows=1 width=80)          
+        ->  Index Scan using t1_pt_update_pkey_part_0 on t1_pt_update (partition sequence: 0, name: t1_pt_update_part_0)  (cost=0.15..2.08 rows=0 width=80)                
+            Index Cond: (f1 = 1)          
+        ->  Index Scan using t1_pt_update_pkey_part_1 on t1_pt_update (partition sequence: 1, name: t1_pt_update_part_1)  (cost=0.15..2.08 rows=0 width=80)               
+            Index Cond: (f1 = 1) 
 (7 rows) 
 
 ```
-需要扫描所有分区子表
+All partition sub tables need to be scanned
 
-- 关联表更新
+- Table association update
 
 ```
 create table public.t1_update_join1 
@@ -327,9 +331,9 @@ distribute by shard(f1) to group default_group;
 update t1_update_join1 set f2='pg' from t1_update_join2 where t1_update_join1.f1=t1_update_join2.f1;  
 
 ```
-表关联更新只能是基于分布键关联
+Table Association updates can only be based on distribution key associations
 
-- 分布键，分区键不能更新
+- Distribution key, partition key cannot be updated
 
 ```
 create table public.t1_update_pkey 
@@ -343,16 +347,16 @@ Time: 0.910 ms.
  
 ```
 
-目前的解决办法“删除旧记录，再新增记录” 
+The current solution is "delete old records and add new records" 
 
-- 更多的UPDATE使用方法请参考Postgresql用法 
+- Please refer to PostgreSQL for more usage of UPDATE
 
 ```
 http://www.postgres.cn/docs/10/sql-update.html
 ```
 
-## 2.3、DELETE
-- 删除返回记录
+### 2.3、DELETE
+- Return deleted records when deleting
 
 ```
 create table public.t1_delete_return 
@@ -373,16 +377,16 @@ postgres=# delete from t1_delete_return where f1=1 returning *;
 
 ```
 
-- UPDATE最优使用方法同样适合于DELETE
+- The optimal usage of update is also suitable for delete
 
-- DELETE更多的使用方法见
+- Please refer to PostgreSQL for more usage of DELETE
 
 ```
 http://www.postgres.cn/docs/10/sql-delete.html
 ```
 
-## 2.4、SELECT
-- 基于分布键查询
+### 2.4、SELECT
+- Select based on distributed key
 
 ```
 create table public.t1_select 
@@ -391,35 +395,35 @@ create table public.t1_select
 ) 
 distribute by shard(f1) to group default_group;   
 
-postgres=# explain select * from t1_select where f1=1;                                        									QUERY PLAN
+postgres=# explain select * from t1_select where f1=1;                                                                          QUERY PLAN
 ----------------------------------------------------------------------------------  
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
-	Node/s: dn001    
-	->  Index Scan using t1_select_pkey on t1_select  (cost=0.15..4.17 rows=1 width=144)          
-			Index Cond: (f1 = 1)
+    Node/s: dn001    
+    ->  Index Scan using t1_select_pkey on t1_select  (cost=0.15..4.17 rows=1 width=144)          
+            Index Cond: (f1 = 1)
 
 ```
 
-性能最优，扩展性好
+best performance, good scalability
 
-- 非分布键查询
+- Select based on non-distributed key
 
 ```
 postgres=# explain select * from t1_select where f1<3;
-									QUERY PLAN
+                                    QUERY PLAN
 -------------------------------------------------------------------------------------  
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)   
-	Node/s: dn001, dn002   
- 	->  Bitmap Heap Scan on t1_select  (cost=3.21..14.92 rows=137 width=144)          
- 		Recheck Cond: (f1 < 3)          
- 		->  Bitmap Index Scan on t1_select_pkey  (cost=0.00..3.17 rows=137 width=0)
- 		 	Index Cond: (f1 < 3)
+    Node/s: dn001, dn002   
+    ->  Bitmap Heap Scan on t1_select  (cost=3.21..14.92 rows=137 width=144)          
+        Recheck Cond: (f1 < 3)          
+        ->  Bitmap Index Scan on t1_select_pkey  (cost=0.00..3.17 rows=137 width=0)
+            Index Cond: (f1 < 3)
 
 ```
 
-查询语句发往所有节点，然后在CN汇总
+The query statement will be sent to all nodes and then summarized in CN.
 
-- 分布键JOIN查询
+- Join query based on distributed key
 
 ```
 create table public.t1_select_join1 
@@ -435,41 +439,41 @@ distribute by shard(f1) to group default_group;
 create index t1_select_join2_f2_idx on t1_select_join2(f2);   
   
 postgres=# explain select t1_select_join1.* from t1_select_join1,t1_select_join2 where t1_select_join1.f1=t1_select_join2.f1 and t1_select_join1.f1=1;   
-									QUERY PLAN                                                   --------------------------------------------------------------------------------------
+                                    QUERY PLAN                                                   --------------------------------------------------------------------------------------
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)   
-	Node/s: dn001    
-	->  Nested Loop  (cost=0.30..8.35 rows=1 width=8)          
-		->  Index Scan using t1_select_join1_pkey on t1_select_join1  (cost=0.15..4.17 rows=1 width=8)                
-			Index Cond: (f1 = 1)          
-		->  Index Only Scan using t1_select_join2_pkey on t1_select_join2  (cost=0.15..4.17 rows=1 width=4)                
-			Index Cond: (f1 = 1) 
+    Node/s: dn001    
+    ->  Nested Loop  (cost=0.30..8.35 rows=1 width=8)          
+        ->  Index Scan using t1_select_join1_pkey on t1_select_join1  (cost=0.15..4.17 rows=1 width=8)                
+            Index Cond: (f1 = 1)          
+        ->  Index Only Scan using t1_select_join2_pkey on t1_select_join2  (cost=0.15..4.17 rows=1 width=4)                
+            Index Cond: (f1 = 1) 
 
 ```
 
-性能最优，扩展性好
+best performance, good scalability
 
-- 非分布键JOIN查询
+- Join query based on non-distributed key
 
 ```
 postgres=# explain select * from t1_select_join1,t1_select_join2 where t1_select_join1.f1=t1_select_join2.f2 and t1_select_join1.f2=1 ;                                                       
-									QUERY PLAN                                                       ------------------------------------------------------------------------------------------  
+                                    QUERY PLAN                                                       ------------------------------------------------------------------------------------------  
 Remote Subquery Scan on all (dn001,dn002)  (cost=2.26..33.48 rows=7 width=16)    
-	->  Nested Loop  (cost=2.26..33.48 rows=7 width=16)          
-		->  Bitmap Heap Scan on t1_select_join1  (cost=2.13..9.57 rows=7 width=8)                				Recheck Cond: (f2 = 1)                
-			->  Bitmap Index Scan on t1_select_join1_f2_idx  (cost=0.00..2.13 rows=7 width=0)                      
-					Index Cond: (f2 = 1)          
-		->  Materialize  (cost=100.12..103.45 rows=7 width=8)                
-			->  Remote Subquery Scan on all (dn001,dn002)  (cost=100.12..103.44 rows=7 width=8)                      
-					Distribute results by S: f2                      
-			->  Index Scan using t1_select_join2_f2_idx on t1_select_join2  (cost=0.12..3.35 rows=7 width=8)                            
-				Index Cond: (f2 = t1_select_join1.f1) 
-				
+    ->  Nested Loop  (cost=2.26..33.48 rows=7 width=16)          
+        ->  Bitmap Heap Scan on t1_select_join1  (cost=2.13..9.57 rows=7 width=8)                               Recheck Cond: (f2 = 1)                
+            ->  Bitmap Index Scan on t1_select_join1_f2_idx  (cost=0.00..2.13 rows=7 width=0)                      
+                    Index Cond: (f2 = 1)          
+        ->  Materialize  (cost=100.12..103.45 rows=7 width=8)                
+            ->  Remote Subquery Scan on all (dn001,dn002)  (cost=100.12..103.44 rows=7 width=8)                      
+                    Distribute results by S: f2                      
+            ->  Index Scan using t1_select_join2_f2_idx on t1_select_join2  (cost=0.12..3.35 rows=7 width=8)                            
+                Index Cond: (f2 = t1_select_join1.f1) 
+                
 ```
 
-需要在DN做数据重分布
+Need to redistribute data in DN.
 
-## 2.5、TRUNCATE
-- 普通表truncate
+### 2.5、TRUNCATE
+- Truncate of non-partition table
 
 ```
 create table public.t1_delete_truncate 
@@ -481,7 +485,7 @@ insert into t1_delete_truncate select t,t::text from generate_series(1,1000000) 
 truncate table t1_delete_truncate;  
 ```
 
-- 分区表truncate
+- Truncate of partition table
 
 ```
 postgres=# create table public.t1_pt
