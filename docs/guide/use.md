@@ -16,8 +16,8 @@
 ![OpenTenBase_shard分区表续](images/1.2shard_part_2.jpg)
 
 ```
-[tbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U tbase
-psql (PostgreSQL 10.0 TBase V2)
+[opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
 
 postgres=# create table public.t1_pt
@@ -68,8 +68,8 @@ postgres=#
 ![OpenTenBase_shard冷热分区表续](images/1.3shard_cold_hot_2.jpg)
  
 ``` 
-[tbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U tbase
-psql (PostgreSQL 10.0 TBase V2)
+[opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
 
 postgres=# create table public.t1_cold_hot
@@ -114,8 +114,8 @@ postgres=#
  
 ```
  
-[tbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11000 -d postgres -U tbase
-psql (PostgreSQL 10.0 TBase V2)
+[opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11000 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
  
 postgres=#  select pg_set_node_cold_access();
@@ -141,8 +141,8 @@ manual_hot_date = '2019-01-01'
 
 ```
 
-[tbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U tbase
-psql (PostgreSQL 10.0 TBase V2)
+[opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
 
 postgres=# create table public.t1_rep
@@ -176,7 +176,7 @@ CREATE TABLE public.t1_insert_mul
     primary key(f1) 
 )  distribute by shard(f1) to group default_group;  
 
-postgres=# INSERT INTO  t1_insert_mul VALUES(1,'Tbase'),(2,'pg'); 
+postgres=# INSERT INTO  t1_insert_mul VALUES(1,'opentenbase'),(2,'pg'); 
 INSERT 0 2
 
 ```
@@ -192,7 +192,7 @@ create table public.t1_conflict
     primary key(f1) 
 )  distribute by shard(f1) to group default_group;   
 
-insert into t1_conflict values(1,'tbase') ON CONFLICT (f1)  DO UPDATE SET f2 = 'tbase';
+insert into t1_conflict values(1,'opentenbase') ON CONFLICT (f1)  DO UPDATE SET f2 = 'opentenbase';
 
 create table public.t1_conflict 
 ( 
@@ -202,7 +202,7 @@ create table public.t1_conflict
     primary key(f1,f2) 
 ) distribute by shard(f1) to group default_group;      
 
-insert into t1_conflict values(1,'tbase',2) ON CONFLICT (f1,f2)  DO UPDATE SET f3 = 2;
+insert into t1_conflict values(1,'opentenbase',2) ON CONFLICT (f1,f2)  DO UPDATE SET f3 = 2;
  
 ``` 
 
@@ -212,7 +212,7 @@ insert into t1_conflict values(1,'tbase',2) ON CONFLICT (f1,f2)  DO UPDATE SET f
 create table public.t1_insert_return 
 ( 
     f1 int not null,
-    f2 varchar(20) not null default 'tbase',
+    f2 varchar(20) not null default 'opentenbase',
     primary key(f1) 
 ) distribute by shard(f1) to group default_group;    
 
@@ -220,7 +220,7 @@ postgres=# insert into t1_insert_return values(1) returning *;
 
  f1 |  f2    
 ----+-------  
-  1 | tbase 
+  1 | opentenbase 
  (1 row) 
  INSERT 0 1
  
@@ -240,12 +240,12 @@ http://www.postgres.cn/docs/10/sql-insert.html
 create table public.t1_update_pkey 
 ( 
     f1 int not null,
-    f2 varchar(20) not null default 'tbase',
+    f2 varchar(20) not null default 'opentenbase',
     f3 varchar(32), 
     primary key(f1) 
 ) distribute by shard(f1) to group default_group;   
 
-postgres=# explain UPDATE t1_update_pkey SET f2='tbase' where f1=1;                                                
+postgres=# explain UPDATE t1_update_pkey SET f2='opentenbase' where f1=1;                                                
 
                                     QUERY PLAN
 ----------------------------------------------------------------------------------  
@@ -261,7 +261,7 @@ Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)
 - 非分布键更新
 
 ```
-postgres=# explain UPDATE t1_update_pkey SET f2='tbase' where f3='pg';                                  											QUERY PLAN 
+postgres=# explain UPDATE t1_update_pkey SET f2='opentenbase' where f3='pg';                                  											QUERY PLAN 
 ----------------------------------------------------------------------------------    
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
 	Node/s: dn001, dn002    
@@ -280,7 +280,7 @@ create table public.t1_pt_update
 (  f1 int not null,f2 timestamp not null,f3 varchar(20),primary key(f1)  )  
 partition by range (f2) begin (timestamp without time zone '2019-01-01 0:0:0') step (interval '1 month') partitions (2) distribute by shard(f1) to group default_group; 
 
-postgres=# explain update t1_pt_update set f3='tbase' where f1=1 and f2>'2019-01-01' and f2<'2019-02-01';                                                                                										QUERY PLAN
+postgres=# explain update t1_pt_update set f3='opentenbase' where f1=1 and f2>'2019-01-01' and f2<'2019-02-01';                                                                                										QUERY PLAN
 -----------------------------------------------------------------------------------
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
         Node/s: dn001    
@@ -295,7 +295,7 @@ Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)
 - 分区表不带分区条件更新
 
 ```
-postgres=# explain update t1_pt_update set f3='tbase' where f1=1;                                                                          										QUERY PLAN
+postgres=# explain update t1_pt_update set f3='opentenbase' where f1=1;                                                                          										QUERY PLAN
 ------------------------------------------------------------------------------------
 Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)    
 	Node/s: dn001    
@@ -314,13 +314,13 @@ Remote Fast Query Execution  (cost=0.00..0.00 rows=0 width=0)
 ```
 create table public.t1_update_join1 
 (
-    f1 int not null,f2 varchar(20) not null default 'tbase',primary key(f1) 
+    f1 int not null,f2 varchar(20) not null default 'opentenbase',primary key(f1) 
 )
 distribute by shard(f1) to group default_group;
 
 create table public.t1_update_join2 
 ( 
-    f1 int not null,f2 varchar(20) not null default 'tbase',primary key(f1) 
+    f1 int not null,f2 varchar(20) not null default 'opentenbase',primary key(f1) 
 ) 
 distribute by shard(f1) to group default_group; 
 
@@ -334,7 +334,7 @@ update t1_update_join1 set f2='pg' from t1_update_join2 where t1_update_join1.f1
 ```
 create table public.t1_update_pkey 
 ( 
-    f1 int not null,f2 varchar(20) not null default 'tbase', primary key(f1) 
+    f1 int not null,f2 varchar(20) not null default 'opentenbase', primary key(f1) 
 ) distribute by shard(f1) to group default_group;   
 
 postgres=# update t1_update_pkey set f1=2 where f1=1;  
@@ -357,18 +357,18 @@ http://www.postgres.cn/docs/10/sql-update.html
 ```
 create table public.t1_delete_return 
 ( 
-    f1 int not null,f2 varchar(20) not null default 'tbase',primary key(f1) 
+    f1 int not null,f2 varchar(20) not null default 'opentenbase',primary key(f1) 
 ) 
 distribute by shard(f1) to group default_group;    
 
-postgres=# insert into t1_delete_return values(1,'tbase');   
+postgres=# insert into t1_delete_return values(1,'opentenbase');   
 INSERT 0 1 
 
 postgres=# delete from t1_delete_return where f1=1 returning *;     
 
  f1 |  f2    
 ----+-------   
-  1 | tbase 
+  1 | opentenbase 
 (1 row)
 
 ```
@@ -387,7 +387,7 @@ http://www.postgres.cn/docs/10/sql-delete.html
 ```
 create table public.t1_select 
 ( 
-    f1 int not null,f2 varchar(20) not null default 'tbase',f3 varchar(32), primary key(f1) 
+    f1 int not null,f2 varchar(20) not null default 'opentenbase',f3 varchar(32), primary key(f1) 
 ) 
 distribute by shard(f1) to group default_group;   
 
@@ -473,7 +473,7 @@ Remote Subquery Scan on all (dn001,dn002)  (cost=2.26..33.48 rows=7 width=16)
 
 ```
 create table public.t1_delete_truncate 
-( f1 int not null,f2 varchar(20) not null default 'tbase',primary key(f1) ) 
+( f1 int not null,f2 varchar(20) not null default 'opentenbase',primary key(f1) ) 
 distribute by shard(f1) to group default_group; 
 
 insert into t1_delete_truncate select t,t::text from generate_series(1,1000000) as t; 

@@ -35,7 +35,7 @@
 
 ## 为代码做出贡献
 ---
-如果您有好的意见或建议，欢迎创建[Issues](https://github.com/Tencent/TBase/issues)或[Pull Requests](https://github.com/Tencent/TBase/pulls)，为 OpenTenBase 开源社区做出贡献。OpenTenBase 不断招募贡献者，哪怕是回答 issue 中的问题，或者做一些简单的 bug 修复，都会对 OpenTenBase 有很大的帮助。
+如果您有好的意见或建议，欢迎创建[Issues](https://github.com/OpenTenBase/OpenTenBase/issues)或[Pull Requests](https://github.com/OpenTenBase/OpenTenBase/pulls)，为 OpenTenBase 开源社区做出贡献。OpenTenBase 不断招募贡献者，哪怕是回答 issue 中的问题，或者做一些简单的 bug 修复，都会对 OpenTenBase 有很大的帮助。
 [腾讯开源激励计划](https://opensource.tencent.com/contribution) 鼓励开发者参与和贡献，期待您的加入。
 
 ### Issue

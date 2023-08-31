@@ -34,22 +34,22 @@ Next, let's show how to build a OpenTenBase cluster environment from the source 
 
 ```
 mkdir /data
-useradd -d /data/TBase TBase
+useradd -d /data/opentenbase opentenbase
 ```
 
 - **get source code**
 
 ```
-git clone https://github.com/Tencent/TBase
+git clone https://github.com/OpenTenBase/OpenTenBase
 ```
 
 - **source code compilation**
 
 ```
 cd ${SOURCECODE_PATH}
-rm -rf ${INSTALL_PATH}/TBase_bin_v2.0
+rm -rf ${INSTALL_PATH}/opentenbase_bin_v2.0
 chmod +x configure*
-./configure --prefix=${INSTALL_PATH}/TBase_bin_v2.0  --enable-user-switch --with-openssl  --with-ossp-uuid CFLAGS=-g
+./configure --prefix=${INSTALL_PATH}/opentenbase_bin_v2.0  --enable-user-switch --with-openssl  --with-ossp-uuid CFLAGS=-g
 make clean
 make -sj
 make install
@@ -62,8 +62,8 @@ make install
 In this paper, the above two parameters are as follows
 
 ```
-${SOURCECODE_PATH}=/data/TBase/TBase-master
-${INSTALL_PATH}=/data/TBase/install
+${SOURCECODE_PATH}=/data/opentenbase/OpenTenBase
+${INSTALL_PATH}=/data/opentenbase/install
 ```
 
 - **cluster installation**
@@ -80,14 +80,14 @@ planning is as follows：
 
 node name|IP|data directory
 ---|---|---
-GTM master|10.215.147.158|/data/TBase/data/gtm
-GTM slave|10.240.138.159|/data/TBase/data/gtm
-CN1|10.215.147.158|/data/TBase/data/coord
-CN2|10.240.138.159|/data/TBase/data/coord
-DN1 master|10.215.147.158|/data/TBase/data/dn001
-DN1 slave|10.240.138.159|/data/TBase/data/dn001
-DN2 master|10.240.138.159|/data/TBase/data/dn002
-DN2 slave|10.215.147.158|/data/TBase/data/dn002
+GTM master|10.215.147.158|/data/opentenbase/data/gtm
+GTM slave|10.240.138.159|/data/opentenbase/data/gtm
+CN1|10.215.147.158|/data/opentenbase/data/coord
+CN2|10.240.138.159|/data/opentenbase/data/coord
+DN1 master|10.215.147.158|/data/opentenbase/data/dn001
+DN1 slave|10.240.138.159|/data/opentenbase/data/dn001
+DN2 master|10.240.138.159|/data/opentenbase/data/dn002
+DN2 slave|10.215.147.158|/data/opentenbase/data/dn002
 
 Sketch Map:  
 
@@ -102,10 +102,10 @@ Reference resources: [Linux ssh mutual trust](https://blog.csdn.net/chenghuikai/
 All machines in the cluster need to be configured
 
 ```shell
-[TBase@TENCENT64 ~]$ vim ~/.bashrc
-export TBase_HOME=/data/TBase/install/TBase_bin_v2.0
-export PATH=$TBase_HOME/bin:$PATH
-export LD_LIBRARY_PATH=$TBase_HOME/lib:${LD_LIBRARY_PATH}
+[opentenbase@localhost ~]$ vim ~/.bashrc
+export OPENTENBASE_HOME=/data/opentenbase/install/opentenbase_bin_v2.0
+export PATH=$OPENTENBASE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$OPENTENBASE_HOME/lib:${LD_LIBRARY_PATH}
 ```
 
 Above, the required basic environment has been configured, and you can enter the cluster initialization stage. For the convenience of users, OpenTenBase provides special configuration and operation tools: **pgxc_ctl** to help users quickly build and manage clusters. Here, you need to write the IP, port and data directory of the nodes mentioned above into the configuration file pgxc\_ctl.conf
@@ -113,9 +113,9 @@ Above, the required basic environment has been configured, and you can enter the
 - **Initialization configuration file pgxc_ctl.conf**
 
 ```shell
-[TBase@TENCENT64 ~]$ mkdir /data/TBase/pgxc_ctl
-[TBase@TENCENT64 ~]$ cd /data/TBase/pgxc_ctl
-[TBase@TENCENT64 ~/pgxc_ctl]$ vim pgxc_ctl.conf
+[opentenbase@localhost ~]$ mkdir /data/opentenbase/pgxc_ctl
+[opentenbase@localhost ~]$ cd /data/opentenbase/pgxc_ctl
+[opentenbase@localhost ~/pgxc_ctl]$ vim pgxc_ctl.conf
 ```
 
 The following shows the pgxc\_ctl.conf file content written using the IP, port, database directory, binary directory and other planning values described above. In practice, we only need to configure it according to our own actual situation.
@@ -124,8 +124,8 @@ The following shows the pgxc\_ctl.conf file content written using the IP, port, 
 ```shell
 #!/bin/bash
 
-pgxcInstallDir=/data/TBase/install/TBase_bin_v2.0
-pgxcOwner=TBase
+pgxcInstallDir=/data/opentenbase/install/opentenbase_bin_v2.0
+pgxcOwner=opentenbase
 defaultDatabase=postgres
 pgxcUser=$pgxcOwner
 tmpDir=/tmp
@@ -140,18 +140,18 @@ configBackupFile=pgxc_ctl.bak
 gtmName=gtm
 gtmMasterServer=10.215.147.158
 gtmMasterPort=50001
-gtmMasterDir=/data/TBase/data/gtm
+gtmMasterDir=/data/opentenbase/data/gtm
 gtmExtraConfig=none
 gtmMasterSpecificExtraConfig=none
 gtmSlave=y
 gtmSlaveServer=10.240.138.159
 gtmSlavePort=50001
-gtmSlaveDir=/data/TBase/data/gtm
+gtmSlaveDir=/data/opentenbase/data/gtm
 gtmSlaveSpecificExtraConfig=none
 
 #---- Coordinators -------
-coordMasterDir=/data/TBase/data/coord
-coordArchLogDir=/data/TBase/data/coord_archlog
+coordMasterDir=/data/opentenbase/data/coord
+coordArchLogDir=/data/opentenbase/data/coord_archlog
 
 coordNames=(cn001 cn002 )
 coordPorts=(30004 30004 )
@@ -171,7 +171,7 @@ cat > $coordExtraConfig <<EOF
 # Added to all the coordinator postgresql.conf
 # Original: $coordExtraConfig
 
-include_if_exists = '/data/TBase/global/global_TBase.conf'
+include_if_exists = '/data/opentenbase/global/global_opentenbase.conf'
 
 wal_level = replica
 wal_keep_segments = 256 
@@ -216,12 +216,12 @@ coordAdditionalSlaves=n
 cad1_Sync=n
 
 #---- Datanodes ---------------------
-dn1MstrDir=/data/TBase/data/dn001
-dn2MstrDir=/data/TBase/data/dn002
-dn1SlvDir=/data/TBase/data/dn001
-dn2SlvDir=/data/TBase/data/dn002
-dn1ALDir=/data/TBase/data/datanode_archlog
-dn2ALDir=/data/TBase/data/datanode_archlog
+dn1MstrDir=/data/opentenbase/data/dn001
+dn2MstrDir=/data/opentenbase/data/dn002
+dn1SlvDir=/data/opentenbase/data/dn001
+dn2SlvDir=/data/opentenbase/data/dn002
+dn1ALDir=/data/opentenbase/data/datanode_archlog
+dn2ALDir=/data/opentenbase/data/datanode_archlog
 
 primaryDatanode=dn001
 datanodeNames=(dn001 dn002)
@@ -247,7 +247,7 @@ cat > $datanodeExtraConfig <<EOF
 # Added to all the coordinator postgresql.conf
 # Original: $datanodeExtraConfig
 
-include_if_exists = '/data/TBase/global/global_TBase.conf'
+include_if_exists = '/data/opentenbase/global/global_opentenbase.conf'
 listen_addresses = '*' 
 wal_level = replica 
 wal_keep_segments = 256 
@@ -299,15 +299,15 @@ walArchive=n
 After writing the configuration file, you need to deploy the binary package to the physical machine where all nodes are located. This can be done by executing the **deploy all** command with pgxc\_ctl tool.
 
 ```shell
-[TBase@TENCENT64 ~/pgxc_ctl]$ pgxc_ctl 
+[opentenbase@localhost ~/pgxc_ctl]$ pgxc_ctl 
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/TBase/pgxc_ctl/pgxc_ctl_bash --home /data/TBase/pgxc_ctl --configuration /data/TBase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/TBase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC deploy all
 Deploying Postgres-XL components to all the target servers.
 Prepare tarball to deploy ... 
@@ -319,32 +319,32 @@ Deployment done.
 Log in to all nodes and check whether the binary package is distributed
 
 ```
-[TBase@TENCENT64 ~/install]$ ls /data/TBase/install/TBase_bin_v2.0
+[opentenbase@localhost ~/install]$ ls /data/opentenbase/install/opentenbase_bin_v2.0
 bin  include  lib  share	
 ```
 
 * execute **init all** command to complete cluster initialization
 
 ```shell
-[TBase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/TBase/pgxc_ctl/pgxc_ctl_bash --home /data/TBase/pgxc_ctl --configuration /data/TBase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/TBase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC init all
 Initialize GTM master
 ....
 ....
 Initialize datanode slave dn001
 Initialize datanode slave dn002
-mkdir: cannot create directory '/data1/TBase': Permission denied
-chmod: cannot access '/data1/TBase/data/dn001': No such file or directory
-pg_ctl: directory "/data1/TBase/data/dn001" does not exist
-pg_basebackup: could not create directory "/data1/TBase": Permission denied
+mkdir: cannot create directory '/data1/opentenbase': Permission denied
+chmod: cannot access '/data1/opentenbase/data/dn001': No such file or directory
+pg_ctl: directory "/data1/opentenbase/data/dn001" does not exist
+pg_basebackup: could not create directory "/data1/opentenbase": Permission denied
 ```
 
 - **Installation error handling**
@@ -352,42 +352,42 @@ pg_basebackup: could not create directory "/data1/TBase": Permission denied
 Generally, if there is an error in initializing the cluster, the terminal will print out the error log. You can look up the error reason and change the configuration, or through the error log in '/data/OpenTenBase/pgxc\_ctl/pgxc\_log' path to check the error in the configuration file
 
 ```shell
-[TBase@TENCENT64 ~]$ ll ~/pgxc_ctl/pgxc_log/
+[opentenbase@localhost ~]$ ll ~/pgxc_ctl/pgxc_log/
 total 184
--rw-rw-r-- 1 TBase TBase 81123 Nov 13 17:22 14105_pgxc_ctl.log
--rw-rw-r-- 1 TBase TBase  2861 Nov 13 17:58 15762_pgxc_ctl.log
--rw-rw-r-- 1 TBase TBase 14823 Nov 14 07:59 16671_pgxc_ctl.log
--rw-rw-r-- 1 TBase TBase  2721 Nov 13 16:52 18891_pgxc_ctl.log
--rw-rw-r-- 1 TBase TBase  1409 Nov 13 16:20 22603_pgxc_ctl.log
--rw-rw-r-- 1 TBase TBase 60043 Nov 13 16:33 28932_pgxc_ctl.log
--rw-rw-r-- 1 TBase TBase 15671 Nov 14 07:57 6849_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 81123 Nov 13 17:22 14105_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  2861 Nov 13 17:58 15762_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 14823 Nov 14 07:59 16671_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  2721 Nov 13 16:52 18891_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  1409 Nov 13 16:20 22603_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 60043 Nov 13 16:33 28932_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 15671 Nov 14 07:57 6849_pgxc_ctl.log
 ```
 
 By running pgxc\_ctl tool, execute **clean all** command to delete the initialized file. Then modify the pgxc\_ctl.conf file，and execute the **init all** command to reinitialize.
 
 
 ```shell
-[TBase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/TBase/pgxc_ctl/pgxc_ctl_bash --home /data/TBase/pgxc_ctl --configuration /data/TBase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/TBase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC clean all
 
 
-[TBase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/TBase/pgxc_ctl/pgxc_ctl_bash --home /data/TBase/pgxc_ctl --configuration /data/TBase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/TBase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC init all
 Initialize GTM master
 EXECUTE DIRECT ON (dn002) 'ALTER NODE dn002 WITH (TYPE=''datanode'', 	HOST=''10.240.138.159'', PORT=40004, PREFERRED)';
@@ -406,15 +406,15 @@ Done.
 	When the above output is found, the cluster is OK. In addition, you can show the cluster status through the **monitor all** command of the pgxc\_ctl tool
 	
 ```shell
-[TBase@TENCENT64 ~/pgxc_ctl]$ pgxc_ctl
+[opentenbase@localhost ~/pgxc_ctl]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/TBase/pgxc_ctl/pgxc_ctl_bash --home /data/TBase/pgxc_ctl --configuration /data/TBase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/TBase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC monitor all
 Running: gtm master
 Not running: gtm slave
@@ -434,8 +434,8 @@ If the replication mode between the master and slave nodes is not synchronous re
 	The example of accessing through psql under the Linux command line is as follows:
 	
 ```sql
-[TBase@TENCENT64 ~/pgxc_ctl]$ psql -h 10.215.147.158 -p 30004 -d postgres -U TBase
-psql (PostgreSQL 10.0 TBase V2)
+[opentenbase@localhost ~/pgxc_ctl]$ psql -h 10.215.147.158 -p 30004 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
 
 postgres=# \d
@@ -443,11 +443,11 @@ Did not find any relations.
 postgres=# select * from pgxc_node;
  node_name | node_type | node_port |   node_host    | nodeis_primary | nodeis_preferred |  node_id   | node_cluster_name 
 -----------+-----------+-----------+----------------+----------------+------------------+------------+-------------------
- gtm       | G         |     50001 | 10.215.147.158 | t              | f                |  428125959 | TBase_cluster
- cn001     | C         |     30004 | 10.215.147.158 | f              | f                | -264077367 | TBase_cluster
- cn002     | C         |     30004 | 10.240.138.159 | f              | f                | -674870440 | TBase_cluster
- dn001     | D         |     40004 | 10.215.147.158 | t              | t                | 2142761564 | TBase_cluster
- dn002     | D         |     40004 | 10.240.138.159 | f              | f                |  -17499968 | TBase_cluster
+ gtm       | G         |     50001 | 10.215.147.158 | t              | f                |  428125959 | opentenbase_cluster
+ cn001     | C         |     30004 | 10.215.147.158 | f              | f                | -264077367 | opentenbase_cluster
+ cn002     | C         |     30004 | 10.240.138.159 | f              | f                | -674870440 | opentenbase_cluster
+ dn001     | D         |     40004 | 10.215.147.158 | t              | t                | 2142761564 | opentenbase_cluster
+ dn002     | D         |     40004 | 10.240.138.159 | f              | f                |  -17499968 | opentenbase_cluster
 (5 rows)
 ```
 
@@ -504,7 +504,7 @@ Done.
 Stopping all the datanode slaves.
 Stopping datanode slave dn001.
 Stopping datanode slave dn002.
-pg_ctl: PID file "/data/TBase/data/dn002/postmaster.pid" does not exist
+pg_ctl: PID file "/data/opentenbase/data/dn002/postmaster.pid" does not exist
 Is server running?
 Stopping all the datanode masters.
 Stopping datanode master dn001.
@@ -532,15 +532,15 @@ Not running: datanode slave dn002
 	Start the cluster through the **start all** command of pgxc\_ctl tool. 
 	
 ```shell
-[TBase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/TBase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/TBase/pgxc_ctl/pgxc_ctl_bash --home /data/TBase/pgxc_ctl --configuration /data/TBase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/TBase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC start all
 ```
 

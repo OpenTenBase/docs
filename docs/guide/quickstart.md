@@ -25,28 +25,28 @@ OpenTenBase采用分布式集群架构（如下图）， 该架构分布式为�
 
 ## OpenTenBase源码编译安装
 
-- **创建tbase用户**
+- **创建opentenbase用户**
 
 	注意：所有需要安装OpenTenBase集群的机器上都需要创建
 
 ``` shell
 mkdir /data
-useradd -d /data/tbase tbase
+useradd -d /data/opentenbase opentenbase
 ```
 
 - **源码获取**
 
 ```
-git clone https://github.com/Tencent/TBase
+git clone https://github.com/OpenTenBase/OpenTenBase
 ```
 
 - **源码编译**
 
 ``` shell
 cd ${SOURCECODE_PATH}
-rm -rf ${INSTALL_PATH}/tbase_bin_v2.0
+rm -rf ${INSTALL_PATH}/opentenbase_bin_v2.0
 chmod +x configure*
-./configure --prefix=${INSTALL_PATH}/tbase_bin_v2.0  --enable-user-switch --with-openssl  --with-ossp-uuid CFLAGS=-g
+./configure --prefix=${INSTALL_PATH}/opentenbase_bin_v2.0  --enable-user-switch --with-openssl  --with-ossp-uuid CFLAGS=-g
 make clean
 make -sj
 make install
@@ -59,8 +59,8 @@ make install
 本文的使用环境中，上述两个参数如下
 
 ```
-${SOURCECODE_PATH}=/data/tbase/TBase-master	
-${INSTALL_PATH}=/data/tbase/install
+${SOURCECODE_PATH}=/data/opentenbase/OpenTenBase	
+${INSTALL_PATH}=/data/opentenbase/install
 ```
 - **集群安装**
 
@@ -77,14 +77,14 @@ ${INSTALL_PATH}=/data/tbase/install
 
   |节点名称|IP|数据目录|
   |---|---|---|
-  |GTM master|10.215.147.158|/data/tbase/data/gtm|
-  |GTM slave|10.240.138.159|/data/tbase/data/gtm|
-  |CN1|10.215.147.158|/data/tbase/data/coord|
-  |CN2|10.240.138.159|/data/tbase/data/coord|
-  |DN1 master|10.215.147.158|/data/tbase/data/dn001|
-  |DN1 slave|10.240.138.159|/data/tbase/data/dn001|
-  |DN2 master|10.240.138.159|/data/tbase/data/dn002|
-  |DN2 slave|10.215.147.158|/data/tbase/data/dn002|
+  |GTM master|10.215.147.158|/data/opentenbase/data/gtm|
+  |GTM slave|10.240.138.159|/data/opentenbase/data/gtm|
+  |CN1|10.215.147.158|/data/opentenbase/data/coord|
+  |CN2|10.240.138.159|/data/opentenbase/data/coord|
+  |DN1 master|10.215.147.158|/data/opentenbase/data/dn001|
+  |DN1 slave|10.240.138.159|/data/opentenbase/data/dn001|
+  |DN2 master|10.240.138.159|/data/opentenbase/data/dn002|
+  |DN2 slave|10.215.147.158|/data/opentenbase/data/dn002|
 
   示意图
 
@@ -100,10 +100,10 @@ ${INSTALL_PATH}=/data/tbase/install
   
 
 ``` shell
-[tbase@TENCENT64 ~]$ vim ~/.bashrc
-export TBASE_HOME=/data/tbase/install/tbase_bin_v2.0
-export PATH=$TBASE_HOME/bin:$PATH
-export LD_LIBRARY_PATH=$TBASE_HOME/lib:${LD_LIBRARY_PATH}
+[opentenbase@localhost ~]$ vim ~/.bashrc
+export OPENTENBASE_HOME=/data/opentenbase/install/opentenbase_bin_v2.0
+export PATH=$OPENTENBASE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$OPENTENBASE_HOME/lib:${LD_LIBRARY_PATH}
 ```
 
 以上，已经配置好了所需要基础环境，可以进入到集群初始化阶段，为了方便用户，OpenTenBase提供了专用的配置和操作工具：**pgxc_ctl**来协助用户快速搭建并管理集群，首先需要将前文所述的节点的ip，端口，目录写入到配置文件 pgxc\_ctl.conf 中。
@@ -111,9 +111,9 @@ export LD_LIBRARY_PATH=$TBASE_HOME/lib:${LD_LIBRARY_PATH}
   - **初始化pgxc_ctl.conf文件**
 
 ```shell
-[tbase@TENCENT64 ~]$ mkdir /data/tbase/pgxc_ctl
-[tbase@TENCENT64 ~]$ cd /data/tbase/pgxc_ctl
-[tbase@TENCENT64 ~/pgxc_ctl]$ vim pgxc_ctl.conf
+[opentenbase@localhost ~]$ mkdir /data/opentenbase/pgxc_ctl
+[opentenbase@localhost ~]$ cd /data/opentenbase/pgxc_ctl
+[opentenbase@localhost ~/pgxc_ctl]$ vim pgxc_ctl.conf
 ```
 
 如下，是结合上文描述的IP，端口，数据库目录，二进制目录等规划来写的pgxc_ctl.conf文件。具体实践中只需按照自己的实际情况配置好即可.
@@ -121,8 +121,8 @@ export LD_LIBRARY_PATH=$TBASE_HOME/lib:${LD_LIBRARY_PATH}
 ``` yaml
 #!/bin/bash
 
-pgxcInstallDir=/data/tbase/install/tbase_bin_v2.0
-pgxcOwner=tbase
+pgxcInstallDir=/data/opentenbase/install/opentenbase_bin_v2.0
+pgxcOwner=opentenbase
 defaultDatabase=postgres
 pgxcUser=$pgxcOwner
 tmpDir=/tmp
@@ -137,18 +137,18 @@ configBackupFile=pgxc_ctl.bak
 gtmName=gtm
 gtmMasterServer=10.215.147.158
 gtmMasterPort=50001
-gtmMasterDir=/data/tbase/data/gtm
+gtmMasterDir=/data/opentenbase/data/gtm
 gtmExtraConfig=none
 gtmMasterSpecificExtraConfig=none
 gtmSlave=y
 gtmSlaveServer=10.240.138.159
 gtmSlavePort=50001
-gtmSlaveDir=/data/tbase/data/gtm
+gtmSlaveDir=/data/opentenbase/data/gtm
 gtmSlaveSpecificExtraConfig=none
 
 #---- Coordinators -------
-coordMasterDir=/data/tbase/data/coord
-coordArchLogDir=/data/tbase/data/coord_archlog
+coordMasterDir=/data/opentenbase/data/coord
+coordArchLogDir=/data/opentenbase/data/coord_archlog
 
 coordNames=(cn001 cn002 )
 coordPorts=(30004 30004 )
@@ -168,7 +168,7 @@ cat > $coordExtraConfig <<EOF
 # Added to all the coordinator postgresql.conf
 # Original: $coordExtraConfig
 
-include_if_exists = '/data/tbase/global/global_tbase.conf'
+include_if_exists = '/data/opentenbase/global/global_opentenbase.conf'
 
 wal_level = replica
 wal_keep_segments = 256 
@@ -213,12 +213,12 @@ coordAdditionalSlaves=n
 cad1_Sync=n
 
 #---- Datanodes ---------------------
-dn1MstrDir=/data/tbase/data/dn001
-dn2MstrDir=/data/tbase/data/dn002
-dn1SlvDir=/data/tbase/data/dn001
-dn2SlvDir=/data/tbase/data/dn002
-dn1ALDir=/data/tbase/data/datanode_archlog
-dn2ALDir=/data/tbase/data/datanode_archlog
+dn1MstrDir=/data/opentenbase/data/dn001
+dn2MstrDir=/data/opentenbase/data/dn002
+dn1SlvDir=/data/opentenbase/data/dn001
+dn2SlvDir=/data/opentenbase/data/dn002
+dn1ALDir=/data/opentenbase/data/datanode_archlog
+dn2ALDir=/data/opentenbase/data/datanode_archlog
 
 primaryDatanode=dn001
 datanodeNames=(dn001 dn002)
@@ -244,7 +244,7 @@ cat > $datanodeExtraConfig <<EOF
 # Added to all the coordinator postgresql.conf
 # Original: $datanodeExtraConfig
 
-include_if_exists = '/data/tbase/global/global_tbase.conf'
+include_if_exists = '/data/opentenbase/global/global_opentenbase.conf'
 listen_addresses = '*' 
 wal_level = replica 
 wal_keep_segments = 256 
@@ -296,15 +296,15 @@ walArchive=n
 在一个节点配置好配置文件后，需要预先将二进制包部署到所有节点所在的机器上，这个可以使用pgxc_ctl工具，执行**deploy all**命令来完成。
 
 ```shell
-[tbase@TENCENT64 ~/pgxc_ctl]$ pgxc_ctl 
+[opentenbase@localhost ~/pgxc_ctl]$ pgxc_ctl 
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/tbase/pgxc_ctl/pgxc_ctl_bash --home /data/tbase/pgxc_ctl --configuration /data/tbase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/tbase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC deploy all
 Deploying Postgres-XL components to all the target servers.
 Prepare tarball to deploy ... 
@@ -313,74 +313,74 @@ Deploying to the server 10.240.138.159.
 Deployment done.
 
 登录到所有节点，check二进制包是否分发OK
-[tbase@TENCENT64 ~/install]$ ls /data/tbase/install/tbase_bin_v2.0
+[opentenbase@localhost ~/install]$ ls /data/opentenbase/install/opentenbase_bin_v2.0
 bin  include  lib  share	
 ```
 
 * 执行**init all**命令，完成集群初始化命令
 
 ```shell
-[tbase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/tbase/pgxc_ctl/pgxc_ctl_bash --home /data/tbase/pgxc_ctl --configuration /data/tbase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/tbase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC init all
 Initialize GTM master
 ....
 ....
 Initialize datanode slave dn001
 Initialize datanode slave dn002
-mkdir: cannot create directory '/data1/tbase': Permission denied
-chmod: cannot access '/data1/tbase/data/dn001': No such file or directory
-pg_ctl: directory "/data1/tbase/data/dn001" does not exist
-pg_basebackup: could not create directory "/data1/tbase": Permission denied
+mkdir: cannot create directory '/data1/opentenbase': Permission denied
+chmod: cannot access '/data1/opentenbase/data/dn001': No such file or directory
+pg_ctl: directory "/data1/opentenbase/data/dn001" does not exist
+pg_basebackup: could not create directory "/data1/opentenbase": Permission denied
 ```
 
 - **安装错误处理**
 
-一般init集群出错，终端会打印出错误日志，通过查看错误原因，更改配置即可，或者可以通过/data/tbase/pgxc\_ctl/pgxc_log路径下的错误日志查看错误，排查配置文件的错误
+一般init集群出错，终端会打印出错误日志，通过查看错误原因，更改配置即可，或者可以通过/data/opentenbase/pgxc\_ctl/pgxc_log路径下的错误日志查看错误，排查配置文件的错误
 
 ```shell
-[tbase@TENCENT64 ~]$ ll ~/pgxc_ctl/pgxc_log/
+[opentenbase@localhost ~]$ ll ~/pgxc_ctl/pgxc_log/
 total 184
--rw-rw-r-- 1 tbase tbase 81123 Nov 13 17:22 14105_pgxc_ctl.log
--rw-rw-r-- 1 tbase tbase  2861 Nov 13 17:58 15762_pgxc_ctl.log
--rw-rw-r-- 1 tbase tbase 14823 Nov 14 07:59 16671_pgxc_ctl.log
--rw-rw-r-- 1 tbase tbase  2721 Nov 13 16:52 18891_pgxc_ctl.log
--rw-rw-r-- 1 tbase tbase  1409 Nov 13 16:20 22603_pgxc_ctl.log
--rw-rw-r-- 1 tbase tbase 60043 Nov 13 16:33 28932_pgxc_ctl.log
--rw-rw-r-- 1 tbase tbase 15671 Nov 14 07:57 6849_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 81123 Nov 13 17:22 14105_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  2861 Nov 13 17:58 15762_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 14823 Nov 14 07:59 16671_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  2721 Nov 13 16:52 18891_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  1409 Nov 13 16:20 22603_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 60043 Nov 13 16:33 28932_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 15671 Nov 14 07:57 6849_pgxc_ctl.log
 ```
 
 通过运行 pgxc\_ctl 工具，执行**clean all**命令删除已经初始化的文件，修改pgxc\_ctl.conf文件，重新执行**init all**命令重新发起初始化。
 
 ```shell
-[tbase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/tbase/pgxc_ctl/pgxc_ctl_bash --home /data/tbase/pgxc_ctl --configuration /data/tbase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/tbase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC clean all
 
 
-[tbase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/tbase/pgxc_ctl/pgxc_ctl_bash --home /data/tbase/pgxc_ctl --configuration /data/tbase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/tbase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC init all
 Initialize GTM master
 EXECUTE DIRECT ON (dn002) 'ALTER NODE dn002 WITH (TYPE=''datanode'', 	HOST=''10.240.138.159'', PORT=40004, PREFERRED)';
@@ -399,15 +399,15 @@ Done.
 	当发现上面的输出时，集群已经OK，另外也可以通过pgxc_ctl工具的**monitor all**命令来查看集群状态
 	
 ```shell
-[tbase@TENCENT64 ~/pgxc_ctl]$ pgxc_ctl
+[opentenbase@localhost ~/pgxc_ctl]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/tbase/pgxc_ctl/pgxc_ctl_bash --home /data/tbase/pgxc_ctl --configuration /data/tbase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/tbase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC monitor all
 Running: gtm master
 Not running: gtm slave
@@ -424,8 +424,8 @@ Not running: datanode slave dn002
 	访问OpenTenBase集群和访问单机的PostgreSQL基本上无差别，我们可以通过任意一个CN访问数据库集群：例如通过连接CN节点select pgxc\_node表即可查看集群的拓扑结构（当前的配置下备机不会展示在pgxc\_node中），在Linux命令行下通过psql访问的具体示例如下
 	
 ```sql
-[tbase@TENCENT64 ~/pgxc_ctl]$ psql -h 10.215.147.158 -p 30004 -d postgres -U tbase
-psql (PostgreSQL 10.0 TBase V2)
+[opentenbase@localhost ~/pgxc_ctl]$ psql -h 10.215.147.158 -p 30004 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
 
 postgres=# \d
@@ -433,11 +433,11 @@ Did not find any relations.
 postgres=# select * from pgxc_node;
  node_name | node_type | node_port |   node_host    | nodeis_primary | nodeis_preferred |  node_id   | node_cluster_name 
 -----------+-----------+-----------+----------------+----------------+------------------+------------+-------------------
- gtm       | G         |     50001 | 10.215.147.158 | t              | f                |  428125959 | tbase_cluster
- cn001     | C         |     30004 | 10.215.147.158 | f              | f                | -264077367 | tbase_cluster
- cn002     | C         |     30004 | 10.240.138.159 | f              | f                | -674870440 | tbase_cluster
- dn001     | D         |     40004 | 10.215.147.158 | t              | t                | 2142761564 | tbase_cluster
- dn002     | D         |     40004 | 10.240.138.159 | f              | f                |  -17499968 | tbase_cluster
+ gtm       | G         |     50001 | 10.215.147.158 | t              | f                |  428125959 | opentenbase_cluster
+ cn001     | C         |     30004 | 10.215.147.158 | f              | f                | -264077367 | opentenbase_cluster
+ cn002     | C         |     30004 | 10.240.138.159 | f              | f                | -674870440 | opentenbase_cluster
+ dn001     | D         |     40004 | 10.215.147.158 | t              | t                | 2142761564 | opentenbase_cluster
+ dn002     | D         |     40004 | 10.240.138.159 | f              | f                |  -17499968 | opentenbase_cluster
 (5 rows)
 ```
 
@@ -492,7 +492,7 @@ Done.
 Stopping all the datanode slaves.
 Stopping datanode slave dn001.
 Stopping datanode slave dn002.
-pg_ctl: PID file "/data/tbase/data/dn002/postmaster.pid" does not exist
+pg_ctl: PID file "/data/opentenbase/data/dn002/postmaster.pid" does not exist
 Is server running?
 Stopping all the datanode masters.
 Stopping datanode master dn001.
@@ -520,15 +520,15 @@ Not running: datanode slave dn002
 	通过pgxc_ctl工具的**start all**命令来启动集群
 	
 ```shell
-[tbase@TENCENT64 ~]$ pgxc_ctl
+[opentenbase@localhost ~]$ pgxc_ctl
 /usr/bin/bash
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Installing pgxc_ctl_bash script as /data/tbase/pgxc_ctl/pgxc_ctl_bash.
-Reading configuration using /data/tbase/pgxc_ctl/pgxc_ctl_bash --home /data/tbase/pgxc_ctl --configuration /data/tbase/pgxc_ctl/pgxc_ctl.conf
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
 Finished reading configuration.
    ******** PGXC_CTL START ***************
 
-Current directory: /data/tbase/pgxc_ctl
+Current directory: /data/opentenbase/pgxc_ctl
 PGXC start all
 ```
 
