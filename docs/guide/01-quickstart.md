@@ -26,13 +26,28 @@ OpenTenBase 采用分布式集群架构（如下图）， 该架构分布式为�
 
 ## OpenTenBase源码编译安装
 
+### 系统要求: 
+
+Memory: 4G RAM minimum
+
+OS: TencentOS 2, TencentOS 3, OpenCloudOS, CentOS 7, CentOS 8, Ubuntu
+
+### 安装依赖
+
+` yum -y install gcc make readline-devel zlib-devel openssl-devel uuid-devel bison flex`
+
+或
+
+` apt install -y gcc make libreadline-dev zlib1g-dev libssl-dev libossp-uuid-dev bison flex`
+
 - **创建opentenbase用户**
 
 	注意：所有需要安装OpenTenBase集群的机器上都需要创建
 
 ``` shell
 mkdir /data
-useradd -d /data/opentenbase opentenbase
+useradd -d /data/opentenbase -s /bin/bash -m opentenbase
+passwd opentenbase # set password
 ```
 
 - **源码获取**
@@ -91,7 +106,22 @@ ${INSTALL_PATH}=/data/opentenbase/install
 
   ![OpenTenBase部署示意图](images/node_ip.png)
 
+  - **禁用 SELinux 和 防火墙 (可选)**
+
+```shell
+vi /etc/selinux/config # disable SELinux, change SELINUX=enforcing to SELINUX=disabled
+# disable firewall, for Ubuntu, change firewalld to ufw
+systemctl disable firewalld
+systemctl stop firewalld
+```
+
   - **机器间的ssh互信配置**
+
+```shell
+su opentenbase
+ssh-keygen -t rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub destination-user@destination-server
+```
 
       参考[Linux ssh互信配置](https://blog.csdn.net/chenghuikai/article/details/52807074)
 
@@ -105,6 +135,7 @@ ${INSTALL_PATH}=/data/opentenbase/install
 export OPENTENBASE_HOME=/data/opentenbase/install/opentenbase_bin_v2.0
 export PATH=$OPENTENBASE_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$OPENTENBASE_HOME/lib:${LD_LIBRARY_PATH}
+export LC_ALL=C
 ```
 
 以上，已经配置好了所需要基础环境，可以进入到集群初始化阶段，为了方便用户，OpenTenBase提供了专用的配置和操作工具：**pgxc_ctl**来协助用户快速搭建并管理集群，首先需要将前文所述的节点的ip，端口，目录写入到配置文件 pgxc\_ctl.conf 中。

@@ -28,13 +28,28 @@ Next, let's show how to build a OpenTenBase cluster environment from the source 
 
 ## OpenTenBase source code compilation and installation
 
+### System Requirements: 
+
+Memory: 4G RAM minimum
+
+OS: TencentOS 2, TencentOS 3, OpenCloudOS, CentOS 7, CentOS 8, Ubuntu
+
+### Dependence
+
+` yum -y install gcc make readline-devel zlib-devel openssl-devel uuid-devel bison flex`
+
+or
+
+` apt install -y gcc make libreadline-dev zlib1g-dev libssl-dev libossp-uuid-dev bison flex`
+
 - **create user**
 
 	Note: all machines that need to install OpenTenBase cluster need to create
 
 ```
 mkdir /data
-useradd -d /data/opentenbase opentenbase
+useradd -d /data/opentenbase -s /bin/bash -m opentenbase
+passwd opentenbase # set password
 ```
 
 - **get source code**
@@ -93,7 +108,22 @@ Sketch Map:
 
 ![OpenTenBase Deploy Sketch Map](images/node_ip.png)
 
+- **Disable SELinux and firewall (optinal)**
+
+```shell
+vi /etc/selinux/config # disable SELinux, change SELINUX=enforcing to SELINUX=disabled
+# disable firewall, for Ubuntu, change firewalld to ufw
+systemctl disable firewalld
+systemctl stop firewalld
+```
+
 - **SSH mutual trust configuration between machines**
+
+```shell
+su opentenbase
+ssh-keygen -t rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub destination-user@destination-server
+```
 
 Reference resources: [Linux ssh mutual trust](https://blog.csdn.net/chenghuikai/article/details/52807074)
 
@@ -106,6 +136,7 @@ All machines in the cluster need to be configured
 export OPENTENBASE_HOME=/data/opentenbase/install/opentenbase_bin_v2.0
 export PATH=$OPENTENBASE_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$OPENTENBASE_HOME/lib:${LD_LIBRARY_PATH}
+export LC_ALL=C
 ```
 
 Above, the required basic environment has been configured, and you can enter the cluster initialization stage. For the convenience of users, OpenTenBase provides special configuration and operation tools: **pgxc_ctl** to help users quickly build and manage clusters. Here, you need to write the IP, port and data directory of the nodes mentioned above into the configuration file pgxc\_ctl.conf
