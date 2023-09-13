@@ -151,6 +151,12 @@ Above, the required basic environment has been configured, and you can enter the
 
 The following shows the pgxc\_ctl.conf file content written using the IP, port, database directory, binary directory and other planning values described above. In practice, we only need to configure it according to our own actual situation.
 
+We can also download and rename it to ```pgxc_ctl.conf``` and configure it according to our own actual situation.
+
+[Download Double Node Conf](./pgxc_ctl_double.conf)
+
+[Download Single Node Conf](./pgxc_ctl_single.conf)
+
 
 ```shell
 #!/bin/bash

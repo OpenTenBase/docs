@@ -148,7 +148,13 @@ export LC_ALL=C
 [opentenbase@localhost ~/pgxc_ctl]$ vim pgxc_ctl.conf
 ```
 
-如下，是结合上文描述的IP，端口，数据库目录，二进制目录等规划来写的pgxc_ctl.conf文件。具体实践中只需按照自己的实际情况配置好即可.
+如下，是结合上文描述的IP，端口，数据库目录，二进制目录等规划来写的pgxc_ctl.conf文件。具体实践中只需按照自己的实际情况配置好即可。
+
+亦可从此处下载，修改文件名为 ```pgxc_ctl.conf``` ，按照实际情况修改内容：
+
+[点击此处下载双节点配置](./pgxc_ctl_double.conf)
+
+[点击此处下载单节点配置](./pgxc_ctl_single.conf)
 
 ``` yaml
 #!/bin/bash
