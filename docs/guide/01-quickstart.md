@@ -34,11 +34,11 @@ OS: TencentOS 2, TencentOS 3, OpenCloudOS, CentOS 7, CentOS 8, Ubuntu
 
 ### 安装依赖
 
-` yum -y install gcc make readline-devel zlib-devel openssl-devel uuid-devel bison flex`
+` yum -y install gcc make readline-devel zlib-devel openssl-devel uuid-devel bison flex git`
 
 或
 
-` apt install -y gcc make libreadline-dev zlib1g-dev libssl-dev libossp-uuid-dev bison flex`
+` apt install -y gcc make libreadline-dev zlib1g-dev libssl-dev libossp-uuid-dev bison flex git`
 
 - **创建opentenbase用户**
 
@@ -156,8 +156,12 @@ export LC_ALL=C
 
 [点击此处下载单节点配置](./pgxc_ctl_single.conf)
 
-``` yaml
+``` shell
 #!/bin/bash
+# Double Node Config
+
+IP_1=10.215.147.158
+IP_2=10.240.138.159
 
 pgxcInstallDir=/data/opentenbase/install/opentenbase_bin_v2.0
 pgxcOwner=opentenbase
@@ -173,13 +177,13 @@ configBackupFile=pgxc_ctl.bak
 
 #---- GTM ----------
 gtmName=gtm
-gtmMasterServer=10.215.147.158
+gtmMasterServer=$IP_1
 gtmMasterPort=50001
 gtmMasterDir=/data/opentenbase/data/gtm
 gtmExtraConfig=none
 gtmMasterSpecificExtraConfig=none
 gtmSlave=y
-gtmSlaveServer=10.240.138.159
+gtmSlaveServer=$IP_2
 gtmSlavePort=50001
 gtmSlaveDir=/data/opentenbase/data/gtm
 gtmSlaveSpecificExtraConfig=none
@@ -192,7 +196,7 @@ coordNames=(cn001 cn002 )
 coordPorts=(30004 30004 )
 poolerPorts=(31110 31110 )
 coordPgHbaEntries=(0.0.0.0/0)
-coordMasterServers=(10.215.147.158 10.240.138.159)
+coordMasterServers=($IP_1 $IP_2)
 coordMasterDirs=($coordMasterDir $coordMasterDir)
 coordMaxWALsernder=2
 coordMaxWALSenders=($coordMaxWALsernder $coordMaxWALsernder )
@@ -247,7 +251,7 @@ EOF
 
 
 coordSpecificExtraPgHba=(none none)
-coordAdditionalSlaves=n	
+coordAdditionalSlaves=n 
 cad1_Sync=n
 
 #---- Datanodes ---------------------
@@ -263,13 +267,13 @@ datanodeNames=(dn001 dn002)
 datanodePorts=(40004 40004)
 datanodePoolerPorts=(41110 41110)
 datanodePgHbaEntries=(0.0.0.0/0)
-datanodeMasterServers=(10.215.147.158 10.240.138.159)
+datanodeMasterServers=($IP_1 $IP_2)
 datanodeMasterDirs=($dn1MstrDir $dn2MstrDir)
 dnWALSndr=4
 datanodeMaxWALSenders=($dnWALSndr $dnWALSndr)
 
 datanodeSlave=y
-datanodeSlaveServers=(10.240.138.159 10.215.147.158)
+datanodeSlaveServers=($IP_2 $IP_1)
 datanodeSlavePorts=(50004 54004)
 datanodeSlavePoolerPorts=(51110 51110)
 datanodeSlaveSync=n
