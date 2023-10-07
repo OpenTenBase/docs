@@ -4,6 +4,8 @@
 
 OpenTenBase is an enterprise-level distributed HTAP open source database. It has high scalability, commercial database syntax compatibility, distributed HTAP engine, multi-level disaster recovery and multi-dimensional resource isolation. It has been successfully used in core businesses in finance, medical, aerospace and other industries. system.
 
+Welcome visit our homepage: [https://opentenbase.org](https://opentenbase.org)
+
 [Quick Start](guide/01-quickstart.md)  
 
 [Application Access](guide/02-access.md) 
