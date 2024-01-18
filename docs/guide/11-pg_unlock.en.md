@@ -78,4 +78,4 @@ This illustrates the transaction rolled back to resolve the deadlock. The `execu
 
 3) Subsequently, when both sessions attempt to execute "drop table" commands, transaction "1998:5" requests an ACCESS EXCLUSIVE lock on table b, which conflicts with the ACCESS SHARE lock held by transaction "1995:1". Thus, a "1998:5 --> 1995:1" dependency is created. Similarly, there's a reciprocal dependency "1995:1 --> 1998:5".
 
-4) At this point, a deadlock situation arises between the two transactions. Upon detection of the deadlock, the tool terminates transaction "1998:5."In summary, the pg_unlock tool offers a means to identify and resolve deadlock situations in distributed database environments, ensuring smooth operation of database transactions.
+4) At this point, a deadlock situation arises between the two transactions. Upon detection of the deadlock, the tool terminates transaction "1998:5". In summary, the pg_unlock tool offers a means to identify and resolve deadlock situations in distributed database environments, ensuring smooth operation of database transactions.
