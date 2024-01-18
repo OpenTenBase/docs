@@ -4,7 +4,7 @@
 >
 >本篇将介绍应用程序如何连接OpenTenBase数据库进行建库、建表、数据导入、查询等操作。
 
-OpenTenBase兼容所有支持Postgres协议的客户端连接，这里将详细介绍JAVA、C语音、shell语言、Python、PHP、Golang 这6种最常用的开发语言连接OpenTenBase的操作方法。
+OpenTenBase兼容所有支持Postgres协议的客户端连接，这里将详细介绍JAVA、C语言、shell语言、Python、PHP、Golang 这6种最常用的开发语言连接OpenTenBase的操作方法。
 
 ## 1、JAVA开发  
 ### 1.1、创建数据表  
