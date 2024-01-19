@@ -76,14 +76,14 @@ CREATE table opentenbase_log
 );
 ```
 #### Import log data  
-OpenTenBase 日志文件默认存储在“数据目录/pg\_log”目录下面
+OpenTenBase Log files are stored under the "data directory/pg\_log" directory by default
 
 ```
 postgres=# COPY opentenbase_log FROM '/data/pgxz/data/pgxz/dn001/pg_log/postgresql-Tuesday-16.csv' WITH csv; 
 COPY 10790
 ```
 #### Statistics log data  
---按照session连接及操作时间排序
+--Sort by session connection and operation time
 
 ```
 postgres=# select * from opentenbase_log order by process_id,log_time;
