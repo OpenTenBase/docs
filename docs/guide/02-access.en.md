@@ -1,13 +1,13 @@
-# 应用接入指南
+# Application Access Guide
 
->在[快速入门](01-quickstart.md)文章中我们介绍了 OpenTenBase 的架构、源码编译安装、集群运行状态、启动停止等内容。
+>In [Quick Start](01-quickstart.en.md) article, we introduced opentenbase architecture, source code compilation and installation, cluster running status, startup and stop, etc.
 >
->本篇将介绍应用程序如何连接OpenTenBase数据库进行建库、建表、数据导入、查询等操作。
+>This chapter will introduce how to connect to OpenTenBase for create database, table, data import, query and other operations.
 
-OpenTenBase兼容所有支持Postgres协议的客户端连接，这里将详细介绍JAVA、C语言、shell语言、Python、PHP、Golang 这6种最常用的开发语言连接OpenTenBase的操作方法。
+OpenTenBase is compatible with all clients that support the Postgres protocol. Now we introduce the commonly used development languages including JAVA, C, shell, python, PHP, golang for connect to OpenTenBase.
 
-## 1、JAVA开发  
-### 1.1、创建数据表  
+## 1、JAVA
+### 1.1、Create Table
 
 ```
 import java.sql.Connection;
@@ -37,14 +37,13 @@ public class createtable {
      }
 }
 ```
+Explain： 
 
-说明：
-
-* 这里连接的节点为任意CN主节点，后面所有操作，没特别说明，都是连接到CN主节点进行操作。
-
+* The node in here is an arbitrary CN master node. All subsequent operations, unless otherwise specified, are performed by connecting to the CN master node.
 
 
-### 1.2、使用普通协议插入数据  
+
+### 1.2、Insert data use general protocol
 ```
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -79,7 +78,7 @@ public class insert {
    }
 }
 ```
-### 1.3、使用扩展协议插入数据  
+### 1.3、Insert data use extended protocol
 ```
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -95,14 +94,14 @@ public class insert_prepared {
          c = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:15432/postgres?currentSchema=public&binaryTransfer=false","opentenbase", "opentenbase");
          c.setAutoCommit(false);
          System.out.println("Opened database successfully");
-         //插入数据
+         //Insert data
          String sql = "INSERT INTO opentenbase (id,nickname) VALUES (?,?)";         
          stmt = c.prepareStatement(sql);
          stmt.setInt(1, 9999);
          stmt.setString(2, "opentenbase_prepared");
          stmt.executeUpdate();
          
-         //插入更新
+         //Insert update
          sql = "INSERT INTO opentenbase (id,nickname) VALUES (?,?) ON CONFLICT(id) DO UPDATE SET nickname=?";
          stmt = c.prepareStatement(sql);
          stmt.setInt(1, 9999);
@@ -121,7 +120,7 @@ public class insert_prepared {
    }
 }
 ```
-### 1.4、copy from 加载文件到表  
+### 1.4、Use `copy from` load file to table 
 ```
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -154,7 +153,7 @@ public class copyfrom {
      }
 }
 ```
-### 1.5、copy to 导出数据到文件  
+### 1.5、Use `copy to` export data to file  
 ```
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -187,13 +186,13 @@ public class copyto {
      }
 }
 ```
-### 1.6、jdbc包下载地址  
+### 1.6、Download address for jdbc file
 ```
 https://jdbc.postgresql.org/download.html
 ```
 
-## 2、C程序开发  
-### 2.1、连接数据库  
+## 2、C  
+### 2.1、Connect to database
 ```
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -209,35 +208,35 @@ main(int argc, char **argv){
     }            
     conn = PQconnectdb(conninfo);
     if (PQstatus(conn) != CONNECTION_OK){
-        fprintf(stderr, "连接数据库失败: %s",PQerrorMessage(conn));              
+        fprintf(stderr, "Failed to connect to the database: %s",PQerrorMessage(conn));              
     }else{
-        printf("连接数据库成功！\n");
+        printf("Connected to database successful！\n");
     }
     PQfinish(conn);
     return 0;
 }
 ```  
 
-编译    
+Compile    
 
 ```
 gcc -c -I /usr/local/install/opentenbase_pgxz/include/ conn.c  
 gcc -o conn conn.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq  
 ```   
 
-运行  
+Run  
   
 ``` 
 ./conn "host=172.16.0.3 dbname=postgres port=11000"  
-连接数据库成功！
+Connected to database successful！
 ```  
   
 ```
 ./conn "host=172.16.0.3 dbname=postgres port=15432 user=opentenbase"   
-连接数据库成功！ 
+Connected to database successful！ 
 ```   
  
-### 2.2、建立数据表
+### 2.2、Create table
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -255,37 +254,37 @@ main(int argc, char **argv){
     }        
     conn = PQconnectdb(conninfo);
     if (PQstatus(conn) != CONNECTION_OK){
-        fprintf(stderr, "连接数据库失败: %s",PQerrorMessage(conn));              
+        fprintf(stderr, "Failed to connect to the database: %s",PQerrorMessage(conn));              
     }else{
-        printf("连接数据库成功！\n");
+        printf("Connected to database successful！\n");
     }
     res = PQexec(conn,sql);
     if(PQresultStatus(res) != PGRES_COMMAND_OK){
-        fprintf(stderr, "建立数据表失败: %s",PQresultErrorMessage(res)); 
+        fprintf(stderr, "Failed to create data table: %s",PQresultErrorMessage(res)); 
     }else{
-        printf("建立数据表成功！\n");
+        printf("Create data table successful！\n");
     }
     PQclear(res);
     PQfinish(conn);
     return 0;
 }
 ``` 
-编译  
+Compile  
 
 ``` 
 gcc -c -I /usr/local/install/opentenbase_pgxz/include/ createtable.c  
 gcc -o createtable createtable.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq  
 ```   
-运行  
+Run  
 
 ```
 ./createtable "port=11000 dbname=postgres"
-连接数据库成功！  
-建立数据表成功！ 
+Connected to database successful！  
+Create data table successful！ 
 ```  
 
 
-### 2.3、插入数据
+### 2.3、Insert data
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -303,35 +302,35 @@ main(int argc, char **argv){
     }        
     conn = PQconnectdb(conninfo);
     if (PQstatus(conn) != CONNECTION_OK){
-        fprintf(stderr, "连接数据库失败: %s",PQerrorMessage(conn));              
+        fprintf(stderr, "Failed to connect to the database: %s",PQerrorMessage(conn));              
     }else{
-        printf("连接数据库成功！\n");
+        printf("Create data table successful！\n");
     }
     res = PQexec(conn,sql);
     if(PQresultStatus(res) != PGRES_COMMAND_OK){
-        fprintf(stderr, "插入数据失败: %s",PQresultErrorMessage(res)); 
+        fprintf(stderr, "Insert data failed: %s",PQresultErrorMessage(res)); 
     }else{
-        printf("插入数据成功！\n");
+        printf("Insert data successful！\n");
     }
     PQclear(res);
     PQfinish(conn);
     return 0;
 }
 ``` 
-编译  
+Compile  
 
 ``` 
 gcc -c -I /usr/local/install/opentenbase_pgxz/include/ insert.c
 gcc -o insert insert.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq
 ```   
-运行  
+Run  
 
 ```
 ./insert "dbname=postgres port=15432"
 ```  
   
 
-### 2.4、查询数据
+### 2.4、Query data
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -349,15 +348,15 @@ main(int argc, char **argv){
     }
     conn = PQconnectdb(conninfo);    
     if (PQstatus(conn) != CONNECTION_OK){
-        fprintf(stderr, "连接数据库失败: %s",PQerrorMessage(conn));              
+        fprintf(stderr, "Failed to connect to the database: %s",PQerrorMessage(conn));              
     }else{    
-        printf("连接数据库成功！\n");
+        printf("Connected to database successful！\n");
     }                                
     res = PQexec(conn,sql);
     if(PQresultStatus(res) != PGRES_TUPLES_OK){
-        fprintf(stderr, "插入数据失败: %s",PQresultErrorMessage(res)); 
+        fprintf(stderr, "Insert data failed: %s",PQresultErrorMessage(res)); 
     }else{
-        printf("查询数据成功！\n");    
+        printf("Query data successful！\n");    
         int rownum = PQntuples(res) ;
         int colnum = PQnfields(res);
         for(int j = 0;j< colnum; ++j){
@@ -377,25 +376,25 @@ main(int argc, char **argv){
 }
 ```
  
-编译  
+Compile  
 
 ``` 
 gcc -std=c99 -c -I /usr/local/install/opentenbase_pgxz/include/ select.c  
 gcc -o select select.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq
 ```     
-运行 
+Run 
  
 ``` 
 ./select "dbname=postgres port=15432"
-连接数据库成功！  
-查询数据成功！    
+Connected to database successful！  
+Query data successful！ 
 id      nickname  
 1       opentenbase  
 2       pgxz  
 
 ```
 
-### 2.5、流数据COPY入表
+### 2.5、Copy Stream data into table
 ```
 #include <string.h>
 #include <stdio.h>
@@ -414,28 +413,28 @@ main(int argc, char **argv){
     }
     conn = PQconnectdb(conninfo);
     if (PQstatus(conn) != CONNECTION_OK){
-        fprintf(stderr, "连接数据库失败: %s",PQerrorMessage(conn));              
+        fprintf(stderr, "Failed to connect to the database: %s",PQerrorMessage(conn));              
     }else{
-        printf("连接数据库成功！\n");
+        printf("Connected to database successful！\n");
     }
     res=PQexec(conn,"COPY opentenbase FROM STDIN DELIMITER ',';");
     if(PQresultStatus(res) != PGRES_COPY_IN){
-        fprintf(stderr, "copy数据出错1: %s",PQresultErrorMessage(res));
+        fprintf(stderr, "Wrong from copy data 1: %s",PQresultErrorMessage(res));
     }else{
         int len = strlen(buffer);
         if(PQputCopyData(conn,buffer,len) == 1){
              if(PQputCopyEnd(conn,NULL) == 1){
                 res = PQgetResult(conn);
                 if(PQresultStatus(res) == PGRES_COMMAND_OK){
-                    printf("copy数据成功！\n");         
+                    printf("Copy data successful！\n");         
                 }else{
-                    fprintf(stderr, "copy数据出错2: %s",PQerrorMessage(conn));    
+                    fprintf(stderr, "Wrong from copy data 2: %s",PQerrorMessage(conn));    
                 }
              }else{
-                fprintf(stderr, "copy数据出错3: %s",PQerrorMessage(conn));   
+                fprintf(stderr, "Wrong from copy data 3: %s",PQerrorMessage(conn));   
              }
         }else{
-            fprintf(stderr, "copy数据出错4: %s",PQerrorMessage(conn));              
+            fprintf(stderr, "Wrong from copy data 4: %s",PQerrorMessage(conn));              
         }
     }
     PQclear(res);
@@ -444,24 +443,24 @@ main(int argc, char **argv){
 }
 ```
  
-编译  
+Compile  
 
 ``` 
 gcc -c -I /usr/local/install/opentenbase_pgxz/include/ copy.c
 gcc -o copy copy.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq
 ```
  
-执行  
+Run  
 
 ``` 
 ./copy "dbname=postgres port=15432"
-连接数据库成功！  
-copy数据成功！
+Connected to database successful！ 
+Copy data successful！
 ```  
 
 
 
-### 3、shell脚本开发
+### 3、Shell script
 ```
 #!/bin/sh
  
@@ -495,41 +494,41 @@ do
 done
 ```
 
-## 4、python程序开发  
-### 4.1、安装psycopg2模块
+## 4、Python
+### 4.1、Install psycopg2
 ```
 [root@VM_0_29_centos ~]# yum install python-psycopg2
 ```  
 
-### 4.2、连接数据库
+### 4.2、Connect database
 ```
 #coding=utf-8
 #!/usr/bin/python
 import psycopg2
 try:
     conn = psycopg2.connect(database="postgres", user="opentenbase", password="", host="172.16.0.29", port="15432")
-    print "连接数据库成功"
+    print "Connected to database successful！"
     conn.close()
 except psycopg2.Error,msg:
-    print "连接数据库出错，错误详细信息： %s" %(msg.args[0])
+    print "Failed to connect database, details： %s" %(msg.args[0])
 ```
  
-运行  
+Run  
 
 ``` 
 [opentenbase@VM_0_29_centos python]$ python conn.py 
-连接数据库成功   
+Connected to database successful！  
 ```
 
 
-### 4.3、创建数据表
+### 4.3、Create table
 ```
 #coding=utf-8
 #!/usr/bin/python
 import psycopg2
 try:
     conn = psycopg2.connect(database="postgres", user="opentenbase", password="", host="172.16.0.29", port="15432")
-    print "连接数据库成功"    
+    print "Connected to database successful！"
     cur = conn.cursor()
     sql = """
           create table opentenbase 
@@ -540,53 +539,53 @@ try:
           """
     cur.execute(sql)
     conn.commit()
-    print "建立数据表成功"    
+    print "Create table successful!"    
     conn.close()
 except psycopg2.Error,msg:
     print "OpenTenBase Error %s" %(msg.args[0])
 ``` 
-运行  
+Run  
 
 ``` 
 [opentenbase@VM_0_29_centos python]$ python createtable.py   
-连接数据库成功
-建立数据表成功
+Connected to database successful！ 
+Create table successful!
 ```
-### 4.4、插入数据
+### 4.4、Insert data
 ```
 #coding=utf-8
 #!/usr/bin/python
 import psycopg2
 try:
     conn = psycopg2.connect(database="postgres", user="opentenbase", password="", host="172.16.0.29", port="15432")
-    print "连接数据库成功"    
+    print "Connected to database successful!"    
     cur = conn.cursor()
     sql = "insert into opentenbase values(1,'opentenbase'),(2,'opentenbase');"
     cur.execute(sql)
     sql = "insert into opentenbase values(%s,%s)"   
     cur.execute(sql,(3,'pg'))
     conn.commit()
-    print "插入数据成功"    
+    print "Insert data successful!"    
     conn.close()
 except psycopg2.Error,msg:
-    print "操作数据库出库 %s" %(msg.args[0])
+    print "OpenTenBase Error %s" %(msg.args[0])
 ``` 
-运行  
+Run  
 
 ``` 
 [opentenbase@VM_0_29_centos python]$ python insert.py   
-连接数据库成功  
-插入数据成功  
+Connected to database successful！  
+Insert data successful! 
 ```
 
-### 4.5、查询数据
+### 4.5、Query data
 ```
 #coding=utf-8
 #!/usr/bin/python
 import psycopg2
 try:
     conn = psycopg2.connect(database="postgres", user="opentenbase", password="", host="172.16.0.29", port="15432")
-    print "连接数据库成功"    
+    print "Connected to database successful!"    
     cur = conn.cursor()
     sql = "select * from opentenbase"
     cur.execute(sql)
@@ -596,14 +595,14 @@ try:
         print "NICKNAME = ", row[1],"\n"
     conn.close()
 except psycopg2.Error,msg:
-    print "操作数据库出库 %s" %(msg.args[0])
+    print "OpenTenBase Error %s" %(msg.args[0])
 ```
  
-运行  
+Run  
 
 ``` 
 [opentenbase@VM_0_29_centos python]$ python select.py   
-连接数据库成功
+Connected to database successful！
 ID =  1
 NICKNAME =  opentenbase 
  
@@ -614,36 +613,36 @@ ID =  3
 NICKNAME =  pg
 ```  
  
-### 4.6、copy from 加载文件到表
+### 4.6、Use `copy from` load file to table
 ```
 #coding=utf-8
 #!/usr/bin/python
 import psycopg2
 try:
     conn = psycopg2.connect(database="postgres", user="opentenbase", password="", host="172.16.0.29", port="15432")
-    print "连接数据库成功"    
+    print "Connected to database successful！"    
     cur = conn.cursor()
     filename = "/data/opentenbase/opentenbase.txt"
     cols = ('id','nickname')
     tablename="public.opentenbase"
     cur.copy_from(file=open(filename),table=tablename,columns=cols,sep=',')
     conn.commit()
-    print "导入数据成功"
+    print "Import data successful!"
     conn.close()
 except psycopg2.Error,msg:
-    print "操作数据库出库 %s" %(msg.args[0])
+    print "OpenTenBase Error %s" %(msg.args[0])
 ```  
  
-执行
+Run
 
 ``` 
 [opentenbase@VM_0_29_centos python]$ python copy_from.py 
-连接数据库成功
-导入数据成功
+Connected to database successful！ 
+Import data successful!
 ``` 
 
-## 5、PHP程序开发
-### 5.1、连接数据库
+## 5、PHP
+### 5.1、Connect database
 ```
 <?php     
 $host="172.16.0.29";
@@ -652,28 +651,28 @@ $dbname="postgres";
 $user="opentenbase" ;
 $password="";  
  
-//连接数据库
+//Connect database
 $conn=@pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");      
 if (!$conn){
     $error_msg=@pg_errormessage($conn); 
-    echo "连接数据库出错，详情：".$error_msg."\n<BR>"; ;
+    echo "Failed to connect database，details：".$error_msg."\n<BR>"; ;
     exit;
 }else{
-    echo "连接数据库成功"."\n<BR>";      
+    echo "Connected to database successful!"\n<BR>";      
 } 
-//关闭连接
+//Close connect
 pg_close($conn);
 ?>
 ``` 
  
-执行  
+Run  
 
 ``` 
 [root@VM_0_47_centos test]# curl http://127.0.0.1:8080/dbsta/test/conn.php
-连接数据库成功
+Connected to database successful!
 ```  
 
-### 5.2、创建数据表
+### 5.2、Create table
 ```
 <?php     
 $host="172.16.0.29";
@@ -682,40 +681,40 @@ $dbname="postgres";
 $user="opentenbase" ;
 $password="";  
  
-//连接数据库
+//Connect database
 $conn=@pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");      
 if (!$conn){
     $error_msg=@pg_errormessage($conn); 
-    echo "连接数据库出错，详情：".$error_msg."\n"; ;
+    echo "Failed to connect database，details：".$error_msg."\n<BR>"; ;
     exit;
 }else{
-    echo "连接数据库成功"."\n";      
+    echo "Connected to database successful!"\n<BR>";      
 } 
  
-//建立数据表
+//Create table
 $sql="create table public.opentenbase(id integer,nickname varchar(100)) distribute by shard(id) to group default_group;";
 $result = @pg_exec($conn,$sql) ;
 if (!$result){
     $error_msg=@pg_errormessage($conn); 
-    echo "创建数据表出错，详情：".$error_msg."\n"; ;
+    echo "Failed to create table，details：".$error_msg."\n"; ;
     exit;
 }else{
-    echo "创建数据表成功"."\n";       
+    echo "Creat table successful!"\n";       
 }
-//关闭连接
+//Close connect
 pg_close($conn);
 ?>
 ```  
 
-执行
+run
 
 ``` 
 [root@VM_0_47_centos test]# curl http://127.0.0.1:8080/dbsta/test/createtable.php
-连接数据库成功
-创建数据表成功
+Connected to database successful!
+Creat table successful!
 ```
 
-### 5.3、插入数据
+### 5.3、Insert data
 ```
 <?php     
 $host="172.16.0.29";
@@ -724,42 +723,42 @@ $dbname="postgres";
 $user="opentenbase" ;
 $password="";  
  
-//连接数据库
+//Connect database
 $conn=@pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");      
 if (!$conn){
     $error_msg=@pg_errormessage($conn); 
-    echo "连接数据库出错，详情：".$error_msg."\n"; ;
+    echo "Failed to connect database，details：".$error_msg."\n"; ;
     exit;
 }else{
-    echo "连接数据库成功"."\n";      
+    echo "Connected to database successful!"\n";      
 } 
  
-//插入数据
+//Insert data
 $sql="insert into public.opentenbase values(1,'opentenbase'),(2,'pgxz');";    
 $result = @pg_exec($conn,$sql) ;
 if (!$result){
     $error_msg=@pg_errormessage($conn); 
-    echo "插入数据出错，详情：".$error_msg."\n";
+    echo "Failed to insert data, details：".$error_msg."\n";
     exit;
 }else{
-    echo "插入数据成功"."\n";       
+    echo "Insert data successful!"\n";       
 }
  
-//关闭连接
+//Close connect
 pg_close($conn);
  
 ?>
 ```  
  
-执行
+Run
 
 ``` 
 [opentenbase@VM_0_47_centos test]$ curl http://127.0.0.1:8080/dbsta/test/insert.php
-连接数据库成功
-插入数据成功
+Connected to database successful!
+Insert data successful!
 ```
 
-### 5.4、查询数据
+### 5.4、Query data
 ```
 <?php     
 $host="172.16.0.29";
@@ -768,55 +767,55 @@ $dbname="postgres";
 $user="opentenbase" ;
 $password="";  
  
-//连接数据库
+//Connect database
 $conn=@pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");      
 if (!$conn){
     $error_msg=@pg_errormessage($conn); 
-    echo "连接数据库出错，详情：".$error_msg."\n"; ;
+    echo "Failed to connect database，details: ".$error_msg."\n"; ;
     exit;
 }else{
-    echo "连接数据库成功"."\n";      
+    echo "Connected to database successful!"\n";      
 } 
  
-//查询数据 
+//Query data
 $sql="select id,nickname from public.opentenbase";    
 $result = @pg_exec($conn,$sql) ;
 if (!$result){
     $error_msg=@pg_errormessage($conn); 
-    echo "查询数据出错，详情：".$error_msg."\n";
+    echo "Failed to query data, details ：".$error_msg."\n";
     exit;
 }else{
-    echo "查询数据成功"."\n";      
+    echo "Query data successful!"\n";      
 }
 $record_num = pg_numrows($result);  
-echo "返回记录数".$record_num."\n"; 
+echo "Return query number: ".$record_num."\n"; 
 $rec=pg_fetch_all($result); 
 for($i=0;$i<$record_num;$i++){
-    echo "记录数#".strval($i+1)."\n";
+    echo "numbers: #".strval($i+1)."\n";
     echo "id：".$rec[$i]["id"]."\n";
     echo "nickname：".$rec[$i]["nickname"]."\n\n";
 }
-//关闭连接
+//CLose connect 
 pg_close($conn);
 ?>
 ``` 
-调用方法  
+Use method  
 
 ``` 
 [root@VM_0_47_centos ~]# curl http://127.0.0.1:8080/dbsta/test/select.php
-连接数据库成功
-查询数据成功
-返回记录数2
-记录数#1
+Connected to database successful!
+Query data successful!
+Return query number: 2
+numbers: 1
 id：1
 nickname：opentenbase
  
-记录数#2
+numbers: 2
 id：2
 nickname：pgxz
 ```  
 
-### 5.5、流数据copy 入表
+### 5.5、Copy Stream data into table
 ```
 <?php 
  
@@ -826,40 +825,40 @@ $dbname="postgres";
 $user="opentenbase" ;
 $password="";  
  
-//连接数据库
+//Connect database
 $conn=@pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");      
 if (!$conn){
     $error_msg=@pg_errormessage($conn); 
-    echo "连接数据库出错，详情：".$error_msg."\n"; ;
+    echo "Failed to connect database，details: ".$error_msg."\n"; ;
     exit;
 }else{
-    echo "连接数据库成功"."\n";      
+    echo "Connected to database successful!"\n";      
 }                                     
 $row=ARRAY("1,opentenbase","2,pgxz");   
 $flag=pg_copy_from($conn,"public.opentenbase",$row,",");
  
 if (!$flag){
     $error_msg=@pg_errormessage($conn); 
-    echo "copy出错，详情：".$error_msg."\n";
+    echo "copy wrong，details：".$error_msg."\n";
 }else{
-    echo "copy成功"."\n";          
+    echo "copy successful!"\n";          
 }
  
-//关闭连接
+//Close connect
 pg_close($conn);
         
 ?>
 ```  
  
-调用方法
+Use method
 
 ``` 
 curl http://127.0.0.1/dbsta/cron/php_copy_from.php
-连接数据库成功
-copy成功
+Connected to database successful!
+copy successful!
 ```  
 
-### 5.6、copy to导出数据到一个数组中
+### 5.6、Export data to List
 ```
 <?php 
  
@@ -869,33 +868,33 @@ $dbname="postgres";
 $user="opentenbase" ;
 $password="";  
  
-//连接数据库
+//Connect database
 $conn=@pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");      
 if (!$conn){
     $error_msg=@pg_errormessage($conn); 
-    echo "连接数据库出错，详情：".$error_msg."\n"; ;
+    echo "Failed to connect database，details: ".$error_msg."\n"; ;
     exit;
 }else{
-    echo "连接数据库成功"."\n";      
-}                                     
+    echo "Connected to database successful!"\n";      
+}                                    
  
 $row=pg_copy_to($conn,"public.opentenbase",",");  
 if (!$row){
     $error_msg=@pg_errormessage($conn); 
-    echo "copy出错，详情：".$error_msg."\n";
+    echo "copy wrong，details：".$error_msg."\n";
 }else{
     print_r($row);
 }  
-//关闭连接 
+//Close connect 
 pg_close($conn);              
 ?>
 ``` 
  
-调用方法  
+Use method 
 
 ```
 curl http://127.0.0.1/dbsta/cron/php_copy_to.php  
-连接数据库成功
+Connected to database successful!
 Array
 (
     [0] => 1,opentenbase
@@ -905,8 +904,8 @@ Array
 )
 ```  
 
-## 6、golang程序开发  
-### 6.1、连接数据库  
+## 6、golang 
+### 6.1、Connect database
 ```
 package main
  
@@ -920,54 +919,54 @@ import (
 func main() {
     var error_msg string
  
-    //连接数据库
+    //Connect database
     conn, err := db_connect()
     if err != nil {
-        error_msg = "连接数据库失败，详情：" + err.Error()
+        error_msg = "Failed to connect database, details：" + err.Error()
         write_log("Error", error_msg)
         return
     }
-    //程序运行结束时关闭连接
+    //Close connect
     defer conn.Close()
-    write_log("Log", "连接数据库成功")
+    write_log("Log", "Connected to database successful！")
  
 }
  
 /*
-功能描述：写入日志处理
+Function：write to log
  
-参数说明：
-log_level -- 日志级别，只能是`Error`或`Log`
-error_msg -- 日志内容
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
  
-返回值说明：无
+Return：none
 */
  
 func write_log(log_level string, error_msg string) {
-    //打印错误信息
-    fmt.Println("访问时间：", time.Now().Format("2006-01-02 15:04:05"))
-    fmt.Println("日志级别：", log_level)
-    fmt.Println("详细信息：", error_msg)
+    //print error message
+    fmt.Println("Time：", time.Now().Format("2006-01-02 15:04:05"))
+    fmt.Println("Log level：", log_level)
+    fmt.Println("Details：", error_msg)
 }
  
 /*
-功能描述：连接数据库
+Function：Connect database
  
-参数说明：无
+Parameter：none
  
-返回值说明：
-conn *pgx.Conn -- 连接信息
-err error -- 错误信息
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
  
 */
  
 func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
-    config.Host = "127.0.0.1"    //数据库主机host或ip
-    config.User = "opentenbase"         //连接用户
-    config.Password = "pgsql"    //用户密码
-    config.Database = "postgres" //连接数据库名
-    config.Port = 15432          //端口号
+    config.Host = "127.0.0.1"    //localhost or ip
+    config.User = "opentenbase"         //username
+    config.Password = "pgsql"    //passoword
+    config.Database = "postgres" //database name
+    config.Port = 15432          //port
     conn, err = pgx.Connect(config)
     return conn, err
 }
@@ -975,22 +974,22 @@ func db_connect() (conn *pgx.Conn, err error) {
   
 ```  
 [root@VM_0_29_centos opentenbase]# go run conn.go 
-访问时间： 2018-04-03 20:40:28
-日志级别： Log
-详细信息： 连接数据库成功
+Time： 2018-04-03 20:40:28
+Log level： Log
+Details： Connected to database successful！
 ```  
  
-编译后运行  
+Compile And Run  
 
 ```
 [root@VM_0_29_centos opentenbase]# go build conn.go 
 [root@VM_0_29_centos opentenbase]# ./conn 
-访问时间： 2018-04-03 20:40:48
-日志级别： Log
-详细信息： 连接数据库成功
+Time： 2018-04-03 20:40:48
+Log level： Log
+Details： Connected to database successful！
 ```  
 
-### 6.2、创建数据表  
+### 6.2、Create table  
 ```
 package main
  
@@ -1005,64 +1004,64 @@ func main() {
     var error_msg string
     var sql string
  
-    //连接数据库
+    //Connect database
     conn, err := db_connect()
     if err != nil {
-        error_msg = "连接数据库失败，详情：" + err.Error()
+        error_msg = "Failed to connect database，details: " + err.Error()
         write_log("Error", error_msg)
         return
     }
-    //程序运行结束时关闭连接
+    //Close connection
     defer conn.Close()
-    write_log("Log", "连接数据库成功")
+    write_log("Log", "Connected to database successful!")
  
-    //建立数据表
+    //Create table
     sql = "create table public.opentenbase(id varchar(20),nickname varchar(100)) distribute by shard(id) to group  default_group;"
     _, err = conn.Exec(sql)
     if err != nil {
-        error_msg = "创建数据表失败,详情：" + err.Error()
+        error_msg = "Failed to create table: " + err.Error()
         write_log("Error", error_msg)
         return
     } else {
-        write_log("Log", "创建数据表成功")
+        write_log("Log", "Create table successful!")
     }
 }
  
 /*
-功能描述：写入日志处理
+Function：Write log process
  
-参数说明：
-log_level -- 日志级别，只能是`Error`或`Log`
-error_msg -- 日志内容
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
  
-返回值说明：无
+Return：none
 */
  
 func write_log(log_level string, error_msg string) {
-    //打印错误信息
-    fmt.Println("访问时间：", time.Now().Format("2006-01-02 15:04:05"))
-    fmt.Println("日志级别：", log_level)
-    fmt.Println("详细信息：", error_msg)
+    //print error message
+    fmt.Println("Time：", time.Now().Format("2006-01-02 15:04:05"))
+    fmt.Println("Log level：", log_level)
+    fmt.Println("Details：", error_msg)
 }
  
 /*
-功能描述：连接数据库
+Function：Connect database
  
-参数说明：无
+Parameter：none
  
-返回值说明：
-conn *pgx.Conn -- 连接信息
-err error --错误信息
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
  
 */
  
 func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
-    config.Host = "127.0.0.1"    //数据库主机host或ip
-    config.User = "opentenbase"         //连接用户
-    config.Password = "pgsql"    //用户密码
-    config.Database = "postgres" //连接数据库名
-    config.Port = 15432          //端口号
+    config.Host = "127.0.0.1"    //localhost or ip
+    config.User = "opentenbase"         //username
+    config.Password = "pgsql"    //passoword
+    config.Database = "postgres" //database name
+    config.Port = 15432          //port
     conn, err = pgx.Connect(config)
     return conn, err
 }
@@ -1070,15 +1069,15 @@ func db_connect() (conn *pgx.Conn, err error) {
 
 ``` 
 [root@VM_0_29_centos opentenbase]# go run createtable.go 
-访问时间： 2018-04-03 20:50:24
-日志级别： Log
-详细信息： 连接数据库成功
-访问时间： 2018-04-03 20:50:24
-日志级别： Log
-详细信息： 创建数据表成功
+Time： 2018-04-03 20:50:24
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-03 20:50:24
+Log level： Log
+Details： Create table successful!
 ```  
 
-### 6.3、插入数据
+### 6.3、Insert data
 ```
 package main
  
@@ -1095,60 +1094,60 @@ func main() {
     var sql string
     var nickname string
  
-    //连接数据库
+    //Connect database
     conn, err := db_connect()
     if err != nil {
-        error_msg = "连接数据库失败，详情：" + err.Error()
+        error_msg = "Failed to connect database，details: " + err.Error()
         write_log("Error", error_msg)
         return
     }
-    //程序运行结束时关闭连接
+    //Close connection
     defer conn.Close()
-    write_log("Log", "连接数据库成功")
+    write_log("Log", "Connected to database successful!")
  
-    //插入数据
+    //Insert data
     sql = "insert into public.opentenbase values('1','opentenbase'),('2','pgxz');"
     _, err = conn.Exec(sql)
     if err != nil {
-        error_msg = "插入数据失败,详情：" + err.Error()
+        error_msg = "Failed to insert data, details: " + err.Error()
         write_log("Error", error_msg)
         return
     } else {
-        write_log("Log", "插入数据成功")
+        write_log("Log", "Insert data successful!")
     }
  
-    //绑定变量插入数据,不需要做防注入处理
+    //Bind variables to insert data, no need to do anti-injection processing
     sql = "insert into public.opentenbase values($1,$2),($1,$3);"
     _, err = conn.Exec(sql, "3", "postgresql", "postgres")
     if err != nil {
-        error_msg = "插入数据失败,详情：" + err.Error()
+        error_msg = "Failed to insert data, details: " + err.Error()
         write_log("Error", error_msg)
         return
     } else {
-        write_log("Log", "插入数据成功")
+        write_log("Log", "Insert data successful!")
     }
  
-    //拼接sql语句插入数据,需要做防注入处理
+    //Splice sql statement to insert data, need to do anti-injection processing
     nickname = "OpenTenBase is ' good!"
     sql = "insert into public.opentenbase values('1','" + sql_data_encode(nickname) + "')"
     _, err = conn.Exec(sql)
     if err != nil {
-        error_msg = "插入数据失败,详情：" + err.Error()
+        error_msg = "Failed to insert data, details: " + err.Error()
         write_log("Error", error_msg)
         return
     } else {
-        write_log("Log", "插入数据成功")
+        write_log("Log", "Insert data successful!")
     }
 }
  
 /*
-功能描述：sql查询拼接字符串编码
+Function：SQL query concatenation string encoding
  
-参数说明：
-str -- 要编码的字符串
+Parameter：
+str -- The string to be encode
  
-返回值说明：
-返回编码过的字符串
+Return：
+Return encoded string
  
 */
  
@@ -1157,40 +1156,40 @@ func sql_data_encode(str string) string {
 }
  
 /*
-功能描述：写入日志处理
+Function：Write log process
  
-参数说明：
-log_level -- 日志级别，只能是是Error或Log
-error_msg -- 日志内容
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
  
-返回值说明：无
+Return：none
 */
  
 func write_log(log_level string, error_msg string) {
-    //打印错误信息
-    fmt.Println("访问时间：", time.Now().Format("2006-01-02 15:04:05"))
-    fmt.Println("日志级别：", log_level)
-    fmt.Println("详细信息：", error_msg)
+    //print error message
+    fmt.Println("Time：", time.Now().Format("2006-01-02 15:04:05"))
+    fmt.Println("Log level：", log_level)
+    fmt.Println("Details：", error_msg)
 }
  
 /*
-功能描述：连接数据库
+Function：Connect database
  
-参数说明：无
+Parameter：none
  
-返回值说明：
-conn *pgx.Conn -- 连接信息
-err error --错误信息
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
  
 */
  
 func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
-    config.Host = "127.0.0.1"    //数据库主机host或ip
-    config.User = "opentenbase"         //连接用户
-    config.Password = "pgsql"    //用户密码
-    config.Database = "postgres" //连接数据库名
-    config.Port = 15432          //端口号
+    config.Host = "127.0.0.1"    //localhost or ip
+    config.User = "opentenbase"         //username
+    config.Password = "pgsql"    //passoword
+    config.Database = "postgres" //database name
+    config.Port = 15432          //port
     conn, err = pgx.Connect(config)
     return conn, err
 }
@@ -1198,21 +1197,21 @@ func db_connect() (conn *pgx.Conn, err error) {
 
 ``` 
 [root@VM_0_29_centos opentenbase]# go run insert.go 
-访问时间： 2018-04-03 21:05:51
-日志级别： Log
-详细信息： 连接数据库成功
-访问时间： 2018-04-03 21:05:51
-日志级别： Log
-详细信息： 插入数据成功
-访问时间： 2018-04-03 21:05:51
-日志级别： Log
-详细信息： 插入数据成功
-访问时间： 2018-04-03 21:05:51
-日志级别： Log
-详细信息： 插入数据成功
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Insert data successful!
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Insert data successful!
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Insert data successful!
 ```  
 
-### 6.4、查询数据
+### 6.4、Query data
 ```
 package main
  
@@ -1228,25 +1227,25 @@ func main() {
     var error_msg string
     var sql string
  
-    //连接数据库
+    //Connect database
     conn, err := db_connect()
     if err != nil {
-        error_msg = "连接数据库失败，详情：" + err.Error()
+        error_msg = "Failed to connect database，details: " + err.Error()
         write_log("Error", error_msg)
         return
     }
-    //程序运行结束时关闭连接
+    //Close connection
     defer conn.Close()
-    write_log("Log", "连接数据库成功")
+    write_log("Log", "Connected to database successful!")
  
     sql = "SELECT id,nickname FROM public.opentenbase LIMIT 2"
     rows, err := conn.Query(sql)
     if err != nil {
-        error_msg = "查询数据失败,详情：" + err.Error()
+        error_msg = "Failed to query data, details: " + err.Error()
         write_log("Error", error_msg)
         return
     } else {
-        write_log("Log", "查询数据成功")
+        write_log("Log", "Query data successful!")
     }
  
     var nickname string
@@ -1255,7 +1254,7 @@ func main() {
     for rows.Next() {
         err = rows.Scan(&id, &nickname)
         if err != nil {
-            error_msg = "执行查询失败，详情：" + err.Error()
+            error_msg = "Failed to query data, details: " + err.Error()
             write_log("Error", error_msg)
             return
         }
@@ -1269,18 +1268,18 @@ func main() {
     sql = "SELECT id,nickname FROM public.opentenbase WHERE nickname ='" + sql_data_encode(nickname) + "' "
     rows, err = conn.Query(sql)
     if err != nil {
-        error_msg = "查询数据失败,详情：" + err.Error()
+        error_msg = "Failed to query data, details: " + err.Error()
         write_log("Error", error_msg)
         return
     } else {
-        write_log("Log", "查询数据成功")
+        write_log("Log", "Query data successful!")
     }
     defer rows.Close()
  
     for rows.Next() {
         err = rows.Scan(&id, &nickname)
         if err != nil {
-            error_msg = "执行查询失败，详情：" + err.Error()
+            error_msg = "Failed to query data, details: " + err.Error()
             write_log("Error", error_msg)
             return
         }
@@ -1290,13 +1289,13 @@ func main() {
 }
  
 /*
-功能描述：sql查询拼接字符串编码
+Function：SQL query concatenation string encoding
  
-参数说明：
-str -- 要编码的字符串
+Parameter：
+str -- The string to be encode
  
-返回值说明：
-返回编码过的字符串
+Return：
+Return encoded string
  
 */
  
@@ -1305,67 +1304,67 @@ func sql_data_encode(str string) string {
 }
  
 /*
-功能描述：写入日志处理
+Function：Write log process
  
-参数说明：
-log_level -- 日志级别，只能是是Error或Log
-error_msg -- 日志内容
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
  
-返回值说明：无
+Return：none
 */
  
 func write_log(log_level string, error_msg string) {
-    //打印错误信息
-    fmt.Println("访问时间：", time.Now().Format("2006-01-02 15:04:05"))
-    fmt.Println("日志级别：", log_level)
-    fmt.Println("详细信息：", error_msg)
+    //print error message
+    fmt.Println("Time：", time.Now().Format("2006-01-02 15:04:05"))
+    fmt.Println("Log level：", log_level)
+    fmt.Println("Details：", error_msg)
 }
  
 /*
-功能描述：连接数据库
+Function：Connect database
  
-参数说明：无
+Parameter：none
  
-返回值说明：
-conn *pgx.Conn -- 连接信息
-err error --错误信息
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
  
 */
  
 func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
-    config.Host = "127.0.0.1"    //数据库主机host或ip
-    config.User = "opentenbase"         //连接用户
-    config.Password = "pgsql"    //用户密码
-    config.Database = "postgres" //连接数据库名
-    config.Port = 15432          //端口号
+    config.Host = "127.0.0.1"    //localhost or ip
+    config.User = "opentenbase"         //username
+    config.Password = "pgsql"    //passoword
+    config.Database = "postgres" //database name
+    config.Port = 15432          //port
     conn, err = pgx.Connect(config)
     return conn, err
 }
 ```  
 ``` 
 [root@VM_0_29_centos opentenbase]# go run select.go
-访问时间： 2018-04-09 10:35:50
-日志级别： Log
-详细信息： 连接数据库成功
-访问时间： 2018-04-09 10:35:50
-日志级别： Log
-详细信息： 查询数据成功
-访问时间： 2018-04-09 10:35:50
-日志级别： Log
-详细信息： id：2 nickname：opentenbase
-访问时间： 2018-04-09 10:35:50
-日志级别： Log
-详细信息： id：3 nickname：postgresql
-访问时间： 2018-04-09 10:35:50
-日志级别： Log
-详细信息： 查询数据成功
-访问时间： 2018-04-09 10:35:50
-日志级别： Log
-详细信息： id：1 nickname：opentenbase
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： Query data successful!
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： id：2 nickname：opentenbase
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： id：3 nickname：postgresql
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： Query data successful!
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： id：1 nickname：opentenbase
 ```  
 
-### 6.5、流数据copy from入表 
+### 6.5、Copy Stream data into table
 ```
 package main
  
@@ -1380,18 +1379,18 @@ import (
 func main() {
     var error_msg string
  
-    //连接数据库
+    //Connect database
     conn, err := db_connect()
     if err != nil {
-        error_msg = "连接数据库失败，详情：" + err.Error()
+        error_msg = "Failed to connect database，details: " + err.Error()
         write_log("Error", error_msg)
         return
     }
-    //程序运行结束时关闭连接
+    //Close connection
     defer conn.Close()
-    write_log("Log", "连接数据库成功")
+    write_log("Log", "Connected to database successful!")
  
-    //构造5000行数据
+    //create 5000 data
     inputRows := [][]interface{}{}
     var id string
     var nickname string
@@ -1402,71 +1401,71 @@ func main() {
     }
     copyCount, err := conn.CopyFrom(pgx.Identifier{"opentenbase"}, []string{"id", "nickname"}, pgx.CopyFromRows(inputRows))
     if err != nil {
-        error_msg = "执行copyFrom失败,详情：" + err.Error()
+        error_msg = "Failed to use copyfrom, details: " + err.Error()
         write_log("Error", error_msg)
         return
     }
     if copyCount != len(inputRows) {
-        error_msg = fmt.Sprintf("执行copyFrom失败，copy行数：%d 返回行数为：%d", len(inputRows), copyCount)
+        error_msg = fmt.Sprintf("Failed to use copyfrom，copy lines：%d Return lines：%d", len(inputRows), copyCount)
         write_log("Error", error_msg)
         return
     } else {
-        error_msg = "Copy 记录成功"
+        error_msg = "Copy successful!"
         write_log("Log", error_msg)
     }
  
 }
  
 /*
-功能描述：写入日志处理
+Function：Write log process
  
-参数说明：
-log_level -- 日志级别，只能是是Error或Log
-error_msg -- 日志内容
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
  
-返回值说明：无
+Return：none
 */
  
 func write_log(log_level string, error_msg string) {
-    //打印错误信息
-    fmt.Println("访问时间：", time.Now().Format("2006-01-02 15:04:05"))
-    fmt.Println("日志级别：", log_level)
-    fmt.Println("详细信息：", error_msg)
+    //print error message
+    fmt.Println("Time：", time.Now().Format("2006-01-02 15:04:05"))
+    fmt.Println("Log level：", log_level)
+    fmt.Println("Details：", error_msg)
 }
  
 /*
-功能描述：连接数据库
+Function：Connect database
  
-参数说明：无
+Parameter：none
  
-返回值说明：
-conn *pgx.Conn -- 连接信息
-err error --错误信息
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
  
 */
  
 func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
-    config.Host = "127.0.0.1"    //数据库主机host或ip
-    config.User = "opentenbase"         //连接用户
-    config.Password = "pgsql"    //用户密码
-    config.Database = "postgres" //连接数据库名
-    config.Port = 15432          //端口号
+    config.Host = "127.0.0.1"    //localhost or ip
+    config.User = "opentenbase"         //username
+    config.Password = "pgsql"    //passoword
+    config.Database = "postgres" //database name
+    config.Port = 15432          //port
     conn, err = pgx.Connect(config)
     return conn, err
 }
 ``` 
 ``` 
 [root@VM_0_29_centos opentenbase]# go run copy_from.go 
-访问时间： 2018-04-09 10:36:40
-日志级别： Log
-详细信息： 连接数据库成功
-访问时间： 2018-04-09 10:36:40
-日志级别： Log
-详细信息： Copy 记录成功
+Time： 2018-04-09 10:36:40
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-09 10:36:40
+Log level： Log
+Details： Copy successful!
 ```
 
-### 6.6、golang相关资源包
-需要git的资源包:  
+### 6.6、Packages for golang
+Needs to clone from git:  
 https://github.com/jackc/pgx  
 https://github.com/pkg/errors  
