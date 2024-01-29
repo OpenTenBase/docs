@@ -858,7 +858,7 @@ Connected to database successful!
 copy successful!
 ```  
 
-### 5.6、Export data to List
+### 5.6、Export data to Array
 ```
 <?php 
  
@@ -964,7 +964,7 @@ func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
     config.Host = "127.0.0.1"    //localhost or ip
     config.User = "opentenbase"         //username
-    config.Password = "pgsql"    //passoword
+    config.Password = "pgsql"    //password
     config.Database = "postgres" //database name
     config.Port = 15432          //port
     conn, err = pgx.Connect(config)
@@ -1028,7 +1028,7 @@ func main() {
 }
  
 /*
-Function：Write log process
+Function： Write log process
  
 Parameter：
 log_level -- level of log，only `Error` or `Log`
@@ -1059,7 +1059,7 @@ func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
     config.Host = "127.0.0.1"    //localhost or ip
     config.User = "opentenbase"         //username
-    config.Password = "pgsql"    //passoword
+    config.Password = "pgsql"    //password
     config.Database = "postgres" //database name
     config.Port = 15432          //port
     conn, err = pgx.Connect(config)
@@ -1187,7 +1187,7 @@ func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
     config.Host = "127.0.0.1"    //localhost or ip
     config.User = "opentenbase"         //username
-    config.Password = "pgsql"    //passoword
+    config.Password = "pgsql"    //password
     config.Database = "postgres" //database name
     config.Port = 15432          //port
     conn, err = pgx.Connect(config)
@@ -1335,7 +1335,7 @@ func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
     config.Host = "127.0.0.1"    //localhost or ip
     config.User = "opentenbase"         //username
-    config.Password = "pgsql"    //passoword
+    config.Password = "pgsql"    //password
     config.Database = "postgres" //database name
     config.Port = 15432          //port
     conn, err = pgx.Connect(config)
@@ -1448,7 +1448,7 @@ func db_connect() (conn *pgx.Conn, err error) {
     var config pgx.ConnConfig
     config.Host = "127.0.0.1"    //localhost or ip
     config.User = "opentenbase"         //username
-    config.Password = "pgsql"    //passoword
+    config.Password = "pgsql"    //password
     config.Database = "postgres" //database name
     config.Port = 15432          //port
     conn, err = pgx.Connect(config)
