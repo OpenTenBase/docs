@@ -21,7 +21,7 @@ Explanation:
 - 	`login` specifies that the user can log in.
 -  	password  'user1@123' specifies the user's password. 
 
-### 创建管理员用户 
+###  Create an administrator user 
 
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
@@ -121,12 +121,12 @@ Explanation:
 psql (PostgreSQL 10.0 opentenbase V2)
 Type "help" for help.
 
---修改密码方法一
+--Password modification method one
 postgres=# role user1 with password 'user1@123' ;
 ALTER ROLE
 
 
---修改密码方法二
+--Password modification method two
 postgres=# \password user1
 Enter new password: 
 Enter it again: 
