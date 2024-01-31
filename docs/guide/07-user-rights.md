@@ -111,6 +111,7 @@ ALTER ROLE
 postgres=# alter role user1 with VALID UNTIL 'infinity'; 
 ALTER ROLE
 ```
+
 说明：
 
 -	VALID UNTIL '2023-09-30 23:59:59'表示用户密码到期时间截，VALID UNTIL 'infinity'，让一个口令永远有效
