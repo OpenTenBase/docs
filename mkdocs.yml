@@ -78,6 +78,7 @@ theme:
 nav:
   - 首页: index.md
   - 用户指南:
+    - 简易部署: guide/00-docker.md
     - 快速入门: guide/01-quickstart.md
     - 应用接入: guide/02-access.md
     - 基本使用: guide/03-basic-use.md
@@ -117,6 +118,7 @@ plugins:
           nav_translations:
               首页: Home
               用户指南: Guide
+              简易部署: Easy Deploy
               快速入门: Quick Start
               应用接入: Application Access
               基本使用: Basic Usage
@@ -135,3 +137,4 @@ plugins:
               如何贡献: How to contribute
               文档库格式手册: Documentation format guide
               下载: Download
+
