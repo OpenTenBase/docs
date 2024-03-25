@@ -2,7 +2,7 @@
 
 ## Contribute to the documentation
 
-1. Fork [the documentation repository](https://github.com/bartdong/docs/fork)
+1. Fork [the documentation repository](https://github.com/OpenTenBase/docs)
 2. Clone the forked documentation repository to your local machine
 
     ```
@@ -13,7 +13,7 @@
 
 3. Configure the environment
     - Install Python 3.x
-    - Install [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) and multi langual plugin
+    - Install [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) and multi language plugin
 
     ```
     pip install mkdocs-material mkdocs-static-i18n
@@ -30,7 +30,7 @@
     - Please follow the [format guide](docs-format-guide.en.md) of this documentation site.
 
 5. Verify if the content and format are correct through the preview server, and then commit your changes.
-6. Submit a Pull Request to [the documentation repository](https://github.com/OpenTenBase/opencloudos.github.io), and it will be merged after being reviewed.
+6. Submit a Pull Request to [the documentation repository](https://github.com/OpenTenBase/docs), and it will be merged after being reviewed.
 
 
 ## Contribute to the Code
