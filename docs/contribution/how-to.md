@@ -2,7 +2,7 @@
 
 ## 贡献文档
 
-1. Fork [文档仓库](https://github.com/bartdong/docs/fork)
+1. Fork [文档仓库](https://github.com/OpenTenBase/docs)
 2. 将您 Fork 后的文档仓库 clone 至本地
 
     ```
