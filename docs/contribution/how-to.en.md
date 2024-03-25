@@ -2,7 +2,7 @@
 
 ## Contribute to the documentation
 
-1. Fork [the documentation repository](https://github.com/bartdong/docs/fork)
+1. Fork [the documentation repository](https://github.com/OpenTenBase/docs)
 2. Clone the forked documentation repository to your local machine
 
     ```
