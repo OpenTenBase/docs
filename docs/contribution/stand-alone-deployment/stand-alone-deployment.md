@@ -5,7 +5,10 @@
 
 ## 环境准备
 
-- OS: CentOS-7-x86_64
+- 虚拟机: VirtualBox 7.0
+- 分配内存: 4 G
+- 分配磁盘: 50 G
+- 操作系统: CentOS-7-x86_64
 
 安装软件包
 ``` bash
@@ -18,7 +21,41 @@ yum -y install git gcc make readline-devel zlib-devel openssl-devel uuid-devel b
 # 设置 SELINUX=disabled
 ```
 
-设置 opentenbase 用户本机互信
+关闭防火墙
+``` bash
+[root@localhost ~]# systemctl disable firewalld
+[root@localhost ~]# systemctl stop firewalld
+[root@localhost ~]# systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:firewalld(1)
+
+```
+
+
+
+
+## 集群规划
+
+![集群规划](assets/topology.png)
+
+
+## 新建 OpenTenBase 账号
+
+``` bash
+[root@localhost ~]# useradd opentenbase
+[root@localhost ~]# id opentenbase
+uid=1000(opentenbase) gid=1000(opentenbase) groups=1000(opentenbase)
+[root@localhost ~]# passwd opentenbase
+Changing password for user opentenbase.
+New password:
+BAD PASSWORD: The password is a palindrome
+Retype new password:
+passwd: all authentication tokens updated successfully.
+```
+
+## 设置 opentenbase 用户本机互信
 ``` bash
 [opentenbase@localhost opentenbase]$ ssh-keygen -t rsa
 Generating public/private rsa key pair.
@@ -57,38 +94,8 @@ and check to make sure that only the key(s) you wanted were added.
 
 ```
 
-关闭防火墙
-``` bash
-[root@localhost ~]# systemctl disable firewalld
-[root@localhost ~]# systemctl stop firewalld
-[root@localhost ~]# systemctl status firewalld
-● firewalld.service - firewalld - dynamic firewall daemon
-   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
-   Active: inactive (dead)
-     Docs: man:firewalld(1)
-
-```
-
-## 集群规划
-
-![集群规划](assets/topology.png)
-
-
-## 新建 OpenTenBase 账号
-
-``` bash
-[root@localhost ~]# useradd opentenbase
-[root@localhost ~]# id opentenbase
-uid=1000(opentenbase) gid=1000(opentenbase) groups=1000(opentenbase)
-[root@localhost ~]# passwd opentenbase
-Changing password for user opentenbase.
-New password:
-BAD PASSWORD: The password is a palindrome
-Retype new password:
-passwd: all authentication tokens updated successfully.
-```
-
 ## 下载源码
+
 新建项目路径，并赋权给 opentenbase 用户
 ``` bash
 [root@localhost ~]# mkdir -p /data/opentenbase
@@ -97,6 +104,7 @@ passwd: all authentication tokens updated successfully.
 total 0
 drwxr-xr-x. 2 opentenbase opentenbase 6 Apr  8 10:43 opentenbase
 ```
+
 下载源码到 /data/opentenbase 目录
 ``` bash
 [root@localhost opentenbase]# su - opentenbase
