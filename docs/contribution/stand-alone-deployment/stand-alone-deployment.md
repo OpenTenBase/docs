@@ -6,8 +6,8 @@
 ## 环境准备
 
 - 虚拟机: VirtualBox 7.0
-- 分配内存: 4 G
-- 分配磁盘: 50 G
+- 分配内存: 最少 4 G 
+- 分配磁盘: 最少 50 G
 - 操作系统: CentOS-7-x86_64
 
 安装软件包
@@ -32,13 +32,6 @@ yum -y install git gcc make readline-devel zlib-devel openssl-devel uuid-devel b
      Docs: man:firewalld(1)
 
 ```
-
-
-
-
-## 集群规划
-
-![集群规划](assets/topology.png)
 
 
 ## 新建 OpenTenBase 账号
@@ -168,6 +161,10 @@ make install
 ```
 
 ## 集群部署
+
+### 集群规划
+
+![集群规划](assets/topology.png)
 
 ### 编辑集群配置文件
 
