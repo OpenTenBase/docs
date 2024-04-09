@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>None./</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="None"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/"/>
+    </url>
+    <url>
+        <loc>Nonefaq/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonefaq/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/faq/"/>
+    </url>
+    <url>
+        <loc>Nonecontribution/docs-format-guide/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonecontribution/docs-format-guide/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/contribution/docs-format-guide/"/>
+    </url>
+    <url>
+        <loc>Nonecontribution/how-to/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonecontribution/how-to/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/contribution/how-to/"/>
+    </url>
+    <url>
+        <loc>Noneguide/01-quickstart/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/01-quickstart/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/01-quickstart/"/>
+    </url>
+    <url>
+        <loc>Noneguide/02-access/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/02-access/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/02-access/"/>
+    </url>
+    <url>
+        <loc>Noneguide/03-basic-use/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/03-basic-use/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/03-basic-use/"/>
+    </url>
+    <url>
+        <loc>Noneguide/04-advanced-use/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/04-advanced-use/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/04-advanced-use/"/>
+    </url>
+    <url>
+        <loc>Noneguide/05-component/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/05-component/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/05-component/"/>
+    </url>
+    <url>
+        <loc>Noneguide/06-switching/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/06-switching/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/06-switching/"/>
+    </url>
+    <url>
+        <loc>Noneguide/07-user-rights/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/07-user-rights/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/07-user-rights/"/>
+    </url>
+    <url>
+        <loc>Noneguide/08-data-dump-restore/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/08-data-dump-restore/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/08-data-dump-restore/"/>
+    </url>
+    <url>
+        <loc>Noneguide/09-problem-performance/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/09-problem-performance/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/09-problem-performance/"/>
+    </url>
+    <url>
+        <loc>Noneguide/10-pg_clean/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/10-pg_clean/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/10-pg_clean/"/>
+    </url>
+    <url>
+        <loc>Noneguide/11-pg_unlock/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/11-pg_unlock/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/11-pg_unlock/"/>
+    </url>
+    <url>
+        <loc>Noneguide/12-opentenbase_subscription/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/12-opentenbase_subscription/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/12-opentenbase_subscription/"/>
+    </url>
+    <url>
+        <loc>Nonerelease/v2-2-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-2-0/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-2-0/"/>
+    </url>
+    <url>
+        <loc>Nonerelease/v2-3-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-3-0/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-3-0/"/>
+    </url>
+    <url>
+        <loc>Nonerelease/v2-4-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-4-0/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-4-0/"/>
+    </url>
+    <url>
+        <loc>Nonerelease/v2-5-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-5-0/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-5-0/"/>
+    </url>
+    <url>
+        <loc>Noneen/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="None"/>
+    </url>
+    <url>
+        <loc>Noneen/faq/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/faq/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonefaq/"/>
+    </url>
+    <url>
+        <loc>Noneen/contribution/docs-format-guide/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/contribution/docs-format-guide/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonecontribution/docs-format-guide/"/>
+    </url>
+    <url>
+        <loc>Noneen/contribution/how-to/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/contribution/how-to/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonecontribution/how-to/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/01-quickstart/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/01-quickstart/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/01-quickstart/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/02-access/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/02-access/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/02-access/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/03-basic-use/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/03-basic-use/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/03-basic-use/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/04-advanced-use/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/04-advanced-use/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/04-advanced-use/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/05-component/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/05-component/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/05-component/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/06-switching/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/06-switching/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/06-switching/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/07-user-rights/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/07-user-rights/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/07-user-rights/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/08-data-dump-restore/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/08-data-dump-restore/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/08-data-dump-restore/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/09-problem-performance/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/09-problem-performance/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/09-problem-performance/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/10-pg_clean/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/10-pg_clean/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/10-pg_clean/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/11-pg_unlock/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/11-pg_unlock/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/11-pg_unlock/"/>
+    </url>
+    <url>
+        <loc>Noneen/guide/12-opentenbase_subscription/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/12-opentenbase_subscription/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Noneguide/12-opentenbase_subscription/"/>
+    </url>
+    <url>
+        <loc>Noneen/release/v2-2-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-2-0/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-2-0/"/>
+    </url>
+    <url>
+        <loc>Noneen/release/v2-3-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-3-0/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-3-0/"/>
+    </url>
+    <url>
+        <loc>Noneen/release/v2-4-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-4-0/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-4-0/"/>
+    </url>
+    <url>
+        <loc>Noneen/release/v2-5-0/</loc>
+        <lastmod>2024-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneen/release/v2-5-0/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="Nonerelease/v2-5-0/"/>
+    </url>
+</urlset>
