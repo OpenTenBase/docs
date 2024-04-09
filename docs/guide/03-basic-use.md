@@ -4,7 +4,7 @@
 >
 >在[应用接入](02-access.md)中我们介绍了应用程序连接 OpenTenBase 数据库进行建库、建表、数据导入、查询等操作。
 >
->本篇将介绍OpenTenBase中特有的shard表、冷热分区表、复制表的创建，和基本的DML操作。
+>本篇将介绍OpenTenBase中特有的shard表、复制表的创建，和基本的DML操作。
 
 ## 1、创建数据表
 ### 1.1、创建shard普通表
@@ -70,7 +70,7 @@ postgres=#
 - 增加分区子表的方法ALTER TABLE public.t1_pt ADD PARTITIONS 2;  
 
 ### 1.3、创建复制表
-![OpenTenBase_shard冷热分区表](images/1.4repilication.jpg) 
+![OpenTenBase_shard复制表](images/1.4repilication.jpg) 
 
 ```
 

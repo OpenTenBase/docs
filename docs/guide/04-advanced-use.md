@@ -4,7 +4,7 @@
 >
 >在[应用接入](02-access.md)中我们介绍了应用程序连接 OpenTenBase 数据库进行建库、建表、数据导入、查询等操作。
 >
->在[基本使用](03-basic-use.md)中我们介绍 OpenTenBase 中特有的shard表、冷热分区表、复制表的创建，和基本的DML操作。
+>在[基本使用](03-basic-use.md)中我们介绍 OpenTenBase 中特有的shard表、复制表的创建，和基本的DML操作。
 >
 >本篇将继续介绍OpenTenBase的高级使用操作内容，其中包含了各种窗口函数、Json/Jsonb、游标、事务、锁等的使用。
 

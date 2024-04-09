@@ -2,7 +2,7 @@
 
 >In [Quick Start](01-quickstart.en.md) article, we introduced opentenbase architecture, source code compilation and installation, cluster running status, startup and stop, etc.
 >
->This article will introduce the creation of shard table, hot and cold partition table, replication table and basic DML operation in opentenbase.
+>This article will introduce the creation of shard table, replication table and basic DML operation in opentenbase.
 
 ## 1、Create table
 ### 1.1、Create shard table
@@ -67,80 +67,8 @@ Explain：
 - partions(xx) is used to establish the number of partition sub tables during initialization.
 - Method of adding partition sub table: ALTER TABLE public.t1_pt ADD PARTITIONS 2;  
 
-### 1.3、Create hot and cold partition shard table
-![OpenTenBase_shard_hot_and_cold_partition_table_1](images/1.3shard_cold_hot.EN.png)
-![OpenTenBase_shard_hot_and_cold_partition_table_2](images/1.3shard_cold_hot_2.EN.png)
- 
-``` 
-[opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11387 -d postgres -U opentenbase
-psql (PostgreSQL 10.0 opentenbase V2)
-Type "help" for help.
 
-postgres=# create table public.t1_cold_hot
-(
-f1 int not null,
-f2 timestamp not null,
-f3 varchar(20),
-primary key(f1)
-) 
-partition by range (f2) 
-begin (timestamp without time zone '2017-01-01 0:0:0') 
-step (interval '12 month') partitions (4) 
-distribute by shard(f1,f2) 
-to group default_group cold_group;
-CREATE TABLE
-postgres=# \d+ public.t1_cold_hot
-                                          Table "public.t1_cold_hot"
- Column |            Type             | Collation | Nullable | Default | Storage  | Stats target | Description 
---------+-----------------------------+-----------+----------+---------+----------+--------------+-------------
- f1     | integer                     |           | not null |         | plain    |              | 
- f2     | timestamp without time zone |           | not null |         | plain    |              | 
- f3     | character varying(20)       |           |          |         | extended |              | 
-Indexes:
-    "t1_cold_hot_pkey" PRIMARY KEY, btree (f1)
-Distribute By SHARD(f1,f2)
-        Hotnodes:dn001 Coldnodes:dn002
-Partition By: RANGE(f2)
-         # Of Partitions: 4
-         Start With: 2017-01-01
-         Interval Of Partition: 12 MONTH
-
-postgres=#  
-
-```
-
-Explain：
-
-- distribute By SHARD(f1,f2) : The hot and cold partition table needs to specify two fields for routing, namely distribution key and partition key.
-- to group default\_group cold\_group: You need to specify two storage groups, the first is hot data storage group and the second is cold storage group。
-
-Two groups are required to create the time range cold and hot partition table, and the nodes contained in the cold\_group storing cold data need to be identified as cold nodes:
- 
-```
- 
-[opentenbase@VM_0_37_centos shell]$ psql -h 172.16.0.42 -p 11000 -d postgres -U opentenbase
-psql (PostgreSQL 10.0 opentenbase V2)
-Type "help" for help.
- 
-postgres=#  select pg_set_node_cold_access();
- pg_set_node_cold_access 
--------------------------
- success
-(1 row)
-
-```
-
-The hot and cold partition table needs to configure the hot and cold partition time parameters and partition level in postgresql.conf:
-
-``` 
-
-cold_hot_sepration_mode = 'year'
-enable_cold_seperation = true
-manual_hot_date = '2019-01-01'
-
-```
-
-### 1.4、Create repilication table
+### 1.3、Create repilication table
 ![OpenTenBase_replicaiton_table](images/1.4repilication.EN.png) 
 
 ```
