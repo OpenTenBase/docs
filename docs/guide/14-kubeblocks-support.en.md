@@ -13,6 +13,7 @@ More information about KubeBlocks can be found in the [KubeBlocks GitHub reposit
 ## Prerequisites
 
 Before you deploy the OpenTenBase KubeBlocks add-on, you need to have the following prerequisites:
+
 * A Kubernetes cluster, you can use [minikube](https://minikube.sigs.k8s.io/docs/) to create a local cluster for testing
 * The `kubectl` command-line tool installed on your local machine
 * The `helm` command-line tool installed on your local machine
