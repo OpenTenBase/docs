@@ -95,6 +95,7 @@ nav:
       - 在kubernetes上运行OpenTenbase: guide/14-kubeblocks-support.md
       - 使用docker构建一个简单集群: guide/15-docker-deploy.md
   - 版本说明:
+    - v2.6.0: release/v2-6-0.md
     - v2.5.0: release/v2-5-0.md
     - v2.4.0: release/v2-4-0.md
     - v2.3.0: release/v2-3-0.md
