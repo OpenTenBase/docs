@@ -92,8 +92,8 @@ nav:
       - V2.3.0升级特性pg_unlock使用说明: guide/11-pg_unlock.md
       - V2.3.0升级特性opentenbase_subscription使用说明: guide/12-opentenbase_subscription.md
     - TXSQL:
-      - TXSQL概述: guide/16-txsql_quickstart.md
-      - TXSQL安装指南: guide/17-txsql_deploy.md
+      - 概述: guide/16-txsql_quickstart.md
+      - 安装指南: guide/17-txsql_deploy.md
     - 周边生态:
       - Prometheus/Grafana可视化监控: guide/13-opentenbase_monitoring.md
       - 在kubernetes上运行OpenTenbase: guide/14-kubeblocks-support.md
@@ -129,6 +129,8 @@ plugins:
               首页: Home
               用户指南: Guide
               快速入门: Quick Start
+              概述: Overview
+              安装指南: Deploy
               应用接入: Application Access
               基本使用: Basic Usage
               高级使用: Advanced Usage
