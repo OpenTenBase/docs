@@ -78,7 +78,7 @@ theme:
 nav:
   - 首页: index.md
   - 用户指南:
-    - TBase:
+    - OpenTenBase:
       - 快速入门: guide/01-quickstart.md
       - 应用接入: guide/02-access.md
       - 基本使用: guide/03-basic-use.md
@@ -104,7 +104,7 @@ nav:
       - 在kubernetes上运行OpenTenbase: guide/14-kubeblocks-support.md
       - 使用docker构建一个简单集群: guide/15-docker-deploy.md
   - 版本说明:
-    - TBase:
+    - OpenTenBase:
       - v2.6.0: release/v2-6-0.md
       - v2.5.0: release/v2-5-0.md
       - v2.4.0: release/v2-4-0.md
