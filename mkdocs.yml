@@ -91,6 +91,7 @@ nav:
       - V2.3.0升级特性pg_clean使用说明: guide/10-pg_clean.md
       - V2.3.0升级特性pg_unlock使用说明: guide/11-pg_unlock.md
       - V2.3.0升级特性opentenbase_subscription使用说明: guide/12-opentenbase_subscription.md
+      - V5.0 升级特性opentenbase_ai使用说明: guide/23-opentenbase_ai.md
     - TXSQL:
       - 概述:    guide/16-txsql_quickstart.md
       - 架构说明: guide/17-txsql_architecture.md
@@ -147,6 +148,7 @@ plugins:
               V2.3.0升级特性pg_clean使用说明: V2.3.0 Feature pg_clean
               V2.3.0升级特性pg_unlock使用说明: V2.3.0 Feature pg_unlock
               V2.3.0升级特性opentenbase_subscription使用说明: V2.3.0 Feature opentenbase_subscription
+              V5.0 升级特性opentenbase_ai使用说明: V5.0 Feature opentenbase_ai
               版本说明: Releases
               常见问题: FAQ
               参与贡献: Contributing
