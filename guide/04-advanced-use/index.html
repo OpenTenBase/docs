@@ -1,0 +1,3976 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../03-basic-use/">
+      
+      
+        <link rel="next" href="../05-component/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>高级使用 - OpenTenBase Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OpenTenBase Documentation" class="md-header__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTenBase Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              高级使用
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/guide/04-advanced-use/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OpenTenBase/docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-quickstart/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  用户指南
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release/v2-6-0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  版本说明
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../faq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  常见问题
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../contribution/how-to/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  参与贡献
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  下载
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OpenTenBase Documentation" class="md-nav__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    OpenTenBase Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OpenTenBase/docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    用户指南
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            用户指南
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    快速入门
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    应用接入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-basic-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基本使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    高级使用
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    高级使用
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1、窗口函数
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1、窗口函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1、环境准备
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12row_number-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2、row_number() --返回行号，不分组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13row_number-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3、row_number() --返回行号，按amount排序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14row_number-begincitypubtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4、row_number() --返回行号，按begincity分组，pubtime排序，注意绿色记录行号不间断
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15rank-12335" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5、rank()--返回行号,对比值重复时行号重复并间断，即返回1,2,3,3,5...
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16dance_rank-12334" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6、dance_rank()--返回行号,对比值重复时行号重复但不间断，即返回1,2,3,3,4...
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17percent_rank-11-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7、percent_rank()从当前开始，计算在分组中的比例 (行号-1)*(1/(总记录数-1))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18cume_dist-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8、cume_dist() --返回行数除以记录数值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19ntile-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9、ntile(分组数量)--让所有记录尽可以的均匀分布
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#110lagvalue-any-offset-integer-default-any-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.10、lag(value any [, offset integer [, default any]] )--返回偏移量值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#111leadvalue-any-offset-integer-default-any-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.11、lead(value any [,offset integer [, default any]] )--返回偏移量值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112first_valuevalue-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.12、first_value(value any)返回第一值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113last_valuevalue-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.13、last_value(value any)返回最后值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114nth_valuevalue-any-nth-integer" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.14、nth_value(value any, nth integer)：返回窗口框架中的指定值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.15、统计各个城市的总运费及平均每单的运费
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.16、窗口函数别名使用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.17、获取每个城市运费前两名订单
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2jsonjsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2、json/jsonb使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2、json/jsonb使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21json" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1、json应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1、json应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211json" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.1、创建json类型字段表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.2、插入数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.3、通过键获得 JSON 对象域
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.4、以文本形式获取对象值
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2、jsonb应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2、jsonb应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1、创建jsonb类型字段表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2、插入数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.3、更新数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224jsonb_set" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.4、jsonb_set()函数更新数据
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3、jsonb函数应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3、jsonb函数应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231jsonb_eachjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.1、jsonb_each()将json对象转变键和值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232jsonb_each_textjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.2、jsonb_each_text()将json对象转变文本类型的键和值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233row_to_jsonjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.3、row_to_json()将一行记录变成一个json对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234json_object_keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.4、json_object_keys()返回一个对象中所有的键
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4、jsonb索引使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4、jsonb索引使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.1、创建立jsonb索引
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.2、测试查询的性能
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3、游标使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3、游标使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1、定义一个游标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2、提取下一行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3、提取前一行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4、提取最后一行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5、提取第一行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6、提取该查询的第x行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7、提取当前位置后的第x行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#38x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8、向前提取x行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#39" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9、向前提取剩下的所有数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#310x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10、向后提取x行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11、向后提取剩下的所有数据
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4、事务使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4、事务使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1、开始一个事务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2、提交事务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3、回滚事务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44repeatable-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4、事务读一致性REPEATABLE READ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5、行锁在事务中的运用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5、行锁在事务中的运用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.1、环境准备
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452update" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.2、直接update获取
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#453selectfor-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.3、select...for update获取
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#454" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.4、排它锁检查
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    组件安装及管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主备切换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-user-rights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    用户权限管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-dump-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数据导入导出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-problem-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    问题定位及性能优化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pg_clean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0升级特性pg_clean使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-pg_unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0升级特性pg_unlock使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-opentenbase_subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0升级特性opentenbase_subscription使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23-opentenbase_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V5.0 升级特性opentenbase_ai使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    TXSQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            TXSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-txsql_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-txsql_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    架构说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-txsql_deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    安装指南
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-txsql_access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    应用接入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-txsql_basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-txsql_advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    高级使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-txsql_faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    常见问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    周边生态
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            周边生态
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-opentenbase_monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prometheus/Grafana可视化监控
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-kubeblocks-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在kubernetes上运行OpenTenbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-docker-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用docker构建一个简单集群
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    版本说明
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            版本说明
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-6-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-5-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-4-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.4.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-3-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-2-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.2.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    常见问题
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            常见问题
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TXSQL常见问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    参与贡献
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            参与贡献
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何贡献
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/docs-format-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文档库格式手册
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    下载
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1、窗口函数
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1、窗口函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1、环境准备
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12row_number-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2、row_number() --返回行号，不分组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13row_number-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3、row_number() --返回行号，按amount排序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14row_number-begincitypubtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4、row_number() --返回行号，按begincity分组，pubtime排序，注意绿色记录行号不间断
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15rank-12335" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5、rank()--返回行号,对比值重复时行号重复并间断，即返回1,2,3,3,5...
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16dance_rank-12334" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6、dance_rank()--返回行号,对比值重复时行号重复但不间断，即返回1,2,3,3,4...
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17percent_rank-11-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7、percent_rank()从当前开始，计算在分组中的比例 (行号-1)*(1/(总记录数-1))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18cume_dist-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8、cume_dist() --返回行数除以记录数值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19ntile-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9、ntile(分组数量)--让所有记录尽可以的均匀分布
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#110lagvalue-any-offset-integer-default-any-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.10、lag(value any [, offset integer [, default any]] )--返回偏移量值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#111leadvalue-any-offset-integer-default-any-" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.11、lead(value any [,offset integer [, default any]] )--返回偏移量值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112first_valuevalue-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.12、first_value(value any)返回第一值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113last_valuevalue-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.13、last_value(value any)返回最后值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114nth_valuevalue-any-nth-integer" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.14、nth_value(value any, nth integer)：返回窗口框架中的指定值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.15、统计各个城市的总运费及平均每单的运费
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.16、窗口函数别名使用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.17、获取每个城市运费前两名订单
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2jsonjsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2、json/jsonb使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2、json/jsonb使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21json" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1、json应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1、json应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211json" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.1、创建json类型字段表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.2、插入数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.3、通过键获得 JSON 对象域
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.4、以文本形式获取对象值
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2、jsonb应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2、jsonb应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1、创建jsonb类型字段表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2、插入数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.3、更新数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224jsonb_set" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.4、jsonb_set()函数更新数据
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3、jsonb函数应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3、jsonb函数应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231jsonb_eachjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.1、jsonb_each()将json对象转变键和值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232jsonb_each_textjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.2、jsonb_each_text()将json对象转变文本类型的键和值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233row_to_jsonjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.3、row_to_json()将一行记录变成一个json对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234json_object_keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.4、json_object_keys()返回一个对象中所有的键
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4、jsonb索引使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4、jsonb索引使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241jsonb" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.1、创建立jsonb索引
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.2、测试查询的性能
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3、游标使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3、游标使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1、定义一个游标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2、提取下一行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3、提取前一行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4、提取最后一行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5、提取第一行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6、提取该查询的第x行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7、提取当前位置后的第x行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#38x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8、向前提取x行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#39" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.9、向前提取剩下的所有数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#310x" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.10、向后提取x行数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.11、向后提取剩下的所有数据
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4、事务使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4、事务使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1、开始一个事务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2、提交事务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3、回滚事务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44repeatable-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4、事务读一致性REPEATABLE READ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5、行锁在事务中的运用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5、行锁在事务中的运用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.1、环境准备
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452update" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.2、直接update获取
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#453selectfor-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.3、select...for update获取
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#454" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.4、排它锁检查
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/OpenTenBase/docs/edit/main/docs/guide/04-advanced-use.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/OpenTenBase/docs/raw/main/docs/guide/04-advanced-use.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="_1">高级使用</h1>
+<blockquote>
+<p>在<a href="../01-quickstart/">快速入门</a>文章中我们介绍了 OpenTenBase 的架构、源码编译安装、集群运行状态、启动停止等内容。</p>
+<p>在<a href="../02-access/">应用接入</a>中我们介绍了应用程序连接 OpenTenBase 数据库进行建库、建表、数据导入、查询等操作。</p>
+<p>在<a href="../03-basic-use/">基本使用</a>中我们介绍 OpenTenBase 中特有的shard表、复制表的创建，和基本的DML操作。</p>
+<p>本篇将继续介绍OpenTenBase的高级使用操作内容，其中包含了各种窗口函数、Json/Jsonb、游标、事务、锁等的使用。</p>
+</blockquote>
+<h2 id="1">1、窗口函数</h2>
+<h3 id="11">1.1、环境准备</h3>
+<pre><code>drop table if  exists bills ;
+create table bills 
+(
+  id serial not null,
+  goodsdesc text not null,
+  beginunit text not null,
+  begincity text not null,
+  pubtime timestamp not null,
+  amount float8 not null default 0,
+  primary key (id)
+) distribute by shard(id) to group default_group;
+
+COMMENT ON TABLE bills is '运单记录';
+COMMENT ON COLUMN bills.id IS 'id号';
+COMMENT ON COLUMN bills.goodsdesc IS '货物名称';
+COMMENT ON COLUMN bills.beginunit IS '启运省份';
+COMMENT ON COLUMN bills.begincity IS '启运城市';
+COMMENT ON COLUMN bills.pubtime IS '发布时间';
+COMMENT ON COLUMN bills.amount IS '运费';
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'衣服','海南省','三亚市','2015-10-05 09:32:01',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'建筑设备','福建省','三明市','2015-10-05 07:21:22',ROUND((random()*10000)::NUMERIC,2)); 
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'设备','福建省','三明市','2015-10-05 11:21:54',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'普货','福建省','三明市','2015-10-05 15:19:17',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'5 0铲车，后八轮翻斗车','河南省','三门峡市','2015-10-05 07:53:13',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'鲜香菇2000斤','河南省','三门峡市','2015-10-05 10:38:29',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'旋挖附件38吨','河南省','三门峡市','2015-10-05 10:48:38',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'旋挖附件35吨','河南省','三门峡市','2015-10-05 10:48:38',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'旋挖附件39吨','河南省','三门峡市','2015-10-05 11:38:38',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'设备','上海市','上海市','2015-10-05 07:59:35',ROUND((random()*10000)::NUMERIC,2));
+
+INSERT INTO bills(id,goodsdesc,beginunit,begincity,pubtime,amount) 
+VALUES(default,'普货40吨需13米半挂一辆','上海市','上海市','2015-10-05 08:13:59',ROUND((random()*10000)::NUMERIC,2));
+</code></pre>
+<h3 id="12row_number-">1.2、row_number() --返回行号，不分组</h3>
+<pre><code>postgres=# select row_number() over(),* from bills limit 2;  
+ row_number | id | goodsdesc | beginunit | begincity |       pubtime       | amount  
+------------+----+-----------+-----------+-----------+---------------------+---------
+          1 |  1 | 衣服      | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+          2 |  2 | 建筑设备  | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+(2 rows)
+
+postgres=# select row_number() over(),* from bills limit 2 offset 2; 
+ row_number | id |       goodsdesc       | beginunit | begincity |       pubtime       | amount  
+------------+----+-----------------------+-----------+-----------+---------------------+---------
+          3 |  6 | 5 0铲车，后八轮翻斗车 | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+          4 |  8 | 旋挖附件38吨          | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+(2 rows)
+</code></pre>
+<h3 id="13row_number-amount">1.3、row_number() --返回行号，按amount排序</h3>
+<pre><code>postgres=# select row_number() over(order by amount),* from bills;
+ row_number | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+------------+----+------------------------+-----------+-----------+---------------------+---------
+          1 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+          2 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+          3 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+          4 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+          5 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+          6 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+          7 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+          8 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+          9 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+         10 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+         11 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+(11 rows)
+</code></pre>
+<h3 id="14row_number-begincitypubtime">1.4、row_number() --返回行号，按begincity分组，pubtime排序，注意绿色记录行号不间断</h3>
+<p><img alt="OpenTenBase_shard普通表说明" src="../images/1.4row_number.png" /></p>
+<h3 id="15rank-12335">1.5、rank()--返回行号,对比值重复时行号重复并间断，即返回1,2,3,3,5...</h3>
+<p><img alt="OpenTenBase_shard普通表说明" src="../images/1.5rank.png" /></p>
+<h3 id="16dance_rank-12334">1.6、dance_rank()--返回行号,对比值重复时行号重复但不间断，即返回1,2,3,3,4...</h3>
+<p><img alt="OpenTenBase_shard普通表说明" src="../images/1.6dance_rank.png" /></p>
+<h3 id="17percent_rank-11-1">1.7、percent_rank()从当前开始，计算在分组中的比例 (行号-1)*(1/(总记录数-1))</h3>
+<pre><code>postgres=# select percent_rank() over(partition by begincity order by id),* from bills;  
+ percent_rank | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+--------------+----+------------------------+-----------+-----------+---------------------+---------
+            0 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+            0 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+          0.5 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+            1 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+            0 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+         0.25 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+          0.5 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+         0.75 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+            1 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+            0 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+            1 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="18cume_dist-">1.8、cume_dist() --返回行数除以记录数值</h3>
+<pre><code>postgres=# select ROUND((cume_dist() over(partition by begincity order by id))::NUMERIC,2) AS cume_dist,* from bills;   
+ cume_dist | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+-----------+----+------------------------+-----------+-----------+---------------------+---------
+      1.00 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+      0.33 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+      0.67 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+      1.00 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+      0.20 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+      0.40 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+      0.60 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+      0.80 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+      1.00 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+      0.50 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+      1.00 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="19ntile-">1.9、ntile(分组数量)--让所有记录尽可以的均匀分布</h3>
+<pre><code>postgres=# select ntile(2) over(partition by begincity order by id),* from bills;  
+ ntile | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+-------+----+------------------------+-----------+-----------+---------------------+---------
+     1 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+     1 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+     1 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+     2 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+     1 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+     1 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+     1 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+     2 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+     2 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+     1 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+     2 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+
+postgres=# select ntile(3) over(partition by begincity order by id),* from bills;  
+ ntile | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+-------+----+------------------------+-----------+-----------+---------------------+---------
+     1 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+     1 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+     2 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+     3 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+     1 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+     1 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+     2 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+     2 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+     3 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+     1 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+     2 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="110lagvalue-any-offset-integer-default-any-">1.10、lag(value any [, offset integer [, default any]] )--返回偏移量值</h3>
+<p>offset integer是偏移值，正数时取前值，负数时取后值，没有取到值时用default代替</p>
+<pre><code>postgres=# select lag(amount,1,null) over(partition by begincity order by id),* from bills;   
+   lag   | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+---------+----+------------------------+-----------+-----------+---------------------+---------
+         |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+         |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+ 2022.31 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+ 8771.11 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+         |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+  1030.9 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+ 4182.68 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+ 5365.04 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+ 9621.37 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+         |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+ 9886.15 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+
+postgres=# select lag(amount,2,0::float8) over(partition by begincity order by id),* from bills;  
+   lag   | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+---------+----+------------------------+-----------+-----------+---------------------+---------
+       0 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+       0 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+       0 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+ 2022.31 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+       0 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+       0 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+  1030.9 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+ 4182.68 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+ 5365.04 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+       0 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+       0 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+
+postgres=# select lag(amount,-2,0::float8) over(partition by begincity order by id),* from bills;
+   lag   | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+---------+----+------------------------+-----------+-----------+---------------------+---------
+       0 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+ 1316.27 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+       0 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+       0 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+ 5365.04 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+ 9621.37 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+  8290.5 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+       0 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+       0 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+       0 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+       0 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="111leadvalue-any-offset-integer-default-any-">1.11、lead(value any [,offset integer [, default any]] )--返回偏移量值</h3>
+<p>offset integer是偏移值，正数时取后值，负数时取前值，没有取到值时用default代替  </p>
+<pre><code>postgres=# select lead(amount,2,null) over(partition by begincity order by id),* from bills;
+  lead   | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+---------+----+------------------------+-----------+-----------+---------------------+---------
+         |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+ 1316.27 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+         |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+         |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+ 5365.04 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+ 9621.37 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+  8290.5 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+         |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+         | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+         |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+         | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+
+postgres=# select lead(amount,-2,null) over(partition by begincity order by id),* from bills;
+  lead   | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+---------+----+------------------------+-----------+-----------+---------------------+---------
+         |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+         |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+         |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+ 2022.31 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+         |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+         |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+  1030.9 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+ 4182.68 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+ 5365.04 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+         |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+         | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="112first_valuevalue-any">1.12、first_value(value any)返回第一值</h3>
+<pre><code>postgres=# select first_value(amount) over(partition by begincity order by  id),* from bills;
+ first_value | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+-------------+----+------------------------+-----------+-----------+---------------------+---------
+     1915.86 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+     2022.31 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+     2022.31 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+     2022.31 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+      1030.9 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+      1030.9 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+      1030.9 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+      1030.9 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+      1030.9 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+     9886.15 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+     9886.15 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="113last_valuevalue-any">1.13、last_value(value any)返回最后值</h3>
+<pre><code>postgres=# select last_value(amount) over(partition by begincity order by pubtime),* FROM bills;  
+ last_value | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+------------+----+------------------------+-----------+-----------+---------------------+---------
+    1915.86 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+    2022.31 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+    8771.11 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+    1316.27 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+     1030.9 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+    4182.68 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+    9621.37 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+    9621.37 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+     8290.5 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+     971.54 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+    9886.15 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+(11 rows)
+
+postgres=# select last_value(amount) over(partition by begincity),* FROM bills;
+ last_value | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+------------+----+------------------------+-----------+-----------+---------------------+---------
+    1915.86 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+    1316.27 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+    1316.27 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+    1316.27 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+    9621.37 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+    9621.37 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+    9621.37 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+    9621.37 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+    9621.37 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+     971.54 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+     971.54 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<p>注意不要加上order by id，默认情况下，带了order by 参数会从分组的起始值开始一直叠加，
+直到当前值（不是当前记录）不同为止，当忽略order by 参数则是整个分组。下面通过修改分组的统计范围就可以实现order by参数取最后值  </p>
+<pre><code>postgres=# select last_value(amount) over(partition by begincity order by id range between unbounded preceding and unbounded following),* FROM bills;
+ last_value | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+------------+----+------------------------+-----------+-----------+---------------------+---------
+    1915.86 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+    1316.27 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+    1316.27 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+    1316.27 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+     8290.5 |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+     8290.5 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+     8290.5 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+     8290.5 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+     8290.5 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+     971.54 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+     971.54 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="114nth_valuevalue-any-nth-integer">1.14、nth_value(value any, nth integer)：返回窗口框架中的指定值</h3>
+<pre><code>postgres=# select nth_value(amount,2) over(partition by begincity order by id),* from bills;
+ nth_value | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+-----------+----+------------------------+-----------+-----------+---------------------+---------
+           |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+           |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+   8771.11 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+   8771.11 |  4 | 普货                   | 福建省    | 三明市    | 2015-10-05 15:19:17 | 1316.27
+           |  6 | 5 0铲车，后八轮翻斗车  | 河南省    | 三门峡市  | 2015-10-05 07:53:13 |  1030.9
+   4182.68 |  7 | 鲜香菇2000斤           | 河南省    | 三门峡市  | 2015-10-05 10:38:29 | 4182.68
+   4182.68 |  8 | 旋挖附件38吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 5365.04
+   4182.68 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+   4182.68 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+           |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+    971.54 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(11 rows)
+</code></pre>
+<h3 id="115">1.15、统计各个城市的总运费及平均每单的运费</h3>
+<pre><code>postgres=# select sum(amount) over(partition by begincity),avg(amount) over(partition by begincity),begincity,amount from bills;
+   sum    |       avg        | begincity | amount  
+----------+------------------+-----------+---------
+  1915.86 |          1915.86 | 三亚市    | 1915.86
+ 12109.69 | 4036.56333333333 | 三明市    | 2022.31
+ 12109.69 | 4036.56333333333 | 三明市    | 8771.11
+ 12109.69 | 4036.56333333333 | 三明市    | 1316.27
+ 28490.49 |         5698.098 | 三门峡市  | 4182.68
+ 28490.49 |         5698.098 | 三门峡市  |  8290.5
+ 28490.49 |         5698.098 | 三门峡市  |  1030.9
+ 28490.49 |         5698.098 | 三门峡市  | 5365.04
+ 28490.49 |         5698.098 | 三门峡市  | 9621.37
+ 10857.69 |         5428.845 | 上海市    | 9886.15
+ 10857.69 |         5428.845 | 上海市    |  971.54
+(11 rows)
+</code></pre>
+<h3 id="116">1.16、窗口函数别名使用</h3>
+<pre><code>postgres=# select sum(amount) over w,avg(amount) over w,begincity,amount from bills window w as (partition by begincity);
+   sum    |       avg        | begincity | amount  
+----------+------------------+-----------+---------
+  1915.86 |          1915.86 | 三亚市    | 1915.86
+ 12109.69 | 4036.56333333333 | 三明市    | 2022.31
+ 12109.69 | 4036.56333333333 | 三明市    | 8771.11
+ 12109.69 | 4036.56333333333 | 三明市    | 1316.27
+ 28490.49 |         5698.098 | 三门峡市  | 4182.68
+ 28490.49 |         5698.098 | 三门峡市  |  8290.5
+ 28490.49 |         5698.098 | 三门峡市  |  1030.9
+ 28490.49 |         5698.098 | 三门峡市  | 5365.04
+ 28490.49 |         5698.098 | 三门峡市  | 9621.37
+ 10857.69 |         5428.845 | 上海市    | 9886.15
+ 10857.69 |         5428.845 | 上海市    |  971.54
+(11 rows)
+</code></pre>
+<h3 id="117">1.17、获取每个城市运费前两名订单</h3>
+<pre><code>postgres=# select * from (select row_number() over(partition by begincity order by amount desc),* from bills) where row_number&lt;3;     
+ row_number | id |       goodsdesc        | beginunit | begincity |       pubtime       | amount  
+------------+----+------------------------+-----------+-----------+---------------------+---------
+          1 |  1 | 衣服                   | 海南省    | 三亚市    | 2015-10-05 09:32:01 | 1915.86
+          1 |  3 | 设备                   | 福建省    | 三明市    | 2015-10-05 11:21:54 | 8771.11
+          2 |  2 | 建筑设备               | 福建省    | 三明市    | 2015-10-05 07:21:22 | 2022.31
+          1 |  9 | 旋挖附件35吨           | 河南省    | 三门峡市  | 2015-10-05 10:48:38 | 9621.37
+          2 | 10 | 旋挖附件39吨           | 河南省    | 三门峡市  | 2015-10-05 11:38:38 |  8290.5
+          1 |  5 | 普货40吨需13米半挂一辆 | 上海市    | 上海市    | 2015-10-05 08:13:59 | 9886.15
+          2 | 11 | 设备                   | 上海市    | 上海市    | 2015-10-05 07:59:35 |  971.54
+(7 rows)
+</code></pre>
+<h2 id="2jsonjsonb">2、json/jsonb使用</h2>
+<p>OpenTenBase不只是一个分布式关系型数据库系统，同时它还支持非关系数据类型JSON，JSON 数据类型是用来存储 JSON（JavaScript Object Notation） 数据的。这种数据也可以被存储为text，但是 JSON 数据类型的 优势在于能强制要求每个被存储的值符合 JSON 规则。 也有很多 JSON 相关的函数和操作符可以用于存储在这些数据类型中的数据。JSON 数据类型有json 和 jsonb。它们接受完全相同的值集合作为输入。主要的实际区别是效率。json数据类型存储输入文本的精准拷贝，处理函数必须在每次执行时必须重新解析该数据。而jsonb数据被存储在一种分解好的二进制格式中，它在输入时要稍慢一些，因为需要做附加的转换。但是 jsonb在处理时要快很多，因为不需要解析。jsonb也支持索引，这也是一个令人瞩目的优势。 </p>
+<h3 id="21json">2.1、json应用</h3>
+<h4 id="211json">2.1.1、创建json类型字段表</h4>
+<pre><code>postgres=# create table t_json(id int,f_json json);
+NOTICE:  Replica identity is needed for shard table, please add to this table through &quot;alter table&quot; command.
+CREATE TABLE
+</code></pre>
+<h4 id="212">2.1.2、插入数据</h4>
+<pre><code>postgres=# insert into t_json values(1,'{&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;}');
+INSERT 0 1
+postgres=# insert into t_json values(2,'{&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;,&quot;col3&quot;:&quot;pgxz&quot;}');
+INSERT 0 1
+postgres=# select * from t_json;
+ id |                 f_json                  
+----+-----------------------------------------
+  1 | {&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;}
+  2 | {&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;,&quot;col3&quot;:&quot;pgxz&quot;}
+(2 rows)
+</code></pre>
+<h4 id="213-json">2.1.3、通过键获得 JSON 对象域</h4>
+<pre><code>postgres=# select f_json -&gt;'col2' as col2 ,f_json -&gt; 'col3' as col3 from t_json;  
+  col2   |  col3  
+---------+--------
+ &quot;opentenbase&quot; | 
+ &quot;opentenbase&quot; | &quot;pgxz&quot;
+(2 rows)
+</code></pre>
+<h4 id="214">2.1.4、以文本形式获取对象值</h4>
+<pre><code>postgres=# select f_json -&gt;&gt;'col2' as col2 ,f_json -&gt;&gt; 'col3' as col3 from t_json;
+ col2  | col3 
+-------+------
+ opentenbase | 
+ opentenbase | pgxz
+(2 rows)
+
+postgres=# select f_json -&gt;&gt;'col2' as col2 ,f_json -&gt;&gt; 'col3' as col3 from t_json where f_json -&gt;&gt; 'col3' is not null;
+ col2  | col3 
+-------+------
+ opentenbase | pgxz
+(1 row)
+</code></pre>
+<h3 id="22jsonb">2.2、jsonb应用</h3>
+<h4 id="221jsonb">2.2.1、创建jsonb类型字段表</h4>
+<pre><code>postgres=# create table t_jsonb(id int,f_jsonb jsonb);
+NOTICE:  Replica identity is needed for shard table, please add to this table through &quot;alter table&quot; command.
+CREATE TABLE
+postgres=# 
+</code></pre>
+<h4 id="222">2.2.2、插入数据</h4>
+<pre><code>postgres=# insert into t_jsonb values(1,'{&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;}');
+INSERT 0 1
+postgres=# insert into t_jsonb values(2,'{&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;,&quot;col3&quot;:&quot;pgxz&quot;}');
+INSERT 0 1
+
+postgres=# select * from t_jsonb;
+ id |                   f_jsonb                    
+----+----------------------------------------------
+  1 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+  2 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;, &quot;col3&quot;: &quot;pgxz&quot;}
+(2 rows)
+
+</code></pre>
+<p>--jsonb插入时会移除重复的键，如下所示</p>
+<pre><code>postgres=# insert into t_jsonb values(3,'{&quot;col1&quot;:1,&quot;col2&quot;:&quot;opentenbase&quot;,&quot;col2&quot;:&quot;pgxz&quot;}');
+INSERT 0 1
+postgres=# select * from t_jsonb;
+ id |                   f_jsonb                    
+----+----------------------------------------------
+  1 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+  3 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;pgxz&quot;}
+  2 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;, &quot;col3&quot;: &quot;pgxz&quot;}
+(3 rows)
+
+</code></pre>
+<h4 id="223">2.2.3、更新数据</h4>
+<p>--增加元素</p>
+<pre><code>postgres=# update t_jsonb set f_jsonb = f_jsonb || '{&quot;col3&quot;:&quot;pgxz&quot;}'::jsonb where id=1;  
+UPDATE 1
+</code></pre>
+<p>--更新原来的元素</p>
+<pre><code>postgres=# update t_jsonb set f_jsonb = f_jsonb || '{&quot;col2&quot;:&quot;opentenbase&quot;}'::jsonb where id=3;     
+UPDATE 1
+
+postgres=# select * from t_jsonb;
+ id |                   f_jsonb                    
+----+----------------------------------------------
+  2 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;, &quot;col3&quot;: &quot;pgxz&quot;}
+  1 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;, &quot;col3&quot;: &quot;pgxz&quot;}
+  3 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+(3 rows)
+</code></pre>
+<p>--删除某个键</p>
+<pre><code>postgres=# update t_jsonb set f_jsonb = f_jsonb - 'col3';    
+UPDATE 3
+
+postgres=# select * from t_jsonb;
+ id |           f_jsonb            
+----+------------------------------
+  2 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+  1 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+  3 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+(3 rows)
+</code></pre>
+<h4 id="224jsonb_set">2.2.4、jsonb_set()函数更新数据</h4>
+<pre><code>jsonb_set(target jsonb, path text[], new_value jsonb, [create_missing boolean]) 
+</code></pre>
+<p>说明：target指要更新的数据源，path指路径，new_value指更新后的键值，create_missing值为true表示如果键不存在则添加，create_missing值为false表示如果键不存在则不添加。</p>
+<pre><code>postgres=# update t_jsonb set f_jsonb = jsonb_set( f_jsonb , '{col}' , '&quot;pgxz&quot;' , true ) where id=1;
+UPDATE 1
+postgres=# update t_jsonb set f_jsonb = jsonb_set( f_jsonb , '{col}' , '&quot;pgxz&quot;' , false ) where id=2;         
+UPDATE 1
+postgres=# update t_jsonb set f_jsonb = jsonb_set( f_jsonb , '{col2}' , '&quot;pgxz&quot;' , false ) where id=3;          
+UPDATE 1
+postgres=# select * from t_jsonb;
+ id |                   f_jsonb                   
+----+---------------------------------------------
+  1 | {&quot;col&quot;: &quot;pgxz&quot;, &quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+  2 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+  3 | {&quot;col1&quot;: 1, &quot;col2&quot;: &quot;pgxz&quot;}
+(3 rows)
+</code></pre>
+<h3 id="23jsonb">2.3、jsonb函数应用</h3>
+<h4 id="231jsonb_eachjson">2.3.1、jsonb_each()将json对象转变键和值</h4>
+<pre><code>postgres=# select  f_jsonb  from t_jsonb where id=1;
+                   f_jsonb                   
+---------------------------------------------
+ {&quot;col&quot;: &quot;pgxz&quot;, &quot;col1&quot;: 1, &quot;col2&quot;: &quot;opentenbase&quot;}
+(1 row)
+
+postgres=#  select * from  jsonb_each((select  f_jsonb  from t_jsonb where id=1)); 
+ key  |  value  
+------+---------
+ col  | &quot;pgxz&quot;
+ col1 | 1
+ col2 | &quot;opentenbase&quot;
+(3 rows)
+</code></pre>
+<h4 id="232jsonb_each_textjson">2.3.2、jsonb_each_text()将json对象转变文本类型的键和值</h4>
+<pre><code>postgres=#  select * from  jsonb_each_text((select  f_jsonb  from t_jsonb where id=1)); 
+ key  | value 
+------+-------
+ col  | pgxz
+ col1 | 1
+ col2 | opentenbase
+(3 rows)
+</code></pre>
+<h4 id="233row_to_jsonjson">2.3.3、row_to_json()将一行记录变成一个json对象</h4>
+<pre><code>postgres=# \d+ opentenbase
+                                    Table &quot;public.opentenbase&quot;
+  Column  |  Type   | Collation | Nullable | Default | Storage  | Stats target | Description 
+----------+---------+-----------+----------+---------+----------+--------------+-------------
+ id       | integer |           | not null |         | plain    |              | 
+ nickname | text    |           |          |         | extended |              | 
+Indexes:
+    &quot;opentenbase_pkey&quot; PRIMARY KEY, btree (id)
+Distribute By: SHARD(id)
+Location Nodes: ALL DATANODES
+
+postgres=# select * from opentenbase;
+ id | nickname 
+----+----------
+  1 | opentenbase
+  2 | pgxz
+(2 rows)
+
+postgres=# select row_to_json(opentenbase) from opentenbase;
+         row_to_json         
+-----------------------------
+ {&quot;id&quot;:1,&quot;nickname&quot;:&quot;opentenbase&quot;}
+ {&quot;id&quot;:2,&quot;nickname&quot;:&quot;pgxz&quot;}
+(2 rows)
+</code></pre>
+<h4 id="234json_object_keys">2.3.4、json_object_keys()返回一个对象中所有的键</h4>
+<pre><code>postgres=#  select * from json_object_keys((select  f_jsonb  from t_jsonb where id=1)::json); 
+ json_object_keys 
+------------------
+ col
+ col1
+ col2
+(3 rows)
+</code></pre>
+<h3 id="24jsonb">2.4、jsonb索引使用</h3>
+<p>OpenTenBase为文档jsonb提供了GIN索引，GIN 索引可以被用来有效地搜索在大量jsonb文档（数据）中出现 的键或者键值对。</p>
+<h4 id="241jsonb">2.4.1、创建立jsonb索引</h4>
+<pre><code>postgres=# create index t_jsonb_f_jsonb_idx on t_jsonb using gin(f_jsonb);
+CREATE INDEX
+
+postgres=# \d+ t_jsonb
+                                   Table &quot;public.t_jsonb&quot;
+ Column  |  Type   | Collation | Nullable | Default | Storage  | Stats target | Description 
+---------+---------+-----------+----------+---------+----------+--------------+-------------
+ id      | integer |           |          |         | plain    |              | 
+ f_jsonb | jsonb   |           |          |         | extended |              | 
+Indexes:
+    &quot;t_jsonb_f_jsonb_idx&quot; gin (f_jsonb)
+Distribute By: SHARD(id)
+Location Nodes: ALL DATANODES
+</code></pre>
+<h4 id="242">2.4.2、测试查询的性能</h4>
+<pre><code>postgres=# select count(1) from t_jsonb;
+  count   
+----------
+ 10000000
+(1 row)
+
+postgres=# analyze t_jsonb;
+ANALYZE
+
+</code></pre>
+<p>--没有索引开销</p>
+<pre><code>postgres=# select * from t_jsonb where f_jsonb @&gt; '{&quot;col1&quot;:9999}';
+  id  |            f_jsonb             
+------+--------------------------------
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+(5 rows)
+
+Time: 2473.488 ms (00:02.473)
+
+</code></pre>
+<p>--有索引开销</p>
+<pre><code>postgres=# select * from t_jsonb where f_jsonb @&gt; '{&quot;col1&quot;:9999}';
+  id  |            f_jsonb             
+------+--------------------------------
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+ 9999 | {&quot;col1&quot;: 9999, &quot;col2&quot;: &quot;9999&quot;}
+(5 rows)
+
+Time: 217.968 ms
+</code></pre>
+<h2 id="3">3、游标使用</h2>
+<h3 id="31">3.1、定义一个游标</h3>
+<pre><code>postgres=# begin;
+BEGIN
+postgres=#  DECLARE opentenbase_cur SCROLL CURSOR FOR SELECT * from opentenbase ORDER BY id;              
+DECLARE CURSOR
+</code></pre>
+<p>注意：游标需要放在一个事务中使用</p>
+<h3 id="32">3.2、提取下一行数据</h3>
+<pre><code>postgres=# DECLARE opentenbase_cur SCROLL CURSOR FOR SELECT * from opentenbase ORDER BY id; 
+DECLARE CURSOR
+postgres=# FETCH NEXT from opentenbase_cur ;               
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+(1 row)
+
+postgres=# FETCH NEXT from opentenbase_cur ;
+ id | nickname  
+----+-----------
+  2 | opentenbase好
+(1 row)
+</code></pre>
+<h3 id="33">3.3、提取前一行数据</h3>
+<pre><code>postgres=# FETCH PRIOR from opentenbase_cur ;      
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+(1 row)
+
+postgres=# FETCH PRIOR from opentenbase_cur ;
+ id | nickname 
+----+----------
+(0 rows)
+</code></pre>
+<h3 id="34">3.4、提取最后一行</h3>
+<pre><code>postgres=# FETCH LAST from opentenbase_cur ;         
+ id |  nickname  
+----+------------
+  5 | opentenbase swap
+(1 row)
+</code></pre>
+<h3 id="35">3.5、提取第一行</h3>
+<pre><code>postgres=# FETCH FIRST from opentenbase_cur ;       
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+(1 row)
+</code></pre>
+<h3 id="36x">3.6、提取该查询的第x行</h3>
+<pre><code>postgres=# FETCH ABSOLUTE 2 from opentenbase_cur ;                
+ id | nickname  
+----+-----------
+  2 | opentenbase好
+(1 row)
+
+postgres=# FETCH ABSOLUTE -1 from opentenbase_cur ; 
+ id |  nickname  
+----+------------
+  5 | opentenbase swap
+(1 row)
+
+postgres=# FETCH ABSOLUTE -2 from opentenbase_cur ; 
+ id |   nickname    
+----+---------------
+  4 | opentenbase default
+(1 row)
+
+</code></pre>
+<p>X为负数时则从尾部向上提</p>
+<h3 id="37x">3.7、提取当前位置后的第x行</h3>
+<pre><code>postgres=#  FETCH ABSOLUTE 1 from opentenbase_cur ; 
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+(1 row)
+
+postgres=# FETCH RELATIVE 2 from opentenbase_cur ;
+ id | nickname  
+----+-----------
+  3 | opentenbase好
+(1 row)
+
+postgres=# FETCH RELATIVE 2 from opentenbase_cur ;
+ id |  nickname  
+----+------------
+  5 | opentenbase swap
+(1 row)
+
+</code></pre>
+<p>每提取一次数据，游标的位置都是会前行</p>
+<h3 id="38x">3.8、向前提取x行数据</h3>
+<pre><code>postgres=# FETCH FORWARD 2 from opentenbase_cur ;             
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+  2 | opentenbase好
+(2 rows)
+
+postgres=# FETCH FORWARD 2 from opentenbase_cur ; 
+ id |   nickname    
+----+---------------
+  3 | opentenbase好
+  4 | opentenbase default
+(2 rows)
+</code></pre>
+<h3 id="39">3.9、向前提取剩下的所有数据</h3>
+<pre><code>postgres=# FETCH FORWARD 2 from opentenbase_cur ;    
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+  2 | opentenbase好
+(2 rows)
+
+postgres=# FETCH FORWARD all from opentenbase_cur ;                                         
+ id |   nickname    
+----+---------------
+  3 | opentenbase好
+  4 | opentenbase default
+  5 | opentenbase swap
+(3 rows)
+</code></pre>
+<h3 id="310x">3.10、向后提取x行数据</h3>
+<pre><code>postgres=# FETCH BACKWARD 2 from opentenbase_cur ;   
+ id |   nickname    
+----+---------------
+  5 | opentenbase swap
+  4 | opentenbase default
+(2 rows)
+</code></pre>
+<h3 id="311">3.11、向后提取剩下的所有数据</h3>
+<pre><code>postgres=# FETCH BACKWARD all from opentenbase_cur ; 
+ id |  nickname   
+----+-------------
+  3 | opentenbase好
+  2 | opentenbase好
+  1 | hello opentenbase
+(3 rows)
+</code></pre>
+<h2 id="4">4、事务使用</h2>
+<h3 id="41">4.1、开始一个事务</h3>
+<pre><code>postgres=# begin;
+BEGIN
+</code></pre>
+<p>或者</p>
+<pre><code>postgres=# begin TRANSACTION ; 
+BEGIN
+</code></pre>
+<p>也可以定义事务的级别</p>
+<pre><code>postgres=# begin transaction isolation level read committed ;
+BEGIN
+</code></pre>
+<h3 id="42">4.2、提交事务</h3>
+<p>进程#1访问 </p>
+<pre><code>postgres=# begin;
+BEGIN
+postgres=# delete from opentenbase where id=5;
+DELETE 1
+postgres=#
+postgres=# select * from opentenbase order by id;
+ id |   nickname    
+----+---------------
+  1 | hello opentenbase
+  2 | opentenbase好
+  3 | opentenbase好
+  4 | opentenbase default
+
+</code></pre>
+<p>OpenTenBase也是完全支持ACID特性，没提交前开启另一个连接查询，你会看到是5条记录，这是OpenTenBase隔离性和多版本视图的实现，如下所示</p>
+<p>进程#2访问</p>
+<pre><code>postgres=# select * from opentenbase order by id;
+ id |   nickname    
+----+---------------
+  1 | hello opentenbase
+  2 | opentenbase好
+  3 | opentenbase好
+  4 | opentenbase default
+  5 | opentenbase swap
+(5 rows)
+
+</code></pre>
+<p>进程#1提交数据</p>
+<pre><code>postgres=# commit;
+COMMIT
+postgres=# 
+</code></pre>
+<p>进程#2再查询数据，这时能看到已经提交的数据了，这个级别叫“读已提交”</p>
+<pre><code>postgres=# select * from opentenbase order by id;
+ id |   nickname    
+----+---------------
+  1 | hello opentenbase
+  2 | opentenbase好
+  3 | opentenbase好
+  4 | opentenbase default
+(4 rows)
+</code></pre>
+<h3 id="43">4.3、回滚事务</h3>
+<pre><code>postgres=# begin;
+BEGIN
+postgres=# delete from opentenbase where id in (3,4);
+DELETE 2
+postgres=# select * from opentenbase;
+ id |  nickname   
+----+-------------
+  1 | hello opentenbase
+  2 | opentenbase好
+(2 rows)
+
+postgres=# rollback;
+ROLLBACK
+</code></pre>
+<p>Rollback后数据又回来了</p>
+<pre><code>postgres=# select * from opentenbase;
+ id |   nickname    
+----+---------------
+  1 | hello opentenbase
+  2 | opentenbase好
+  3 | opentenbase好
+  4 | opentenbase default
+(4 rows)
+</code></pre>
+<h3 id="44repeatable-read">4.4、事务读一致性REPEATABLE READ</h3>
+<p>这种事务级别表示事务自始至终读取的数据都是一致的，如下所示</p>
+<p>#session1</p>
+<pre><code>postgres=# create table t_repeatable_read (id int,mc text);
+NOTICE:  Replica identity is needed for shard table, please add to this table through &quot;alter table&quot; command.
+CREATE TABLE
+postgres=# insert into t_repeatable_read values(1,'opentenbase');
+INSERT 0 1
+
+postgres=# begin isolation level repeatable read ;
+BEGIN
+postgres=# select * from t_repeatable_read ;
+ id |  mc   
+----+-------
+  1 | opentenbase
+(1 row)
+</code></pre>
+<p>#session2</p>
+<pre><code>postgres=# insert into t_repeatable_read values(1,'pgxz'); 
+INSERT 0 1
+postgres=# select * from t_repeatable_read;
+ id |  mc   
+----+-------
+  1 | opentenbase
+  1 | pgxz
+(2 rows)
+</code></pre>
+<p>#session1</p>
+<pre><code>postgres=# select * from t_repeatable_read ;
+ id |  mc   
+----+-------
+  1 | opentenbase
+(1 row)
+
+postgres=#
+
+</code></pre>
+<h3 id="45">4.5、行锁在事务中的运用</h3>
+<h4 id="451">4.5.1、环境准备</h4>
+<pre><code>postgres=# create table t_row_lock(id int,mc text,primary key (id));
+NOTICE:  Replica identity is needed for shard table, please add to this table through &quot;alter table&quot; command.
+CREATE TABLE
+postgres=# 
+
+postgres=# insert into t_row_lock values(1,'opentenbase'),(2,'pgxz');       
+INSERT 0 2
+postgres=# select * from t_row_lock;
+ id |  mc   
+----+-------
+  1 | opentenbase
+  2 | pgxz
+(2 rows)
+</code></pre>
+<h4 id="452update">4.5.2、直接update获取</h4>
+<p>#session1</p>
+<pre><code>postgres=# begin;
+BEGIN
+postgres=# set lock_timeout to 1;
+SET
+postgres=# update t_row_lock set mc='postgres' where mc='pgxz';
+UPDATE 1
+postgres=# 
+</code></pre>
+<p>#session2</p>
+<pre><code>postgres=# begin;
+BEGIN
+postgres=# set lock_timeout to 1;
+SET
+postgres=#  update t_row_lock set mc='postgresql' where mc='opentenbase';        
+UPDATE 1
+postgres=# 
+
+</code></pre>
+<p>上面session1与session2分别持有mc=pgxz行和mc=opentenbase的行锁</p>
+<h4 id="453selectfor-update">4.5.3、select...for update获取</h4>
+<p>#session1 </p>
+<pre><code>postgres=#  
+BEGIN
+postgres=# set lock_timeout to 1; 
+SET
+postgres=# select * from t_row_lock where mc='pgxz' for update;
+ id |  mc  
+----+------
+  2 | pgxz
+(1 row)
+</code></pre>
+<p>#session2 </p>
+<pre><code>postgres=# begin;
+BEGIN
+postgres=# set lock_timeout to 1; 
+SET
+postgres=# select * from t_row_lock where mc='opentenbase' for update;
+ id |  mc  
+----+------
+  2 | pgxz
+(1 row)
+</code></pre>
+<p>上面session1与session2分别持有mc=pgxz行和mc=opentenbase的行锁</p>
+<h4 id="454">4.5.4、排它锁检查</h4>
+<pre><code>postgres=# select pid,pg_blocking_pids(pid),wait_event_type,query from pg_stat_activity where wait_event_type = 'Lock' and pid!=pg_backend_pid()
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>

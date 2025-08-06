@@ -1,0 +1,2525 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../">
+      
+      
+        <link rel="next" href="../02-access/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Quick Start - OpenTenBase Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quick-start" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="OpenTenBase Documentation" class="md-header__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTenBase Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quick Start
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../guide/01-quickstart/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release/v2-6-0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Releases
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../faq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  FAQ
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../contribution/how-to/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Contributing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Download
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="OpenTenBase Documentation" class="md-nav__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    OpenTenBase Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-opentenbase" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's OpenTenBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opentenbase-source-code-compilation-and-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenTenBase source code compilation and installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenTenBase source code compilation and installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-basic-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-advanced-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Switching
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-user-rights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Rights Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-dump-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Dump and Restore
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-problem-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Problem tracking and Performance Optimization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pg_clean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_clean
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-pg_unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_unlock
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-opentenbase_subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature opentenbase_subscription
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23-opentenbase_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V5.0 Feature opentenbase_ai
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    TXSQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            TXSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-txsql_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-txsql_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    架构说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-txsql_deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deploy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-txsql_access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-txsql_basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-txsql_advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-txsql_faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Peripheral ecosystem
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Peripheral ecosystem
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-opentenbase_monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monitoring visualization with Prometheus/Grafana
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-kubeblocks-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run opentenbase on kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-docker-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building simple cluster with docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Releases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-6-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-5-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-4-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.4.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-3-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-2-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.2.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            FAQ
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TXSQL FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to contribute
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/docs-format-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation format guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Download
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-opentenbase" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's OpenTenBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opentenbase-source-code-compilation-and-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenTenBase source code compilation and installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenTenBase source code compilation and installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/OpenTenBase/docs/edit/main/docs/guide/01-quickstart.en.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/OpenTenBase/docs/raw/main/docs/guide/01-quickstart.en.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="quick-start">Quick Start</h1>
+<h2 id="whats-opentenbase">What's OpenTenBase</h2>
+<p>OpenTenBase is a relational database cluster platform that provides write reliability and multi node data synchronization. You can configure OpenTenBase on one or more hosts and store OpenTenBase data on multiple physical hosts. There are two ways to store data tables: distributed or replicated. When sending query SQL to OpenTenBase, OpenTenBase will automatically send query statements to data nodes and get the final results.</p>
+<p>OpenTenBase is a distributed cluster architecture (as shown in the figure below), which is a distributed share nothing architecture mode, each node is independent and processes its own data. After processing, the results may be summarized to the upper layer or transferred between nodes. Each processing unit communicates with each other through the network protocol, with better parallel processing and expansion ability, which also means that the OpenTenBase cluster can be deployed on the basic x86 server.</p>
+<p><img alt="OpenTenBase architecture" src="../../../guide/images/OpenTenBase_demo.EN.png" /></p>
+<p>Here are three modules of OpenTenBase</p>
+<ul>
+<li>
+<p><strong>Coordinator Node: (CN for short)</strong></p>
+<p>Application access portal is responsible for data distribution and query planning. Multiple nodes are in the same location, and each node provides the same database view. In terms of function, CN only stores the global metadata of the system, not the actual user data.</p>
+</li>
+<li>
+<p><strong>Datanode Node: (DN for short)</strong></p>
+<p>Each DN stores the partition of user data. In function, DN node is responsible for completing the request of executing CN distribution.</p>
+</li>
+<li>
+<p><strong>GTM Node: (Global Transaction Manager)</strong></p>
+<p>GTM is responsible for the management of cluster transaction information, as well as the global objects of the cluster, such as sequence.</p>
+</li>
+</ul>
+<p>Next, let's show how to build a OpenTenBase cluster environment from the source code</p>
+<h2 id="opentenbase-source-code-compilation-and-installation">OpenTenBase source code compilation and installation</h2>
+<h3 id="system-requirements">System Requirements:</h3>
+<p>Memory: 4G RAM minimum</p>
+<p>OS: TencentOS 2, TencentOS 3, OpenCloudOS, CentOS 7, CentOS 8, Ubuntu</p>
+<h3 id="dependence">Dependence</h3>
+<p><code>yum -y install gcc make readline-devel zlib-devel openssl-devel uuid-devel bison flex git</code></p>
+<p>or</p>
+<p><code>apt install -y gcc make libreadline-dev zlib1g-dev libssl-dev libossp-uuid-dev bison flex git</code></p>
+<ul>
+<li>
+<p><strong>create user</strong></p>
+<p>Note: all machines that need to install OpenTenBase cluster need to create</p>
+</li>
+</ul>
+<pre><code>mkdir /data
+useradd -d /data/opentenbase -s /bin/bash -m opentenbase
+passwd opentenbase # set password
+</code></pre>
+<ul>
+<li><strong>get source code</strong></li>
+</ul>
+<pre><code>git clone https://github.com/OpenTenBase/OpenTenBase
+</code></pre>
+<ul>
+<li><strong>source code compilation</strong></li>
+</ul>
+<pre><code>cd ${SOURCECODE_PATH}
+rm -rf ${INSTALL_PATH}/opentenbase_bin_v2.0
+chmod +x configure*
+./configure --prefix=${INSTALL_PATH}/opentenbase_bin_v2.0  --enable-user-switch --with-openssl  --with-ossp-uuid CFLAGS=-g
+make clean
+make -sj
+make install
+chmod +x contrib/pgxc_ctl/make_signature
+cd contrib
+make -sj
+make install
+</code></pre>
+<p>In this paper, the above two parameters are as follows</p>
+<pre><code>${SOURCECODE_PATH}=/data/opentenbase/OpenTenBase
+${INSTALL_PATH}=/data/opentenbase/install
+</code></pre>
+<ul>
+<li>
+<p><strong>cluster installation</strong></p>
+<ul>
+<li><strong>cluster planning</strong></li>
+</ul>
+<p>Next, set up a cluster of 1 GTM master, 1 GTM standby, 2 CN master (the CN master is equivalent, so there is no need to standy CN), 2 DN master, and 2 DN standby on two servers. This cluster is the minimum configuration with disaster tolerance capability.</p>
+</li>
+</ul>
+<pre><code>host1：10.215.147.158
+host2：10.240.138.159
+</code></pre>
+<p>planning is as follows：</p>
+<table>
+<thead>
+<tr>
+<th>node name</th>
+<th>IP</th>
+<th>data directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GTM master</td>
+<td>10.215.147.158</td>
+<td>/data/opentenbase/data/gtm</td>
+</tr>
+<tr>
+<td>GTM slave</td>
+<td>10.240.138.159</td>
+<td>/data/opentenbase/data/gtm</td>
+</tr>
+<tr>
+<td>CN1</td>
+<td>10.215.147.158</td>
+<td>/data/opentenbase/data/coord</td>
+</tr>
+<tr>
+<td>CN2</td>
+<td>10.240.138.159</td>
+<td>/data/opentenbase/data/coord</td>
+</tr>
+<tr>
+<td>DN1 master</td>
+<td>10.215.147.158</td>
+<td>/data/opentenbase/data/dn001</td>
+</tr>
+<tr>
+<td>DN1 slave</td>
+<td>10.240.138.159</td>
+<td>/data/opentenbase/data/dn001</td>
+</tr>
+<tr>
+<td>DN2 master</td>
+<td>10.240.138.159</td>
+<td>/data/opentenbase/data/dn002</td>
+</tr>
+<tr>
+<td>DN2 slave</td>
+<td>10.215.147.158</td>
+<td>/data/opentenbase/data/dn002</td>
+</tr>
+</tbody>
+</table>
+<p>Sketch Map:  </p>
+<p><img alt="OpenTenBase Deploy Sketch Map" src="../../../guide/images/node_ip.png" /></p>
+<ul>
+<li><strong>Disable SELinux and firewall (optinal)</strong></li>
+</ul>
+<pre><code class="language-shell">vi /etc/selinux/config # disable SELinux, change SELINUX=enforcing to SELINUX=disabled
+# disable firewall, for Ubuntu, change firewalld to ufw
+systemctl disable firewalld
+systemctl stop firewalld
+</code></pre>
+<ul>
+<li><strong>SSH mutual trust configuration between machines</strong></li>
+</ul>
+<pre><code class="language-shell">su opentenbase
+ssh-keygen -t rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub destination-user@destination-server
+</code></pre>
+<p>Reference resources: <a href="https://blog.csdn.net/chenghuikai/article/details/52807074">Linux ssh mutual trust</a></p>
+<ul>
+<li><strong>Environment variable configuration</strong></li>
+</ul>
+<p>All machines in the cluster need to be configured</p>
+<pre><code class="language-shell">[opentenbase@localhost ~]$ vim ~/.bashrc
+export OPENTENBASE_HOME=/data/opentenbase/install/opentenbase_bin_v2.0
+export PATH=$OPENTENBASE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$OPENTENBASE_HOME/lib:${LD_LIBRARY_PATH}
+export LC_ALL=C
+</code></pre>
+<p>Above, the required basic environment has been configured, and you can enter the cluster initialization stage. For the convenience of users, OpenTenBase provides special configuration and operation tools: <strong>pgxc_ctl</strong> to help users quickly build and manage clusters. Here, you need to write the IP, port and data directory of the nodes mentioned above into the configuration file pgxc_ctl.conf</p>
+<ul>
+<li><strong>Initialization configuration file pgxc_ctl.conf</strong></li>
+</ul>
+<pre><code class="language-shell">[opentenbase@localhost ~]$ mkdir /data/opentenbase/pgxc_ctl
+[opentenbase@localhost ~]$ cd /data/opentenbase/pgxc_ctl
+[opentenbase@localhost ~/pgxc_ctl]$ vim pgxc_ctl.conf
+</code></pre>
+<p>The following shows the pgxc_ctl.conf file content written using the IP, port, database directory, binary directory and other planning values described above. In practice, we only need to configure it according to our own actual situation.</p>
+<p>We can also download and rename it to <code>pgxc_ctl.conf</code> and configure it according to our own actual situation.</p>
+<p><a href="../../../guide/pgxc_ctl_double.conf">Download Double Node Conf</a></p>
+<p><a href="../../../guide/pgxc_ctl_single.conf">Download Single Node Conf</a></p>
+<pre><code class="language-shell">#!/bin/bash
+# Double Node Config
+
+IP_1=10.215.147.158
+IP_2=10.240.138.159
+
+pgxcInstallDir=/data/opentenbase/install/opentenbase_bin_v2.0
+pgxcOwner=opentenbase
+defaultDatabase=postgres
+pgxcUser=$pgxcOwner
+tmpDir=/tmp
+localTmpDir=$tmpDir
+configBackup=n
+configBackupHost=pgxc-linker
+configBackupDir=$HOME/pgxc
+configBackupFile=pgxc_ctl.bak
+
+
+#---- GTM ----------
+gtmName=gtm
+gtmMasterServer=$IP_1
+gtmMasterPort=50001
+gtmMasterDir=/data/opentenbase/data/gtm
+gtmExtraConfig=none
+gtmMasterSpecificExtraConfig=none
+gtmSlave=y
+gtmSlaveServer=$IP_2
+gtmSlavePort=50001
+gtmSlaveDir=/data/opentenbase/data/gtm
+gtmSlaveSpecificExtraConfig=none
+
+#---- Coordinators -------
+coordMasterDir=/data/opentenbase/data/coord
+coordArchLogDir=/data/opentenbase/data/coord_archlog
+
+coordNames=(cn001 cn002 )
+coordPorts=(30004 30004 )
+poolerPorts=(31110 31110 )
+coordPgHbaEntries=(0.0.0.0/0)
+coordMasterServers=($IP_1 $IP_2)
+coordMasterDirs=($coordMasterDir $coordMasterDir)
+coordMaxWALsernder=2
+coordMaxWALSenders=($coordMaxWALsernder $coordMaxWALsernder )
+coordSlave=n
+coordSlaveSync=n
+coordArchLogDirs=($coordArchLogDir $coordArchLogDir)
+
+coordExtraConfig=coordExtraConfig
+cat &gt; $coordExtraConfig &lt;&lt;EOF
+#================================================
+# Added to all the coordinator postgresql.conf
+# Original: $coordExtraConfig
+
+include_if_exists = '/data/opentenbase/global/global_opentenbase.conf'
+
+wal_level = replica
+wal_keep_segments = 256 
+max_wal_senders = 4
+archive_mode = on 
+archive_timeout = 1800 
+archive_command = 'echo 0' 
+log_truncate_on_rotation = on 
+log_filename = 'postgresql-%M.log' 
+log_rotation_age = 4h 
+log_rotation_size = 100MB
+hot_standby = on 
+wal_sender_timeout = 30min 
+wal_receiver_timeout = 30min 
+shared_buffers = 1024MB 
+max_pool_size = 2000
+log_statement = 'ddl'
+log_destination = 'csvlog'
+logging_collector = on
+log_directory = 'pg_log'
+listen_addresses = '*'
+max_connections = 2000
+
+EOF
+
+coordSpecificExtraConfig=(none none)
+coordExtraPgHba=coordExtraPgHba
+cat &gt; $coordExtraPgHba &lt;&lt;EOF
+
+local   all             all                                     trust
+host    all             all             0.0.0.0/0               trust
+host    replication     all             0.0.0.0/0               trust
+host    all             all             ::1/128                 trust
+host    replication     all             ::1/128                 trust
+
+
+EOF
+
+
+coordSpecificExtraPgHba=(none none)
+coordAdditionalSlaves=n 
+cad1_Sync=n
+
+#---- Datanodes ---------------------
+dn1MstrDir=/data/opentenbase/data/dn001
+dn2MstrDir=/data/opentenbase/data/dn002
+dn1SlvDir=/data/opentenbase/data/dn001
+dn2SlvDir=/data/opentenbase/data/dn002
+dn1ALDir=/data/opentenbase/data/datanode_archlog
+dn2ALDir=/data/opentenbase/data/datanode_archlog
+
+primaryDatanode=dn001
+datanodeNames=(dn001 dn002)
+datanodePorts=(40004 40004)
+datanodePoolerPorts=(41110 41110)
+datanodePgHbaEntries=(0.0.0.0/0)
+datanodeMasterServers=($IP_1 $IP_2)
+datanodeMasterDirs=($dn1MstrDir $dn2MstrDir)
+dnWALSndr=4
+datanodeMaxWALSenders=($dnWALSndr $dnWALSndr)
+
+datanodeSlave=y
+datanodeSlaveServers=($IP_2 $IP_1)
+datanodeSlavePorts=(50004 54004)
+datanodeSlavePoolerPorts=(51110 51110)
+datanodeSlaveSync=n
+datanodeSlaveDirs=($dn1SlvDir $dn2SlvDir)
+datanodeArchLogDirs=($dn1ALDir/dn001 $dn2ALDir/dn002)
+
+datanodeExtraConfig=datanodeExtraConfig
+cat &gt; $datanodeExtraConfig &lt;&lt;EOF
+#================================================
+# Added to all the coordinator postgresql.conf
+# Original: $datanodeExtraConfig
+
+include_if_exists = '/data/opentenbase/global/global_opentenbase.conf'
+listen_addresses = '*' 
+wal_level = replica 
+wal_keep_segments = 256 
+max_wal_senders = 4
+archive_mode = on 
+archive_timeout = 1800 
+archive_command = 'echo 0' 
+log_directory = 'pg_log' 
+logging_collector = on 
+log_truncate_on_rotation = on 
+log_filename = 'postgresql-%M.log' 
+log_rotation_age = 4h 
+log_rotation_size = 100MB
+hot_standby = on 
+wal_sender_timeout = 30min 
+wal_receiver_timeout = 30min 
+shared_buffers = 1024MB 
+max_connections = 4000 
+max_pool_size = 4000
+log_statement = 'ddl'
+log_destination = 'csvlog'
+wal_buffers = 1GB
+
+EOF
+
+datanodeSpecificExtraConfig=(none none)
+datanodeExtraPgHba=datanodeExtraPgHba
+cat &gt; $datanodeExtraPgHba &lt;&lt;EOF
+
+local   all             all                                     trust
+host    all             all             0.0.0.0/0               trust
+host    replication     all             0.0.0.0/0               trust
+host    all             all             ::1/128                 trust
+host    replication     all             ::1/128                 trust
+
+
+EOF
+
+
+datanodeSpecificExtraPgHba=(none none)
+
+datanodeAdditionalSlaves=n
+walArchive=n
+
+</code></pre>
+<ul>
+<li><strong>Distribute binary package</strong></li>
+</ul>
+<p>After writing the configuration file, you need to deploy the binary package to the physical machine where all nodes are located. This can be done by executing the <strong>deploy all</strong> command with pgxc_ctl tool.</p>
+<pre><code class="language-shell">[opentenbase@localhost ~/pgxc_ctl]$ pgxc_ctl 
+/usr/bin/bash
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
+Finished reading configuration.
+   ******** PGXC_CTL START ***************
+
+Current directory: /data/opentenbase/pgxc_ctl
+PGXC deploy all
+Deploying Postgres-XL components to all the target servers.
+Prepare tarball to deploy ... 
+Deploying to the server 10.215.147.158.
+Deploying to the server 10.240.138.159.
+Deployment done.
+</code></pre>
+<p>Log in to all nodes and check whether the binary package is distributed</p>
+<pre><code>[opentenbase@localhost ~/install]$ ls /data/opentenbase/install/opentenbase_bin_v2.0
+bin  include  lib  share    
+</code></pre>
+<ul>
+<li>execute <strong>init all</strong> command to complete cluster initialization</li>
+</ul>
+<pre><code class="language-shell">[opentenbase@localhost ~]$ pgxc_ctl
+/usr/bin/bash
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
+Finished reading configuration.
+   ******** PGXC_CTL START ***************
+
+Current directory: /data/opentenbase/pgxc_ctl
+PGXC init all
+Initialize GTM master
+....
+....
+Initialize datanode slave dn001
+Initialize datanode slave dn002
+mkdir: cannot create directory '/data1/opentenbase': Permission denied
+chmod: cannot access '/data1/opentenbase/data/dn001': No such file or directory
+pg_ctl: directory &quot;/data1/opentenbase/data/dn001&quot; does not exist
+pg_basebackup: could not create directory &quot;/data1/opentenbase&quot;: Permission denied
+</code></pre>
+<ul>
+<li><strong>Installation error handling</strong></li>
+</ul>
+<p>Generally, if there is an error in initializing the cluster, the terminal will print out the error log. You can look up the error reason and change the configuration, or through the error log in '/data/OpenTenBase/pgxc_ctl/pgxc_log' path to check the error in the configuration file</p>
+<pre><code class="language-shell">[opentenbase@localhost ~]$ ll ~/pgxc_ctl/pgxc_log/
+total 184
+-rw-rw-r-- 1 opentenbase opentenbase 81123 Nov 13 17:22 14105_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  2861 Nov 13 17:58 15762_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 14823 Nov 14 07:59 16671_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  2721 Nov 13 16:52 18891_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase  1409 Nov 13 16:20 22603_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 60043 Nov 13 16:33 28932_pgxc_ctl.log
+-rw-rw-r-- 1 opentenbase opentenbase 15671 Nov 14 07:57 6849_pgxc_ctl.log
+</code></pre>
+<p>By running pgxc_ctl tool, execute <strong>clean all</strong> command to delete the initialized file. Then modify the pgxc_ctl.conf file，and execute the <strong>init all</strong> command to reinitialize.</p>
+<pre><code class="language-shell">[opentenbase@localhost ~]$ pgxc_ctl
+/usr/bin/bash
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
+Finished reading configuration.
+   ******** PGXC_CTL START ***************
+
+Current directory: /data/opentenbase/pgxc_ctl
+PGXC clean all
+
+
+[opentenbase@localhost ~]$ pgxc_ctl
+/usr/bin/bash
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
+Finished reading configuration.
+   ******** PGXC_CTL START ***************
+
+Current directory: /data/opentenbase/pgxc_ctl
+PGXC init all
+Initialize GTM master
+EXECUTE DIRECT ON (dn002) 'ALTER NODE dn002 WITH (TYPE=''datanode'',    HOST=''10.240.138.159'', PORT=40004, PREFERRED)';
+EXECUTE DIRECT
+EXECUTE DIRECT ON (dn002) 'SELECT pgxc_pool_reload()';
+ pgxc_pool_reload 
+------------------
+ t
+(1 row)
+
+Done.
+</code></pre>
+<ul>
+<li>
+<p><strong>Show cluster status</strong>   </p>
+<p>When the above output is found, the cluster is OK. In addition, you can show the cluster status through the <strong>monitor all</strong> command of the pgxc_ctl tool</p>
+</li>
+</ul>
+<pre><code class="language-shell">[opentenbase@localhost ~/pgxc_ctl]$ pgxc_ctl
+/usr/bin/bash
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
+Finished reading configuration.
+   ******** PGXC_CTL START ***************
+
+Current directory: /data/opentenbase/pgxc_ctl
+PGXC monitor all
+Running: gtm master
+Not running: gtm slave
+Running: coordinator master cn001
+Running: coordinator master cn002
+Running: datanode master dn001
+Running: datanode slave dn001
+Running: datanode master dn002
+Not running: datanode slave dn002
+</code></pre>
+<p>If the replication mode between the master and slave nodes is not synchronous replication (meaning asynchronous replication), the failure of GTM salve and DN slave will not affect the access.</p>
+<ul>
+<li>
+<p><strong>cluster access</strong></p>
+<p>There is basically no difference between accessing OpenTenBase cluster and PostgreSQL. We can access database cluster through any CN: for example, we can view the topology of the cluster by connecting CN node to select pgxc_node table (the standby node will not be shown in pgxc_node under the current configuration). <br />
+The example of accessing through psql under the Linux command line is as follows:</p>
+</li>
+</ul>
+<pre><code class="language-sql">[opentenbase@localhost ~/pgxc_ctl]$ psql -h 10.215.147.158 -p 30004 -d postgres -U opentenbase
+psql (PostgreSQL 10.0 opentenbase V2)
+Type &quot;help&quot; for help.
+
+postgres=# \d
+Did not find any relations.
+postgres=# select * from pgxc_node;
+ node_name | node_type | node_port |   node_host    | nodeis_primary | nodeis_preferred |  node_id   | node_cluster_name 
+-----------+-----------+-----------+----------------+----------------+------------------+------------+-------------------
+ gtm       | G         |     50001 | 10.215.147.158 | t              | f                |  428125959 | opentenbase_cluster
+ cn001     | C         |     30004 | 10.215.147.158 | f              | f                | -264077367 | opentenbase_cluster
+ cn002     | C         |     30004 | 10.240.138.159 | f              | f                | -674870440 | opentenbase_cluster
+ dn001     | D         |     40004 | 10.215.147.158 | t              | t                | 2142761564 | opentenbase_cluster
+ dn002     | D         |     40004 | 10.240.138.159 | f              | f                |  -17499968 | opentenbase_cluster
+(5 rows)
+</code></pre>
+<ul>
+<li>Before using the database, you need to <strong>create the default group and sharding group</strong></li>
+</ul>
+<p>OpenTenBase uses datanode group to increase the management flexibility of nodes. A default group is required to be used, so it needs to be created in advance. In general, all datanode nodes will be added to the default group.  </p>
+<p>On the other hand, in order to increase the flexibility of OpenTenBase data distribution, an intermediate logic layer is added to maintain the mapping of data records to physical nodes, which is called sharding. Therefore, sharding needs to be created in advance. The command is as follows:</p>
+<pre><code class="language-sql">postgres=# create default node group default_group  with (dn001,dn002);
+CREATE NODE GROUP
+postgres=# create sharding group to group default_group;
+CREATE SHARDING GROUP
+</code></pre>
+<ul>
+<li>Create database, user, table, insert/delete/update/select, etc</li>
+</ul>
+<p>Now you can access the database cluster just like you can use a stand-alone database</p>
+<pre><code class="language-sql">postgres=# create database test;
+CREATE DATABASE
+postgres=# create user test with password 'test';
+CREATE ROLE
+postgres=# alter database test owner to test;
+ALTER DATABASE
+postgres=# \c test test
+You are now connected to database &quot;test&quot; as user &quot;test&quot;.
+test=&gt; create table foo(id bigint, str text) distribute by shard(id);
+CREATE TABLE
+test=&gt; insert into foo values(1, 'tencent'), (2, 'shenzhen');
+COPY 2
+test=&gt; select * from foo;
+ id |   str    
+----+----------
+  1 | tencent
+  2 | shenzhen
+(2 rows)
+</code></pre>
+<ul>
+<li>
+<p><strong>stop cluster</strong>  </p>
+<p>Stop the cluster through the <strong>stop all</strong> command of pgxc_ctl tool.<br />
+The <strong>stop all</strong> command can be followed by the parameter <strong>-m fast</strong> or <strong>-m immediate</strong> to decide how to stop each node   </p>
+</li>
+</ul>
+<pre><code class="language-shell">PGXC stop all -m fast
+Stopping all the coordinator masters.
+Stopping coordinator master cn001.
+Stopping coordinator master cn002.
+Done.
+Stopping all the datanode slaves.
+Stopping datanode slave dn001.
+Stopping datanode slave dn002.
+pg_ctl: PID file &quot;/data/opentenbase/data/dn002/postmaster.pid&quot; does not exist
+Is server running?
+Stopping all the datanode masters.
+Stopping datanode master dn001.
+Stopping datanode master dn002.
+Done.
+Stop GTM slave
+waiting for server to shut down..... done
+server stopped
+Stop GTM master
+waiting for server to shut down.... done
+server stopped
+PGXC monitor all
+Not running: gtm master
+Not running: gtm slave
+Not running: coordinator master cn001
+Not running: coordinator master cn002
+Not running: datanode master dn001
+Not running: datanode slave dn001
+Not running: datanode master dn002
+Not running: datanode slave dn002
+</code></pre>
+<ul>
+<li>
+<p><strong>start cluster</strong>   </p>
+<p>Start the cluster through the <strong>start all</strong> command of pgxc_ctl tool. </p>
+</li>
+</ul>
+<pre><code class="language-shell">[opentenbase@localhost ~]$ pgxc_ctl
+/usr/bin/bash
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Installing pgxc_ctl_bash script as /data/opentenbase/pgxc_ctl/pgxc_ctl_bash.
+Reading configuration using /data/opentenbase/pgxc_ctl/pgxc_ctl_bash --home /data/opentenbase/pgxc_ctl --configuration /data/opentenbase/pgxc_ctl/pgxc_ctl.conf
+Finished reading configuration.
+   ******** PGXC_CTL START ***************
+
+Current directory: /data/opentenbase/pgxc_ctl
+PGXC start all
+</code></pre>
+<ul>
+<li><strong>Concluding remarks</strong>  <br />
+    This document is just a quick start guide for users, demonstrating how to build a complete OpenTenBase cluster step by step from the source code. Refer to other documents for OpenTenBase features, use, optimization, problem location, etc.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>

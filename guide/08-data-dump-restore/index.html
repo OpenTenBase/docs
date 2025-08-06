@@ -1,0 +1,2920 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../07-user-rights/">
+      
+      
+        <link rel="next" href="../09-problem-performance/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>数据导入导出 - OpenTenBase Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OpenTenBase Documentation" class="md-header__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTenBase Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数据导入导出
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/guide/08-data-dump-restore/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OpenTenBase/docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-quickstart/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  用户指南
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release/v2-6-0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  版本说明
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../faq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  常见问题
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../contribution/how-to/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  参与贡献
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  下载
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OpenTenBase Documentation" class="md-nav__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    OpenTenBase Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OpenTenBase/docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    用户指南
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            用户指南
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    快速入门
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    应用接入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-basic-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基本使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-advanced-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    高级使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    组件安装及管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主备切换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-user-rights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    用户权限管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    数据导入导出
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    数据导入导出
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pg_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dump数据导出工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_dump数据导出工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dump_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dump介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接数据库参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      整库备份
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份指定模式下的对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      不备份指定模式下的对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份某些数据表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      不备份某些数据表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份出对象定义
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份出数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert-valuesxxx" class="md-nav__link">
+    <span class="md-ellipsis">
+      备份出的数据格式为insert values(xxx)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertxxx-valuesxxx" class="md-nav__link">
+    <span class="md-ellipsis">
+      备份出的数据格式为insert(xxx) values(xxx)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group" class="md-nav__link">
+    <span class="md-ellipsis">
+      备份带group信息
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      不备份带非日志表数据
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pg_dumpall" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dumpall数据导出工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_dumpall数据导出工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dumpall_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dumpall介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接数据库参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份全局对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份用户角色
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份表空间
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pg_restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_restore数据导入工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_restore数据导入工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_restore_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_restore介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dump_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      输出等效于pg_dump的纯文本格式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      输出文本重定向于某个文件中
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      恢复时先创建数据库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ddl" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复ddl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      在重新创建数据库对象之前清除
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复某些模式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复某些表
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psql" class="md-nav__link">
+    <span class="md-ellipsis">
+      psql数据导入工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="psql数据导入工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#psql_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      psql介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接数据库参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#psqlsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      psql执行一个sql文件中所有命令
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      结语
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-problem-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    问题定位及性能优化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pg_clean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0升级特性pg_clean使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-pg_unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0升级特性pg_unlock使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-opentenbase_subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0升级特性opentenbase_subscription使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23-opentenbase_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V5.0 升级特性opentenbase_ai使用说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    TXSQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            TXSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-txsql_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-txsql_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    架构说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-txsql_deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    安装指南
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-txsql_access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    应用接入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-txsql_basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-txsql_advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    高级使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-txsql_faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    常见问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    周边生态
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            周边生态
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-opentenbase_monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prometheus/Grafana可视化监控
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-kubeblocks-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在kubernetes上运行OpenTenbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-docker-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用docker构建一个简单集群
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    版本说明
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            版本说明
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-6-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-5-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-4-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.4.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-3-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-2-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.2.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    常见问题
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            常见问题
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TXSQL常见问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    参与贡献
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            参与贡献
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何贡献
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/docs-format-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文档库格式手册
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    下载
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pg_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dump数据导出工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_dump数据导出工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dump_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dump介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接数据库参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      整库备份
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份指定模式下的对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      不备份指定模式下的对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份某些数据表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      不备份某些数据表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份出对象定义
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份出数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert-valuesxxx" class="md-nav__link">
+    <span class="md-ellipsis">
+      备份出的数据格式为insert values(xxx)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertxxx-valuesxxx" class="md-nav__link">
+    <span class="md-ellipsis">
+      备份出的数据格式为insert(xxx) values(xxx)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group" class="md-nav__link">
+    <span class="md-ellipsis">
+      备份带group信息
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      不备份带非日志表数据
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pg_dumpall" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dumpall数据导出工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_dumpall数据导出工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dumpall_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_dumpall介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接数据库参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份全局对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份用户角色
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      只备份表空间
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pg_restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_restore数据导入工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pg_restore数据导入工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_restore_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      pg_restore介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pg_dump_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      输出等效于pg_dump的纯文本格式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      输出文本重定向于某个文件中
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      恢复时先创建数据库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ddl" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复ddl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      在重新创建数据库对象之前清除
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复某些模式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      只恢复某些表
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psql" class="md-nav__link">
+    <span class="md-ellipsis">
+      psql数据导入工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="psql数据导入工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#psql_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      psql介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      连接数据库参数介绍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#psqlsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      psql执行一个sql文件中所有命令
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      结语
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/OpenTenBase/docs/edit/main/docs/guide/08-data-dump-restore.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/OpenTenBase/docs/raw/main/docs/guide/08-data-dump-restore.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="_1">数据导入导出</h1>
+<h2 id="pg_dump">pg_dump数据导出工具</h2>
+<h3 id="pg_dump_1">pg_dump介绍</h3>
+<p>pg_dump是用于备份 OpenTenBase 单个数据库的工具。即使数据库正在被并发使用，它也能创建一致的备份。pg_dump不阻塞其他用户访问数据库（读取或写入）。</p>
+<p>备份的数据可以是脚本或归档文件格式。脚本内容包含 SQL 命令的纯文本数据，它们可以用来重建数据库到它被备份时的状态。恢复一个这样的脚本，需要使用psql客户端工具。脚本文件还可以被用来在其他机器上重构数据库。在经过一些修改后，还可以在其他 SQL 数据库产品上重构数据库。另一种可选的归档文件格式必须与pg_restore配合使用来重建数据库。pg_dump提供了一种灵活的归档和传输机制。pg_dump可以被用来备份整个数据库，然后pg_restore可以被用来检查归档并/或选择数据库的哪些部分要被恢复。pg_restore支持并行恢复并且默认是压缩的。  </p>
+<h3 id="_2">连接数据库参数介绍</h3>
+<p>-d dbname<br />
+--dbname=dbname<br />
+指定要连接到的数据库名，不指定该参数时默认是从PGDATABASE环境变量中取得（如果被设置）。   </p>
+<p>-h host<br />
+--host=host<br />
+指定要连接服务器机器的主机名或者ip地址。不指定该参数时默认是从PGHOST环境变量中取得（如果被设置）。   </p>
+<p>-p port<br />
+--port=port<br />
+指定要连接服务器监听的 TCP 端口，不指定该参数时默认是从PGPORT环境变量中（如果被设置），否则使用编译在程序中的默认值。   </p>
+<p>-U username<br />
+--username=username<br />
+指定要连接服务的用户名，不指定该参数时默认是从PGUSER环境变量中（如果被设置），否则使用当前操作系统用户名做为默认值。   </p>
+<p>-w<br />
+--no-password<br />
+从不发出一个口令提示。如果服务器要求口令认证并且没有其他方式提供口令（例如一个.pgpass文件），那么连接尝试将失败。这个选项对于批处理任务和脚本有用，因为在其中没有一个用户来输入口令。   </p>
+<p>-W<br />
+--password<br />
+强制pg_dump在连接到一个数据库之前提示要求一个口令。  </p>
+<h3 id="_3">使用介绍</h3>
+<h4 id="_4">整库备份</h4>
+<ul>
+<li>备份成文本格式</li>
+</ul>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<ul>
+<li>备份成归档格式</li>
+</ul>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -Fc&gt;/data/opentenbase/opentenbase.sql  
+</code></pre>
+<h4 id="_5">只备份指定模式下的对象</h4>
+<p>备份opentenbase模式下的对象  </p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -n opentenbase&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<p>备份opentenbase和pgxz模式下的对象，多个模式使用多组-n  </p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -n opentenbase -n pgxz&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_6">不备份指定模式下的对象</h4>
+<p>不备份opentenbase模式下的对象</p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -N opentenbase&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<p>不备份opentenbase和pgxz模式下的对象，多个模式使用多组-N  </p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -N opentenbase -N pgxz&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_7">只备份某些数据表</h4>
+<p>备份数据表opentenbase.t</p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -t 'opentenbase.t' &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<p>备份数据表opentenbase.t，pgxz.t  </p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -t 'opentenbase.t' -t 'pgxz.t1'&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<p>备份模式opentenbase下所有t开头的数据表</p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -t 'opentenbase.t*' &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_8">不备份某些数据表</h4>
+<p>不备份数据表opentenbase.t  </p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -T 'opentenbase.t' &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<p>不备份数据表opentenbase.t，pgxz.t1</p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -T 'opentenbase.t' -T 'pgxz.t1'&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<p>不备份模式opentenbase下所有t开头的数据表</p>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -T 'opentenbase.t*' &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_9">只备份出对象定义</h4>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -s &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_10">只备份出数据</h4>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 -a &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="insert-valuesxxx">备份出的数据格式为insert values(xxx)</h4>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 --inserts &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="insertxxx-valuesxxx">备份出的数据格式为insert(xxx) values(xxx)</h4>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 --column-inserts &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="group">备份带group信息</h4>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 --include-nodes &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_11">不备份带非日志表数据</h4>
+<pre><code>pg_dump -h 127.0.0.1 -U opentenbase -d postgres -p 15432 --no-unlogged-table-data &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h2 id="pg_dumpall">pg_dumpall数据导出工具</h2>
+<h3 id="pg_dumpall_1">pg_dumpall介绍</h3>
+<p>pg_dumpall是用于备份 OpenTenBase 所有数据库的工具，所以使用pg_dumpall时不能指定数据库。即使数据库正在被并发使用，它也能创建一致的备份。pg_dumpall不阻塞其他用户访问数据库（读取或写入）。与pg_dump不同的地方是pg_dumpall可以用于备份 OpenTenBase 全局对象，如用户和表空间定义。pg_dumpall备份时无法指定备份数据的格式，即无法使用-Fc这样的参数。</p>
+<h3 id="_12">连接数据库参数介绍</h3>
+<p>-h host<br />
+--host=host<br />
+指定要连接服务器机器的主机名或者ip地址。不指定该参数时默认是从PGHOST环境变量中取得（如果被设置）。   </p>
+<p>-p port<br />
+--port=port<br />
+指定要连接服务器监听的 TCP 端口，不指定该参数时默认是从PGPORT环境变量中（如果被设置），否则使用编译在程序中的默认值。  </p>
+<p>-U username<br />
+--username=username<br />
+指定要连接服务的用户名，不指定该参数时默认是从PGUSER环境变量中（如果被设置），否则使用当前操作系统用户名做为默认值。  </p>
+<p>-w<br />
+--no-password<br />
+从不发出一个口令提示。如果服务器要求口令认证并且没有其他方式提供口令（例如一个.pgpass文件），那么连接尝试将失败。这个选项对于批处理任务和脚本有用，因为在其中没有一个用户来输入口令。   </p>
+<p>-W<br />
+--password<br />
+强制pg_dump在连接到一个数据库之前提示要求一个口令。   </p>
+<p>-l dbname<br />
+--database=dbname<br />
+指定要连接到哪个数据库备份全局对象以及发现要备份哪些其他数据库。如果没有指定，将会使用postgres数据库，如果postgres不存在，就使用 template1。  </p>
+<h3 id="_13">使用介绍</h3>
+<h4 id="_14">只备份全局对象</h4>
+<pre><code>pg_dumpall -h 127.0.0.1 -U opentenbase -p 15432 -g &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_15">只备份用户角色</h4>
+<pre><code>pg_dumpall -h 127.0.0.1 -U opentenbase -p 15432 -r &gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h4 id="_16">只备份表空间</h4>
+<pre><code>pg_dumpall -h 127.0.0.1 -U opentenbase -p 15432 -t&gt;/data/opentenbase/opentenbase.sql
+</code></pre>
+<h2 id="pg_restore">pg_restore数据导入工具</h2>
+<h3 id="pg_restore_1">pg_restore介绍</h3>
+<p>pg_restore是一个用来从pg_dump创建的非文本格式归档恢复PostgreSQL数据库的工具。这些归档文件还允许pg_restore选择恢复哪些内容。pg_restore可以在两种模式下操作。如果指定了一个数据库名称，pg_restore会连接那个数据库并且把归档内容直接恢复到该数据库中。否则，会创建一个脚本，其中包含着重建该数据库所必要的 SQL 命令，它会被写入到一个文件或者标准输出。这个脚本输出等效于pg_dump的纯文本输出格式。因此，一些控制输出的选项与pg_dump的选项类似。  </p>
+<h3 id="_17">连接参数介绍</h3>
+<p>-d dbname<br />
+--dbname=dbname<br />
+指定要连接到的数据库名。   </p>
+<p>-h host<br />
+--host=host<br />
+指定要连接服务器机器的主机名或者ip地址。不指定该参数时默认是从PGHOST环境变量中取得（如果被设置）。   </p>
+<p>-p port<br />
+--port=port<br />
+指定要连接服务器监听的 TCP 端口，不指定该参数时默认是从PGPORT环境变量中（如果被设置），否则使用编译在程序中的默认值。   </p>
+<p>-U username<br />
+--username=username<br />
+指定要连接服务的用户名，不指定该参数时默认是从PGUSER环境变量中（如果被设置），否则使用当前操作系统用户名做为默认值。   </p>
+<p>-w<br />
+--no-password<br />
+从不发出一个口令提示。如果服务器要求口令认证并且没有其他方式提供口令（例如一个.pgpass文件），那么连接尝试将失败。这个选项对于批处理任务和脚本有用，因为在其中没有一个用户来输入口令。   </p>
+<p>-W<br />
+--password<br />
+强制pg_restore在连接到一个数据库之前提示要求一个口令。  </p>
+<h3 id="_18">使用介绍</h3>
+<h4 id="pg_dump_2">输出等效于pg_dump的纯文本格式</h4>
+<pre><code>pg_restore opentenbase.dump
+</code></pre>
+<p>命令中不要使用-d dbname 参数，则pg_restore输出等效于pg_dump的纯文本输出格式。</p>
+<h4 id="_19">输出文本重定向于某个文件中</h4>
+<pre><code>pg_restore opentenbase.dump -f  opentenbase.sql 
+</code></pre>
+<p>或者得  </p>
+<pre><code>pg_restore opentenbase.dump &gt; opentenbase.sql  
+</code></pre>
+<p>将输出的文本重定向于opentenbase.sql文件中。  </p>
+<h4 id="_20">恢复时先创建数据库</h4>
+<pre><code>pg_dump -h 127.0.0.1 -p 15432 -U opentenbase -d opentenbase -Fc &gt; opentenbase.dump
+dropdb -h 127.0.0.1 -p 15432 -U opentenbase opentenbase   
+pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -C -d postgres opentenbase.dump 
+</code></pre>
+<p>在使用这个选项时，-d提到的数据库只被用于发出初始的DROP DATABASE和CREATE DATABASE命令。所有要恢复到该数据库名中的数据都出现在归档中  </p>
+<h4 id="ddl">只恢复ddl</h4>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -d opentenbase -s opentenbase.dump
+</code></pre>
+<h4 id="_21">只恢复数据</h4>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -d opentenbase -a opentenbase.dump
+</code></pre>
+<h4 id="_22">在重新创建数据库对象之前清除</h4>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -d opentenbase -c opentenbase.dump
+</code></pre>
+<h4 id="_23">只恢复某些模式</h4>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -n 'public' -d opentenbase opentenbase.dump
+</code></pre>
+<h4 id="_24">只恢复某些表</h4>
+<p>恢复所有模式下的t_txt表  </p>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -t 't_txt' -d opentenbase opentenbase.dump
+</code></pre>
+<p>恢复所有模式下的t_txt表和t表</p>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -t 't_txt' -t 't' opentenbase.dump
+</code></pre>
+<p>恢复public模式下的t_txt表  </p>
+<pre><code>pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -n 'public' -t 't_txt' -d opentenbase opentenbase.dump
+</code></pre>
+<h2 id="psql">psql数据导入工具</h2>
+<h3 id="psql_1">psql介绍</h3>
+<p>psql是一个基于终端的 OpenTenBase 客户端工具，类似Oracle中的命令行工具sqlplus，但比sqlplus强大多了。它让你能交互式地键入查询，把它们发送给 OpenTenBase ，并且查看查询结果。或者，输入可以来自于一个文件或者命令行参数。此外，psql还提供一些元命令和多种类似 shell 的特性来为编写脚本和自动化多种任务提供便利。psql还支持命令补全，历史命令回找。  </p>
+<h3 id="_25">连接数据库参数介绍</h3>
+<p>-d dbname<br />
+--dbname=dbname<br />
+指定要连接到的数据库名，不指定该参数时默认是从PGDATABASE环境变量中取得（如果被设置）。   </p>
+<p>-h host<br />
+--host=host<br />
+指定要连接服务器机器的主机名或者ip地址。不指定该参数时默认是从PGHOST环境变量中取得（如果被设置）。   </p>
+<p>-p port<br />
+--port=port<br />
+指定要连接服务器监听的 TCP 端口，不指定该参数时默认是从PGPORT环境变量中（如果被设置），否则使用编译在程序中的默认值。   </p>
+<p>-U username<br />
+--username=username<br />
+指定要连接服务的用户名，不指定该参数时默认是从PGUSER环境变量中（如果被设置），否则使用当前操作系统用户名做为默认值。   </p>
+<p>-w<br />
+--no-password<br />
+从不发出一个口令提示。如果服务器要求口令认证并且没有其他方式提供口令（例如一个.pgpass文件），那么连接尝试将失败。这个选项对于批处理任务和脚本有用，因为在其中没有一个用户来输入口令。   </p>
+<p>-W<br />
+--password<br />
+强制pg_dump在连接到一个数据库之前提示要求一个口令。  </p>
+<h3 id="_26">使用介绍</h3>
+<h4 id="psqlsql">psql执行一个sql文件中所有命令</h4>
+<ul>
+<li>在外部执行</li>
+</ul>
+<pre><code>[pgxz@VM_0_3_centos ~]$ cat /data/opentenbase/opentenbase.sql 
+set search_path = public;
+insert into opentenbase values(1,2);
+select count(1) from opentenbase;
+</code></pre>
+<pre><code>[pgxz@VM_0_3_centos ~]$ psql -h 172.16.0.29 -p 15432 -U opentenbase -d postgres -f /data/opentenbase/opentenbase.sql 
+SET
+INSERT 0 1
+ count 
+-------
+ 10001
+(1 row)
+</code></pre>
+<ul>
+<li>在内部执行</li>
+</ul>
+<pre><code>[pgxz@VM_0_3_centos ~]$ psql -h 172.16.0.29 -p 15432 -U opentenbase -d postgres 
+psql (PostgreSQL 10 (opentenbase 2.01))
+Type &quot;help&quot; for help.
+
+postgres=# \i  /data/opentenbase/opentenbase.sql 
+SET
+INSERT 0 1
+ count 
+-------
+ 10002
+(1 row)
+
+</code></pre>
+<h2 id="_27">结语</h2>
+<p>OpenTenBase 是企业级分布式HTAP数据库管理系统。通过单一数据库集群同时为客户提供高一致性的分布式数据库服务和高性能的数据仓库服务，形成一套融合完整的企业级解决方案。大家在数据库领域遇到相关问题时，欢迎随时留言我们。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>

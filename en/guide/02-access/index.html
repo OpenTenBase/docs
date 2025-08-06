@@ -1,0 +1,3895 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../01-quickstart/">
+      
+      
+        <link rel="next" href="../03-basic-use/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Application Access - OpenTenBase Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#application-access-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="OpenTenBase Documentation" class="md-header__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTenBase Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Application Access
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../guide/02-access/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-quickstart/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release/v2-6-0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Releases
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../faq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  FAQ
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../contribution/how-to/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Contributing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Download
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="OpenTenBase Documentation" class="md-nav__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    OpenTenBase Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1java" class="md-nav__link">
+    <span class="md-ellipsis">
+      1、JAVA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1、JAVA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1、Create Table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12insert-data-use-general-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2、Insert data use general protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13insert-data-use-extended-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3、Insert data use extended protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14use-copy-from-load-file-to-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4、Use copy from load file to table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15use-copy-to-export-data-to-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5、Use copy to export data to file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16download-address-for-jdbc-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6、Download address for jdbc file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      2、C
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2、C">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21connect-to-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1、Connect to database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25copy-stream-data-into-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5、Copy Stream data into table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3shell-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      3、Shell script
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4python" class="md-nav__link">
+    <span class="md-ellipsis">
+      4、Python
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4、Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41install-psycopg2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1、Install psycopg2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42connect-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2、Connect database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46use-copy-from-load-file-to-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6、Use copy from load file to table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5php" class="md-nav__link">
+    <span class="md-ellipsis">
+      5、PHP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5、PHP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51connect-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1、Connect database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55copy-stream-data-into-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5、Copy Stream data into table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56export-data-to-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6、Export data to Array
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6golang" class="md-nav__link">
+    <span class="md-ellipsis">
+      6、golang
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6、golang">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61connect-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1、Connect database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65copy-stream-data-into-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5、Copy Stream data into table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66packages-for-golang" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6、Packages for golang
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-basic-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-advanced-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Switching
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-user-rights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Rights Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-dump-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Dump and Restore
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-problem-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Problem tracking and Performance Optimization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pg_clean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_clean
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-pg_unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_unlock
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-opentenbase_subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature opentenbase_subscription
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23-opentenbase_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V5.0 Feature opentenbase_ai
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    TXSQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            TXSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-txsql_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-txsql_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    架构说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-txsql_deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deploy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-txsql_access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-txsql_basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-txsql_advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-txsql_faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Peripheral ecosystem
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Peripheral ecosystem
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-opentenbase_monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monitoring visualization with Prometheus/Grafana
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-kubeblocks-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run opentenbase on kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-docker-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building simple cluster with docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Releases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-6-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-5-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-4-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.4.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-3-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-2-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.2.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            FAQ
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TXSQL FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to contribute
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/docs-format-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation format guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Download
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1java" class="md-nav__link">
+    <span class="md-ellipsis">
+      1、JAVA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1、JAVA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1、Create Table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12insert-data-use-general-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2、Insert data use general protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13insert-data-use-extended-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3、Insert data use extended protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14use-copy-from-load-file-to-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4、Use copy from load file to table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15use-copy-to-export-data-to-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5、Use copy to export data to file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16download-address-for-jdbc-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6、Download address for jdbc file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      2、C
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2、C">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21connect-to-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1、Connect to database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25copy-stream-data-into-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5、Copy Stream data into table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3shell-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      3、Shell script
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4python" class="md-nav__link">
+    <span class="md-ellipsis">
+      4、Python
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4、Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41install-psycopg2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1、Install psycopg2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42connect-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2、Connect database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46use-copy-from-load-file-to-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6、Use copy from load file to table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5php" class="md-nav__link">
+    <span class="md-ellipsis">
+      5、PHP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5、PHP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51connect-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1、Connect database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55copy-stream-data-into-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5、Copy Stream data into table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56export-data-to-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6、Export data to Array
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6golang" class="md-nav__link">
+    <span class="md-ellipsis">
+      6、golang
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6、golang">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61connect-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1、Connect database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2、Create table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63insert-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3、Insert data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64query-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4、Query data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65copy-stream-data-into-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5、Copy Stream data into table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66packages-for-golang" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6、Packages for golang
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/OpenTenBase/docs/edit/main/docs/guide/02-access.en.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/OpenTenBase/docs/raw/main/docs/guide/02-access.en.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="application-access-guide">Application Access Guide</h1>
+<blockquote>
+<p>In <a href="../01-quickstart/">Quick Start</a> article, we introduced opentenbase architecture, source code compilation and installation, cluster running status, startup and stop, etc.</p>
+<p>This chapter will introduce how to connect to OpenTenBase for create database, table, data import, query and other operations.</p>
+</blockquote>
+<p>OpenTenBase is compatible with all clients that support the Postgres protocol. Now we introduce the commonly used development languages including JAVA, C, shell, python, PHP, golang for connect to OpenTenBase.</p>
+<h2 id="1java">1、JAVA</h2>
+<h3 id="11create-table">1.1、Create Table</h3>
+<pre><code>import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+
+public class createtable {
+   public static void main( String args[] )
+     {
+       Connection c = null;
+       Statement stmt = null;
+       try {
+         Class.forName(&quot;org.postgresql.Driver&quot;);
+         c = DriverManager.getConnection(&quot;jdbc:postgresql://127.0.0.1:15432/postgres?currentSchema=public&amp;binaryTransfer=false&quot;,&quot;opentenbase&quot;, &quot;opentenbase&quot;);
+         System.out.println(&quot;Opened database successfully&quot;);
+         stmt = c.createStatement();
+         String sql = &quot;create table opentenbase(id int,nickname text) distribute by shard(id) to group  default_group&quot; ;
+         stmt.executeUpdate(sql);
+         stmt.close();
+         c.close();
+       } catch ( Exception e ) {
+         System.err.println( e.getClass().getName()+&quot;: &quot;+ e.getMessage() );
+         System.exit(0);
+       }
+       System.out.println(&quot;Table created successfully&quot;);
+     }
+}
+</code></pre>
+<p>Explain： </p>
+<ul>
+<li>The node in here is an arbitrary CN master node. All subsequent operations, unless otherwise specified, are performed by connecting to the CN master node.</li>
+</ul>
+<h3 id="12insert-data-use-general-protocol">1.2、Insert data use general protocol</h3>
+<pre><code>import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class insert {
+   public static void main(String args[]) {
+      Connection c = null;
+      Statement stmt = null;
+      try {
+         Class.forName(&quot;org.postgresql.Driver&quot;);
+         c = DriverManager.getConnection(&quot;jdbc:postgresql://127.0.0.1:15432/postgres?currentSchema=public&amp;binaryTransfer=false&quot;,&quot;opentenbase&quot;, &quot;opentenbase&quot;);
+         c.setAutoCommit(false);
+         System.out.println(&quot;Opened database successfully&quot;);
+
+         stmt = c.createStatement();
+         String sql = &quot;INSERT INTO opentenbase (id,nickname) &quot;
+               + &quot;VALUES (1,'opentenbase');&quot;;
+         stmt.executeUpdate(sql);
+
+         sql = &quot;INSERT INTO opentenbase (id,nickname) &quot;
+               + &quot;VALUES (2, 'pgxz' ),(3,'pgxc');&quot;;
+         stmt.executeUpdate(sql);
+         stmt.close();
+         c.commit();
+         c.close();
+      } catch (Exception e) {
+         System.err.println( e.getClass().getName()+&quot;: &quot;+ e.getMessage() );
+         System.exit(0);
+      }
+      System.out.println(&quot;Records created successfully&quot;);
+   }
+}
+</code></pre>
+<h3 id="13insert-data-use-extended-protocol">1.3、Insert data use extended protocol</h3>
+<pre><code>import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.*;
+import java.util.Random;
+
+public class insert_prepared {
+   public static void main(String args[]) {
+      Connection c = null;
+      PreparedStatement stmt;
+      try {
+         Class.forName(&quot;org.postgresql.Driver&quot;);
+         c = DriverManager.getConnection(&quot;jdbc:postgresql://127.0.0.1:15432/postgres?currentSchema=public&amp;binaryTransfer=false&quot;,&quot;opentenbase&quot;, &quot;opentenbase&quot;);
+         c.setAutoCommit(false);
+         System.out.println(&quot;Opened database successfully&quot;);
+         //Insert data
+         String sql = &quot;INSERT INTO opentenbase (id,nickname) VALUES (?,?)&quot;;         
+         stmt = c.prepareStatement(sql);
+         stmt.setInt(1, 9999);
+         stmt.setString(2, &quot;opentenbase_prepared&quot;);
+         stmt.executeUpdate();
+
+         //Insert update
+         sql = &quot;INSERT INTO opentenbase (id,nickname) VALUES (?,?) ON CONFLICT(id) DO UPDATE SET nickname=?&quot;;
+         stmt = c.prepareStatement(sql);
+         stmt.setInt(1, 9999);
+         stmt.setString(2, &quot;opentenbase_prepared&quot;);
+         stmt.setString(3, &quot;opentenbase_prepared_update&quot;);
+         stmt.executeUpdate();
+
+         stmt.close();
+         c.commit();
+         c.close();
+      } catch (Exception e) {
+         System.err.println( e.getClass().getName()+&quot;: &quot;+ e.getMessage() );
+         System.exit(0);
+      }
+      System.out.println(&quot;Records created successfully&quot;);
+   }
+}
+</code></pre>
+<h3 id="14use-copy-from-load-file-to-table">1.4、Use <code>copy from</code> load file to table</h3>
+<pre><code>import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import org.postgresql.copy.CopyManager;  
+import org.postgresql.core.BaseConnection;  
+import java.io.*;
+
+public class copyfrom {
+   public static void main( String args[] )
+     {
+       Connection c = null;
+       Statement stmt = null;
+       FileInputStream fs = null;
+       try {
+         Class.forName(&quot;org.postgresql.Driver&quot;);
+         c = DriverManager.getConnection(&quot;jdbc:postgresql://127.0.0.1:15432/postgres?currentSchema=public&amp;binaryTransfer=false&quot;,&quot;opentenbase&quot;, &quot;opentenbase&quot;);
+         System.out.println(&quot;Opened database successfully&quot;);
+         CopyManager cm = new CopyManager((BaseConnection) c);
+         fs = new FileInputStream(&quot;/data/opentenbase/opentenbase.csv&quot;);
+         String sql = &quot;COPY opentenbase FROM STDIN DELIMITER AS ','&quot;;
+         cm.copyIn(sql, fs);
+         c.close();
+         fs.close();
+       } catch ( Exception e ) {
+         System.err.println( e.getClass().getName()+&quot;: &quot;+ e.getMessage() );
+         System.exit(0);
+       }
+       System.out.println(&quot;Copy data successfully&quot;);
+     }
+}
+</code></pre>
+<h3 id="15use-copy-to-export-data-to-file">1.5、Use <code>copy to</code> export data to file</h3>
+<pre><code>import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import org.postgresql.copy.CopyManager;  
+import org.postgresql.core.BaseConnection;  
+import java.io.*;
+
+public class copyto {
+   public static void main( String args[] )
+     {
+       Connection c = null;
+       Statement stmt = null;
+       FileOutputStream fs = null;
+       try {
+         Class.forName(&quot;org.postgresql.Driver&quot;);
+         c = DriverManager.getConnection(&quot;jdbc:postgresql://127.0.0.1:15432/postgres?currentSchema=public&amp;binaryTransfer=false&quot;,&quot;opentenbase&quot;, &quot;opentenbase&quot;);
+         System.out.println(&quot;Opened database successfully&quot;);
+         CopyManager cm = new CopyManager((BaseConnection) c);
+         fs = new FileOutputStream(&quot;/data/opentenbase/opentenbase.csv&quot;);
+         String sql = &quot;COPY opentenbase TO STDOUT DELIMITER AS ','&quot;;
+         cm.copyOut(sql, fs);
+         c.close();
+         fs.close();
+       } catch ( Exception e ) {
+         System.err.println( e.getClass().getName()+&quot;: &quot;+ e.getMessage() );
+         System.exit(0);
+       }
+       System.out.println(&quot;Copy data successfully&quot;);
+     }
+}
+</code></pre>
+<h3 id="16download-address-for-jdbc-file">1.6、Download address for jdbc file</h3>
+<pre><code>https://jdbc.postgresql.org/download.html
+</code></pre>
+<h2 id="2c">2、C</h2>
+<h3 id="21connect-to-database">2.1、Connect to database</h3>
+<pre><code>#include &lt;stdio.h&gt;  
+#include &lt;stdlib.h&gt;  
+#include &quot;libpq-fe.h&quot;     
+int
+main(int argc, char **argv){
+    const char *conninfo;
+    PGconn     *conn;      
+    if (argc &gt; 1){
+        conninfo = argv[1];
+    }else{
+        conninfo = &quot;dbname = postgres&quot;;  
+    }            
+    conn = PQconnectdb(conninfo);
+    if (PQstatus(conn) != CONNECTION_OK){
+        fprintf(stderr, &quot;Failed to connect to the database: %s&quot;,PQerrorMessage(conn));              
+    }else{
+        printf(&quot;Connected to database successful！\n&quot;);
+    }
+    PQfinish(conn);
+    return 0;
+}
+</code></pre>
+<p>Compile    </p>
+<pre><code>gcc -c -I /usr/local/install/opentenbase_pgxz/include/ conn.c  
+gcc -o conn conn.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq  
+</code></pre>
+<p>Run  </p>
+<pre><code>./conn &quot;host=172.16.0.3 dbname=postgres port=11000&quot;  
+Connected to database successful！
+</code></pre>
+<pre><code>./conn &quot;host=172.16.0.3 dbname=postgres port=15432 user=opentenbase&quot;   
+Connected to database successful！ 
+</code></pre>
+<h3 id="22create-table">2.2、Create table</h3>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;libpq-fe.h&quot;   
+int
+main(int argc, char **argv){
+    const char *conninfo;
+    PGconn     *conn;      
+    PGresult   *res;
+    const char *sql = &quot;create table opentenbase(id int,nickname text) distribute by shard(id) to group  default_group&quot;;
+    if (argc &gt; 1){
+        conninfo = argv[1];
+    }else{
+        conninfo = &quot;dbname = postgres&quot;;           
+    }        
+    conn = PQconnectdb(conninfo);
+    if (PQstatus(conn) != CONNECTION_OK){
+        fprintf(stderr, &quot;Failed to connect to the database: %s&quot;,PQerrorMessage(conn));              
+    }else{
+        printf(&quot;Connected to database successful！\n&quot;);
+    }
+    res = PQexec(conn,sql);
+    if(PQresultStatus(res) != PGRES_COMMAND_OK){
+        fprintf(stderr, &quot;Failed to create data table: %s&quot;,PQresultErrorMessage(res)); 
+    }else{
+        printf(&quot;Create data table successful！\n&quot;);
+    }
+    PQclear(res);
+    PQfinish(conn);
+    return 0;
+}
+</code></pre>
+<p>Compile  </p>
+<pre><code>gcc -c -I /usr/local/install/opentenbase_pgxz/include/ createtable.c  
+gcc -o createtable createtable.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq  
+</code></pre>
+<p>Run  </p>
+<pre><code>./createtable &quot;port=11000 dbname=postgres&quot;
+Connected to database successful！  
+Create data table successful！ 
+</code></pre>
+<h3 id="23insert-data">2.3、Insert data</h3>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;libpq-fe.h&quot;   
+int
+main(int argc, char **argv){
+    const char *conninfo;
+    PGconn     *conn;      
+    PGresult   *res;
+    const char *sql = &quot;INSERT INTO opentenbase (id,nickname) values(1,'opentenbase'),(2,'pgxz')&quot;;
+    if (argc &gt; 1){
+        conninfo = argv[1];
+    }else{
+        conninfo = &quot;dbname = postgres&quot;;           
+    }        
+    conn = PQconnectdb(conninfo);
+    if (PQstatus(conn) != CONNECTION_OK){
+        fprintf(stderr, &quot;Failed to connect to the database: %s&quot;,PQerrorMessage(conn));              
+    }else{
+        printf(&quot;Create data table successful！\n&quot;);
+    }
+    res = PQexec(conn,sql);
+    if(PQresultStatus(res) != PGRES_COMMAND_OK){
+        fprintf(stderr, &quot;Insert data failed: %s&quot;,PQresultErrorMessage(res)); 
+    }else{
+        printf(&quot;Insert data successful！\n&quot;);
+    }
+    PQclear(res);
+    PQfinish(conn);
+    return 0;
+}
+</code></pre>
+<p>Compile  </p>
+<pre><code>gcc -c -I /usr/local/install/opentenbase_pgxz/include/ insert.c
+gcc -o insert insert.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq
+</code></pre>
+<p>Run  </p>
+<pre><code>./insert &quot;dbname=postgres port=15432&quot;
+</code></pre>
+<h3 id="24query-data">2.4、Query data</h3>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;libpq-fe.h&quot;   
+int
+main(int argc, char **argv){
+    const char *conninfo;
+    PGconn     *conn;      
+    PGresult   *res;
+    const char *sql = &quot;select * from opentenbase&quot;;
+    if (argc &gt; 1){
+        conninfo = argv[1];
+    }else{
+        conninfo = &quot;dbname = postgres&quot;;           
+    }
+    conn = PQconnectdb(conninfo);    
+    if (PQstatus(conn) != CONNECTION_OK){
+        fprintf(stderr, &quot;Failed to connect to the database: %s&quot;,PQerrorMessage(conn));              
+    }else{    
+        printf(&quot;Connected to database successful！\n&quot;);
+    }                                
+    res = PQexec(conn,sql);
+    if(PQresultStatus(res) != PGRES_TUPLES_OK){
+        fprintf(stderr, &quot;Insert data failed: %s&quot;,PQresultErrorMessage(res)); 
+    }else{
+        printf(&quot;Query data successful！\n&quot;);    
+        int rownum = PQntuples(res) ;
+        int colnum = PQnfields(res);
+        for(int j = 0;j&lt; colnum; ++j){
+            printf(&quot;%s\t&quot;,PQfname(res,j));
+        }
+        printf(&quot;\n&quot;);
+        for(int i = 0;i&lt; rownum; ++i){
+            for(int j = 0;j&lt; colnum; ++j){
+                printf(&quot;%s\t&quot;,PQgetvalue(res,i,j));
+            }
+            printf(&quot;\n&quot;);
+        }
+    }
+    PQclear(res);
+    PQfinish(conn);
+    return 0;
+}
+</code></pre>
+<p>Compile  </p>
+<pre><code>gcc -std=c99 -c -I /usr/local/install/opentenbase_pgxz/include/ select.c  
+gcc -o select select.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq
+</code></pre>
+<p>Run </p>
+<pre><code>./select &quot;dbname=postgres port=15432&quot;
+Connected to database successful！  
+Query data successful！ 
+id      nickname  
+1       opentenbase  
+2       pgxz  
+
+</code></pre>
+<h3 id="25copy-stream-data-into-table">2.5、Copy Stream data into table</h3>
+<pre><code>#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;libpq-fe.h&quot;   
+int 
+main(int argc, char **argv){
+    const char *conninfo;
+    PGconn     *conn;      
+    PGresult   *res;
+    const char *buffer = &quot;1,opentenbase\n2,pgxz\n3,opentenbase牛&quot;;
+    if (argc &gt; 1){
+        conninfo = argv[1];
+    }else{
+        conninfo = &quot;dbname = postgres&quot;;           
+    }
+    conn = PQconnectdb(conninfo);
+    if (PQstatus(conn) != CONNECTION_OK){
+        fprintf(stderr, &quot;Failed to connect to the database: %s&quot;,PQerrorMessage(conn));              
+    }else{
+        printf(&quot;Connected to database successful！\n&quot;);
+    }
+    res=PQexec(conn,&quot;COPY opentenbase FROM STDIN DELIMITER ',';&quot;);
+    if(PQresultStatus(res) != PGRES_COPY_IN){
+        fprintf(stderr, &quot;Wrong from copy data 1: %s&quot;,PQresultErrorMessage(res));
+    }else{
+        int len = strlen(buffer);
+        if(PQputCopyData(conn,buffer,len) == 1){
+             if(PQputCopyEnd(conn,NULL) == 1){
+                res = PQgetResult(conn);
+                if(PQresultStatus(res) == PGRES_COMMAND_OK){
+                    printf(&quot;Copy data successful！\n&quot;);         
+                }else{
+                    fprintf(stderr, &quot;Wrong from copy data 2: %s&quot;,PQerrorMessage(conn));    
+                }
+             }else{
+                fprintf(stderr, &quot;Wrong from copy data 3: %s&quot;,PQerrorMessage(conn));   
+             }
+        }else{
+            fprintf(stderr, &quot;Wrong from copy data 4: %s&quot;,PQerrorMessage(conn));              
+        }
+    }
+    PQclear(res);
+    PQfinish(conn);
+    return 0;
+}
+</code></pre>
+<p>Compile  </p>
+<pre><code>gcc -c -I /usr/local/install/opentenbase_pgxz/include/ copy.c
+gcc -o copy copy.o -L /usr/local/install/opentenbase_pgxz/lib/ -lpq
+</code></pre>
+<p>Run  </p>
+<pre><code>./copy &quot;dbname=postgres port=15432&quot;
+Connected to database successful！ 
+Copy data successful！
+</code></pre>
+<h3 id="3shell-script">3、Shell script</h3>
+<pre><code>#!/bin/sh
+
+if [ $# -ne 0 ]
+then
+    echo &quot;usage: $0 exec_sql&quot;
+    exit 1
+fi
+
+exec_sql=$1
+
+masters=`psql -h 172.16.0.29 -d postgres -p 15432 -t -c &quot;select string_agg(node_host, ' ') from (select * from pgxc_node where node_type = 'D' order by node_name) t&quot;`
+port_list=`psql -h 172.16.0.29 -d postgres -p 15432 -t -c &quot;select string_agg(node_port::text, ' ') from (select * from pgxc_node where node_type = 'D' order by node_name) t&quot;`
+node_cnt=`psql -h 172.16.0.29 -d postgres -p 15432 -t -c &quot;select count(*) from pgxc_node where node_type = 'D'&quot;`
+masters=($masters)
+ports=($port_list)
+
+echo $node_cnt
+
+flag=0
+
+for((i=0;i&lt;$node_cnt;i++));
+do
+    seq=$(($i+1))
+    master=${masters[$i]}
+    port=${ports[$i]}
+    echo $master
+    echo $port
+
+    psql -h $master -p $port  postgres -c &quot;$exec_sql&quot;
+done
+</code></pre>
+<h2 id="4python">4、Python</h2>
+<h3 id="41install-psycopg2">4.1、Install psycopg2</h3>
+<pre><code>[root@VM_0_29_centos ~]# yum install python-psycopg2
+</code></pre>
+<h3 id="42connect-database">4.2、Connect database</h3>
+<pre><code>#coding=utf-8
+#!/usr/bin/python
+import psycopg2
+try:
+    conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;opentenbase&quot;, password=&quot;&quot;, host=&quot;172.16.0.29&quot;, port=&quot;15432&quot;)
+    print &quot;Connected to database successful！&quot;
+    conn.close()
+except psycopg2.Error,msg:
+    print &quot;Failed to connect database, details： %s&quot; %(msg.args[0])
+</code></pre>
+<p>Run  </p>
+<pre><code>[opentenbase@VM_0_29_centos python]$ python conn.py 
+Connected to database successful！  
+</code></pre>
+<h3 id="43create-table">4.3、Create table</h3>
+<pre><code>#coding=utf-8
+#!/usr/bin/python
+import psycopg2
+try:
+    conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;opentenbase&quot;, password=&quot;&quot;, host=&quot;172.16.0.29&quot;, port=&quot;15432&quot;)
+    print &quot;Connected to database successful！&quot;
+    cur = conn.cursor()
+    sql = &quot;&quot;&quot;
+          create table opentenbase 
+          (
+              id int,
+              nickname varchar(100)
+          )distribute by shard(id) to group default_group
+          &quot;&quot;&quot;
+    cur.execute(sql)
+    conn.commit()
+    print &quot;Create table successful!&quot;    
+    conn.close()
+except psycopg2.Error,msg:
+    print &quot;OpenTenBase Error %s&quot; %(msg.args[0])
+</code></pre>
+<p>Run  </p>
+<pre><code>[opentenbase@VM_0_29_centos python]$ python createtable.py   
+Connected to database successful！ 
+Create table successful!
+</code></pre>
+<h3 id="44insert-data">4.4、Insert data</h3>
+<pre><code>#coding=utf-8
+#!/usr/bin/python
+import psycopg2
+try:
+    conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;opentenbase&quot;, password=&quot;&quot;, host=&quot;172.16.0.29&quot;, port=&quot;15432&quot;)
+    print &quot;Connected to database successful!&quot;    
+    cur = conn.cursor()
+    sql = &quot;insert into opentenbase values(1,'opentenbase'),(2,'opentenbase');&quot;
+    cur.execute(sql)
+    sql = &quot;insert into opentenbase values(%s,%s)&quot;   
+    cur.execute(sql,(3,'pg'))
+    conn.commit()
+    print &quot;Insert data successful!&quot;    
+    conn.close()
+except psycopg2.Error,msg:
+    print &quot;OpenTenBase Error %s&quot; %(msg.args[0])
+</code></pre>
+<p>Run  </p>
+<pre><code>[opentenbase@VM_0_29_centos python]$ python insert.py   
+Connected to database successful！  
+Insert data successful! 
+</code></pre>
+<h3 id="45query-data">4.5、Query data</h3>
+<pre><code>#coding=utf-8
+#!/usr/bin/python
+import psycopg2
+try:
+    conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;opentenbase&quot;, password=&quot;&quot;, host=&quot;172.16.0.29&quot;, port=&quot;15432&quot;)
+    print &quot;Connected to database successful!&quot;    
+    cur = conn.cursor()
+    sql = &quot;select * from opentenbase&quot;
+    cur.execute(sql)
+    rows = cur.fetchall()
+    for row in rows:
+        print &quot;ID = &quot;, row[0]
+        print &quot;NICKNAME = &quot;, row[1],&quot;\n&quot;
+    conn.close()
+except psycopg2.Error,msg:
+    print &quot;OpenTenBase Error %s&quot; %(msg.args[0])
+</code></pre>
+<p>Run  </p>
+<pre><code>[opentenbase@VM_0_29_centos python]$ python select.py   
+Connected to database successful！
+ID =  1
+NICKNAME =  opentenbase 
+
+ID =  2
+NICKNAME =  pgxz 
+
+ID =  3
+NICKNAME =  pg
+</code></pre>
+<h3 id="46use-copy-from-load-file-to-table">4.6、Use <code>copy from</code> load file to table</h3>
+<pre><code>#coding=utf-8
+#!/usr/bin/python
+import psycopg2
+try:
+    conn = psycopg2.connect(database=&quot;postgres&quot;, user=&quot;opentenbase&quot;, password=&quot;&quot;, host=&quot;172.16.0.29&quot;, port=&quot;15432&quot;)
+    print &quot;Connected to database successful！&quot;    
+    cur = conn.cursor()
+    filename = &quot;/data/opentenbase/opentenbase.txt&quot;
+    cols = ('id','nickname')
+    tablename=&quot;public.opentenbase&quot;
+    cur.copy_from(file=open(filename),table=tablename,columns=cols,sep=',')
+    conn.commit()
+    print &quot;Import data successful!&quot;
+    conn.close()
+except psycopg2.Error,msg:
+    print &quot;OpenTenBase Error %s&quot; %(msg.args[0])
+</code></pre>
+<p>Run</p>
+<pre><code>[opentenbase@VM_0_29_centos python]$ python copy_from.py 
+Connected to database successful！ 
+Import data successful!
+</code></pre>
+<h2 id="5php">5、PHP</h2>
+<h3 id="51connect-database">5.1、Connect database</h3>
+<pre><code>&lt;?php     
+$host=&quot;172.16.0.29&quot;;
+$port=&quot;15432&quot;;
+$dbname=&quot;postgres&quot;;
+$user=&quot;opentenbase&quot; ;
+$password=&quot;&quot;;  
+
+//Connect database
+$conn=@pg_connect(&quot;host=$host port=$port dbname=$dbname user=$user password=$password&quot;);      
+if (!$conn){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to connect database，details：&quot;.$error_msg.&quot;\n&lt;BR&gt;&quot;; ;
+    exit;
+}else{
+    echo &quot;Connected to database successful!&quot;\n&lt;BR&gt;&quot;;      
+} 
+//Close connect
+pg_close($conn);
+?&gt;
+</code></pre>
+<p>Run  </p>
+<pre><code>[root@VM_0_47_centos test]# curl http://127.0.0.1:8080/dbsta/test/conn.php
+Connected to database successful!
+</code></pre>
+<h3 id="52create-table">5.2、Create table</h3>
+<pre><code>&lt;?php     
+$host=&quot;172.16.0.29&quot;;
+$port=&quot;15432&quot;;
+$dbname=&quot;postgres&quot;;
+$user=&quot;opentenbase&quot; ;
+$password=&quot;&quot;;  
+
+//Connect database
+$conn=@pg_connect(&quot;host=$host port=$port dbname=$dbname user=$user password=$password&quot;);      
+if (!$conn){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to connect database，details：&quot;.$error_msg.&quot;\n&lt;BR&gt;&quot;; ;
+    exit;
+}else{
+    echo &quot;Connected to database successful!&quot;\n&lt;BR&gt;&quot;;      
+} 
+
+//Create table
+$sql=&quot;create table public.opentenbase(id integer,nickname varchar(100)) distribute by shard(id) to group default_group;&quot;;
+$result = @pg_exec($conn,$sql) ;
+if (!$result){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to create table，details：&quot;.$error_msg.&quot;\n&quot;; ;
+    exit;
+}else{
+    echo &quot;Creat table successful!&quot;\n&quot;;       
+}
+//Close connect
+pg_close($conn);
+?&gt;
+</code></pre>
+<p>run</p>
+<pre><code>[root@VM_0_47_centos test]# curl http://127.0.0.1:8080/dbsta/test/createtable.php
+Connected to database successful!
+Creat table successful!
+</code></pre>
+<h3 id="53insert-data">5.3、Insert data</h3>
+<pre><code>&lt;?php     
+$host=&quot;172.16.0.29&quot;;
+$port=&quot;15432&quot;;
+$dbname=&quot;postgres&quot;;
+$user=&quot;opentenbase&quot; ;
+$password=&quot;&quot;;  
+
+//Connect database
+$conn=@pg_connect(&quot;host=$host port=$port dbname=$dbname user=$user password=$password&quot;);      
+if (!$conn){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to connect database，details：&quot;.$error_msg.&quot;\n&quot;; ;
+    exit;
+}else{
+    echo &quot;Connected to database successful!&quot;\n&quot;;      
+} 
+
+//Insert data
+$sql=&quot;insert into public.opentenbase values(1,'opentenbase'),(2,'pgxz');&quot;;    
+$result = @pg_exec($conn,$sql) ;
+if (!$result){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to insert data, details：&quot;.$error_msg.&quot;\n&quot;;
+    exit;
+}else{
+    echo &quot;Insert data successful!&quot;\n&quot;;       
+}
+
+//Close connect
+pg_close($conn);
+
+?&gt;
+</code></pre>
+<p>Run</p>
+<pre><code>[opentenbase@VM_0_47_centos test]$ curl http://127.0.0.1:8080/dbsta/test/insert.php
+Connected to database successful!
+Insert data successful!
+</code></pre>
+<h3 id="54query-data">5.4、Query data</h3>
+<pre><code>&lt;?php     
+$host=&quot;172.16.0.29&quot;;
+$port=&quot;15432&quot;;
+$dbname=&quot;postgres&quot;;
+$user=&quot;opentenbase&quot; ;
+$password=&quot;&quot;;  
+
+//Connect database
+$conn=@pg_connect(&quot;host=$host port=$port dbname=$dbname user=$user password=$password&quot;);      
+if (!$conn){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to connect database，details: &quot;.$error_msg.&quot;\n&quot;; ;
+    exit;
+}else{
+    echo &quot;Connected to database successful!&quot;\n&quot;;      
+} 
+
+//Query data
+$sql=&quot;select id,nickname from public.opentenbase&quot;;    
+$result = @pg_exec($conn,$sql) ;
+if (!$result){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to query data, details ：&quot;.$error_msg.&quot;\n&quot;;
+    exit;
+}else{
+    echo &quot;Query data successful!&quot;\n&quot;;      
+}
+$record_num = pg_numrows($result);  
+echo &quot;Return query number: &quot;.$record_num.&quot;\n&quot;; 
+$rec=pg_fetch_all($result); 
+for($i=0;$i&lt;$record_num;$i++){
+    echo &quot;numbers: #&quot;.strval($i+1).&quot;\n&quot;;
+    echo &quot;id：&quot;.$rec[$i][&quot;id&quot;].&quot;\n&quot;;
+    echo &quot;nickname：&quot;.$rec[$i][&quot;nickname&quot;].&quot;\n\n&quot;;
+}
+//CLose connect 
+pg_close($conn);
+?&gt;
+</code></pre>
+<p>Use method  </p>
+<pre><code>[root@VM_0_47_centos ~]# curl http://127.0.0.1:8080/dbsta/test/select.php
+Connected to database successful!
+Query data successful!
+Return query number: 2
+numbers: 1
+id：1
+nickname：opentenbase
+
+numbers: 2
+id：2
+nickname：pgxz
+</code></pre>
+<h3 id="55copy-stream-data-into-table">5.5、Copy Stream data into table</h3>
+<pre><code>&lt;?php 
+
+$host=&quot;172.16.0.29&quot;;
+$port=&quot;15432&quot;;
+$dbname=&quot;postgres&quot;;
+$user=&quot;opentenbase&quot; ;
+$password=&quot;&quot;;  
+
+//Connect database
+$conn=@pg_connect(&quot;host=$host port=$port dbname=$dbname user=$user password=$password&quot;);      
+if (!$conn){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to connect database，details: &quot;.$error_msg.&quot;\n&quot;; ;
+    exit;
+}else{
+    echo &quot;Connected to database successful!&quot;\n&quot;;      
+}                                     
+$row=ARRAY(&quot;1,opentenbase&quot;,&quot;2,pgxz&quot;);   
+$flag=pg_copy_from($conn,&quot;public.opentenbase&quot;,$row,&quot;,&quot;);
+
+if (!$flag){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;copy wrong，details：&quot;.$error_msg.&quot;\n&quot;;
+}else{
+    echo &quot;copy successful!&quot;\n&quot;;          
+}
+
+//Close connect
+pg_close($conn);
+
+?&gt;
+</code></pre>
+<p>Use method</p>
+<pre><code>curl http://127.0.0.1/dbsta/cron/php_copy_from.php
+Connected to database successful!
+copy successful!
+</code></pre>
+<h3 id="56export-data-to-array">5.6、Export data to Array</h3>
+<pre><code>&lt;?php 
+
+$host=&quot;172.16.0.29&quot;;
+$port=&quot;15432&quot;;
+$dbname=&quot;postgres&quot;;
+$user=&quot;opentenbase&quot; ;
+$password=&quot;&quot;;  
+
+//Connect database
+$conn=@pg_connect(&quot;host=$host port=$port dbname=$dbname user=$user password=$password&quot;);      
+if (!$conn){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;Failed to connect database，details: &quot;.$error_msg.&quot;\n&quot;; ;
+    exit;
+}else{
+    echo &quot;Connected to database successful!&quot;\n&quot;;      
+}                                    
+
+$row=pg_copy_to($conn,&quot;public.opentenbase&quot;,&quot;,&quot;);  
+if (!$row){
+    $error_msg=@pg_errormessage($conn); 
+    echo &quot;copy wrong，details：&quot;.$error_msg.&quot;\n&quot;;
+}else{
+    print_r($row);
+}  
+//Close connect 
+pg_close($conn);              
+?&gt;
+</code></pre>
+<p>Use method </p>
+<pre><code>curl http://127.0.0.1/dbsta/cron/php_copy_to.php  
+Connected to database successful!
+Array
+(
+    [0] =&gt; 1,opentenbase
+
+    [1] =&gt; 2,pgxz
+
+)
+</code></pre>
+<h2 id="6golang">6、golang</h2>
+<h3 id="61connect-database">6.1、Connect database</h3>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+
+    &quot;github.com/jackc/pgx&quot;
+)
+
+func main() {
+    var error_msg string
+
+    //Connect database
+    conn, err := db_connect()
+    if err != nil {
+        error_msg = &quot;Failed to connect database, details：&quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    }
+    //Close connect
+    defer conn.Close()
+    write_log(&quot;Log&quot;, &quot;Connected to database successful！&quot;)
+
+}
+
+/*
+Function：write to log
+
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
+
+Return：none
+*/
+
+func write_log(log_level string, error_msg string) {
+    //print error message
+    fmt.Println(&quot;Time：&quot;, time.Now().Format(&quot;2006-01-02 15:04:05&quot;))
+    fmt.Println(&quot;Log level：&quot;, log_level)
+    fmt.Println(&quot;Details：&quot;, error_msg)
+}
+
+/*
+Function：Connect database
+
+Parameter：none
+
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
+
+*/
+
+func db_connect() (conn *pgx.Conn, err error) {
+    var config pgx.ConnConfig
+    config.Host = &quot;127.0.0.1&quot;    //localhost or ip
+    config.User = &quot;opentenbase&quot;         //username
+    config.Password = &quot;pgsql&quot;    //password
+    config.Database = &quot;postgres&quot; //database name
+    config.Port = 15432          //port
+    conn, err = pgx.Connect(config)
+    return conn, err
+}
+</code></pre>
+<pre><code>[root@VM_0_29_centos opentenbase]# go run conn.go 
+Time： 2018-04-03 20:40:28
+Log level： Log
+Details： Connected to database successful！
+</code></pre>
+<p>Compile And Run  </p>
+<pre><code>[root@VM_0_29_centos opentenbase]# go build conn.go 
+[root@VM_0_29_centos opentenbase]# ./conn 
+Time： 2018-04-03 20:40:48
+Log level： Log
+Details： Connected to database successful！
+</code></pre>
+<h3 id="62create-table">6.2、Create table</h3>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+
+    &quot;github.com/jackc/pgx&quot;
+)
+
+func main() {
+    var error_msg string
+    var sql string
+
+    //Connect database
+    conn, err := db_connect()
+    if err != nil {
+        error_msg = &quot;Failed to connect database，details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    }
+    //Close connection
+    defer conn.Close()
+    write_log(&quot;Log&quot;, &quot;Connected to database successful!&quot;)
+
+    //Create table
+    sql = &quot;create table public.opentenbase(id varchar(20),nickname varchar(100)) distribute by shard(id) to group  default_group;&quot;
+    _, err = conn.Exec(sql)
+    if err != nil {
+        error_msg = &quot;Failed to create table: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        write_log(&quot;Log&quot;, &quot;Create table successful!&quot;)
+    }
+}
+
+/*
+Function： Write log process
+
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
+
+Return：none
+*/
+
+func write_log(log_level string, error_msg string) {
+    //print error message
+    fmt.Println(&quot;Time：&quot;, time.Now().Format(&quot;2006-01-02 15:04:05&quot;))
+    fmt.Println(&quot;Log level：&quot;, log_level)
+    fmt.Println(&quot;Details：&quot;, error_msg)
+}
+
+/*
+Function：Connect database
+
+Parameter：none
+
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
+
+*/
+
+func db_connect() (conn *pgx.Conn, err error) {
+    var config pgx.ConnConfig
+    config.Host = &quot;127.0.0.1&quot;    //localhost or ip
+    config.User = &quot;opentenbase&quot;         //username
+    config.Password = &quot;pgsql&quot;    //password
+    config.Database = &quot;postgres&quot; //database name
+    config.Port = 15432          //port
+    conn, err = pgx.Connect(config)
+    return conn, err
+}
+</code></pre>
+<pre><code>[root@VM_0_29_centos opentenbase]# go run createtable.go 
+Time： 2018-04-03 20:50:24
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-03 20:50:24
+Log level： Log
+Details： Create table successful!
+</code></pre>
+<h3 id="63insert-data">6.3、Insert data</h3>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;strings&quot;
+    &quot;time&quot;
+
+    &quot;github.com/jackc/pgx&quot;
+)
+
+func main() {
+    var error_msg string
+    var sql string
+    var nickname string
+
+    //Connect database
+    conn, err := db_connect()
+    if err != nil {
+        error_msg = &quot;Failed to connect database，details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    }
+    //Close connection
+    defer conn.Close()
+    write_log(&quot;Log&quot;, &quot;Connected to database successful!&quot;)
+
+    //Insert data
+    sql = &quot;insert into public.opentenbase values('1','opentenbase'),('2','pgxz');&quot;
+    _, err = conn.Exec(sql)
+    if err != nil {
+        error_msg = &quot;Failed to insert data, details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        write_log(&quot;Log&quot;, &quot;Insert data successful!&quot;)
+    }
+
+    //Bind variables to insert data, no need to do anti-injection processing
+    sql = &quot;insert into public.opentenbase values($1,$2),($1,$3);&quot;
+    _, err = conn.Exec(sql, &quot;3&quot;, &quot;postgresql&quot;, &quot;postgres&quot;)
+    if err != nil {
+        error_msg = &quot;Failed to insert data, details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        write_log(&quot;Log&quot;, &quot;Insert data successful!&quot;)
+    }
+
+    //Splice sql statement to insert data, need to do anti-injection processing
+    nickname = &quot;OpenTenBase is ' good!&quot;
+    sql = &quot;insert into public.opentenbase values('1','&quot; + sql_data_encode(nickname) + &quot;')&quot;
+    _, err = conn.Exec(sql)
+    if err != nil {
+        error_msg = &quot;Failed to insert data, details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        write_log(&quot;Log&quot;, &quot;Insert data successful!&quot;)
+    }
+}
+
+/*
+Function：SQL query concatenation string encoding
+
+Parameter：
+str -- The string to be encode
+
+Return：
+Return encoded string
+
+*/
+
+func sql_data_encode(str string) string {
+    return strings.Replace(str, &quot;'&quot;, &quot;''&quot;, -1)
+}
+
+/*
+Function：Write log process
+
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
+
+Return：none
+*/
+
+func write_log(log_level string, error_msg string) {
+    //print error message
+    fmt.Println(&quot;Time：&quot;, time.Now().Format(&quot;2006-01-02 15:04:05&quot;))
+    fmt.Println(&quot;Log level：&quot;, log_level)
+    fmt.Println(&quot;Details：&quot;, error_msg)
+}
+
+/*
+Function：Connect database
+
+Parameter：none
+
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
+
+*/
+
+func db_connect() (conn *pgx.Conn, err error) {
+    var config pgx.ConnConfig
+    config.Host = &quot;127.0.0.1&quot;    //localhost or ip
+    config.User = &quot;opentenbase&quot;         //username
+    config.Password = &quot;pgsql&quot;    //password
+    config.Database = &quot;postgres&quot; //database name
+    config.Port = 15432          //port
+    conn, err = pgx.Connect(config)
+    return conn, err
+}
+</code></pre>
+<pre><code>[root@VM_0_29_centos opentenbase]# go run insert.go 
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Insert data successful!
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Insert data successful!
+Time： 2018-04-03 21:05:51
+Log level： Log
+Details： Insert data successful!
+</code></pre>
+<h3 id="64query-data">6.4、Query data</h3>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;strings&quot;
+    &quot;time&quot;
+
+    &quot;github.com/jackc/pgx&quot;
+)
+
+func main() {
+    var error_msg string
+    var sql string
+
+    //Connect database
+    conn, err := db_connect()
+    if err != nil {
+        error_msg = &quot;Failed to connect database，details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    }
+    //Close connection
+    defer conn.Close()
+    write_log(&quot;Log&quot;, &quot;Connected to database successful!&quot;)
+
+    sql = &quot;SELECT id,nickname FROM public.opentenbase LIMIT 2&quot;
+    rows, err := conn.Query(sql)
+    if err != nil {
+        error_msg = &quot;Failed to query data, details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        write_log(&quot;Log&quot;, &quot;Query data successful!&quot;)
+    }
+
+    var nickname string
+    var id string
+
+    for rows.Next() {
+        err = rows.Scan(&amp;id, &amp;nickname)
+        if err != nil {
+            error_msg = &quot;Failed to query data, details: &quot; + err.Error()
+            write_log(&quot;Error&quot;, error_msg)
+            return
+        }
+        error_msg = fmt.Sprintf(&quot;id：%s nickname：%s&quot;, id, nickname)
+        write_log(&quot;Log&quot;, error_msg)
+    }
+    rows.Close()
+
+    nickname = &quot;opentenbase&quot;
+
+    sql = &quot;SELECT id,nickname FROM public.opentenbase WHERE nickname ='&quot; + sql_data_encode(nickname) + &quot;' &quot;
+    rows, err = conn.Query(sql)
+    if err != nil {
+        error_msg = &quot;Failed to query data, details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        write_log(&quot;Log&quot;, &quot;Query data successful!&quot;)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        err = rows.Scan(&amp;id, &amp;nickname)
+        if err != nil {
+            error_msg = &quot;Failed to query data, details: &quot; + err.Error()
+            write_log(&quot;Error&quot;, error_msg)
+            return
+        }
+        error_msg = fmt.Sprintf(&quot;id：%s nickname：%s&quot;, id, nickname)
+        write_log(&quot;Log&quot;, error_msg)
+    }
+}
+
+/*
+Function：SQL query concatenation string encoding
+
+Parameter：
+str -- The string to be encode
+
+Return：
+Return encoded string
+
+*/
+
+func sql_data_encode(str string) string {
+    return strings.Replace(str, &quot;'&quot;, &quot;''&quot;, -1)
+}
+
+/*
+Function：Write log process
+
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
+
+Return：none
+*/
+
+func write_log(log_level string, error_msg string) {
+    //print error message
+    fmt.Println(&quot;Time：&quot;, time.Now().Format(&quot;2006-01-02 15:04:05&quot;))
+    fmt.Println(&quot;Log level：&quot;, log_level)
+    fmt.Println(&quot;Details：&quot;, error_msg)
+}
+
+/*
+Function：Connect database
+
+Parameter：none
+
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
+
+*/
+
+func db_connect() (conn *pgx.Conn, err error) {
+    var config pgx.ConnConfig
+    config.Host = &quot;127.0.0.1&quot;    //localhost or ip
+    config.User = &quot;opentenbase&quot;         //username
+    config.Password = &quot;pgsql&quot;    //password
+    config.Database = &quot;postgres&quot; //database name
+    config.Port = 15432          //port
+    conn, err = pgx.Connect(config)
+    return conn, err
+}
+</code></pre>
+<pre><code>[root@VM_0_29_centos opentenbase]# go run select.go
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： Query data successful!
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： id：2 nickname：opentenbase
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： id：3 nickname：postgresql
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： Query data successful!
+Time： 2018-04-09 10:35:50
+Log level： Log
+Details： id：1 nickname：opentenbase
+</code></pre>
+<h3 id="65copy-stream-data-into-table">6.5、Copy Stream data into table</h3>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;math/rand&quot;
+    &quot;time&quot;
+
+    &quot;github.com/jackc/pgx&quot;
+)
+
+func main() {
+    var error_msg string
+
+    //Connect database
+    conn, err := db_connect()
+    if err != nil {
+        error_msg = &quot;Failed to connect database，details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    }
+    //Close connection
+    defer conn.Close()
+    write_log(&quot;Log&quot;, &quot;Connected to database successful!&quot;)
+
+    //create 5000 data
+    inputRows := [][]interface{}{}
+    var id string
+    var nickname string
+    for i := 0; i &lt; 5000; i++ {
+        id = fmt.Sprintf(&quot;%d&quot;, rand.Intn(10000))
+        nickname = fmt.Sprintf(&quot;%d&quot;, rand.Intn(10000))
+        inputRows = append(inputRows, []interface{}{id, nickname})
+    }
+    copyCount, err := conn.CopyFrom(pgx.Identifier{&quot;opentenbase&quot;}, []string{&quot;id&quot;, &quot;nickname&quot;}, pgx.CopyFromRows(inputRows))
+    if err != nil {
+        error_msg = &quot;Failed to use copyfrom, details: &quot; + err.Error()
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    }
+    if copyCount != len(inputRows) {
+        error_msg = fmt.Sprintf(&quot;Failed to use copyfrom，copy lines：%d Return lines：%d&quot;, len(inputRows), copyCount)
+        write_log(&quot;Error&quot;, error_msg)
+        return
+    } else {
+        error_msg = &quot;Copy successful!&quot;
+        write_log(&quot;Log&quot;, error_msg)
+    }
+
+}
+
+/*
+Function：Write log process
+
+Parameter：
+log_level -- level of log，only `Error` or `Log`
+error_msg -- content of log
+
+Return：none
+*/
+
+func write_log(log_level string, error_msg string) {
+    //print error message
+    fmt.Println(&quot;Time：&quot;, time.Now().Format(&quot;2006-01-02 15:04:05&quot;))
+    fmt.Println(&quot;Log level：&quot;, log_level)
+    fmt.Println(&quot;Details：&quot;, error_msg)
+}
+
+/*
+Function：Connect database
+
+Parameter：none
+
+Return：
+conn *pgx.Conn -- connection information
+err error -- error message
+
+*/
+
+func db_connect() (conn *pgx.Conn, err error) {
+    var config pgx.ConnConfig
+    config.Host = &quot;127.0.0.1&quot;    //localhost or ip
+    config.User = &quot;opentenbase&quot;         //username
+    config.Password = &quot;pgsql&quot;    //password
+    config.Database = &quot;postgres&quot; //database name
+    config.Port = 15432          //port
+    conn, err = pgx.Connect(config)
+    return conn, err
+}
+</code></pre>
+<pre><code>[root@VM_0_29_centos opentenbase]# go run copy_from.go 
+Time： 2018-04-09 10:36:40
+Log level： Log
+Details： Connected to database successful！
+Time： 2018-04-09 10:36:40
+Log level： Log
+Details： Copy successful!
+</code></pre>
+<h3 id="66packages-for-golang">6.6、Packages for golang</h3>
+<p>Needs to clone from git:<br />
+https://github.com/jackc/pgx<br />
+https://github.com/pkg/errors  </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>

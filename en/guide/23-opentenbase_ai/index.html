@@ -1,0 +1,3118 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../12-opentenbase_subscription/">
+      
+      
+        <link rel="next" href="../16-txsql_quickstart/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>V5.0 Feature opentenbase_ai - OpenTenBase Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#opentenbase_ai-plugin-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="OpenTenBase Documentation" class="md-header__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTenBase Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              V5.0 Feature opentenbase_ai
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../guide/23-opentenbase_ai/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-quickstart/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release/v2-6-0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Releases
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../faq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  FAQ
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../contribution/how-to/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Contributing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Download
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="OpenTenBase Documentation" class="md-nav__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    OpenTenBase Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-basic-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-advanced-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Switching
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-user-rights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Rights Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-dump-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Dump and Restore
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-problem-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Problem tracking and Performance Optimization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-pg_clean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_clean
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-pg_unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_unlock
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-opentenbase_subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature opentenbase_subscription
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    V5.0 Feature opentenbase_ai
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    V5.0 Feature opentenbase_ai
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-using-hunyuan-model-as-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start (Using Hunyuan Model as Example)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start (Using Hunyuan Model as Example)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-hunyuan-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Hunyuan Model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the LLM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-existing-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managing Existing Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-default-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Default Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polymorphic-generate-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Polymorphic Generate Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-specific-generation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type-Specific Generation Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-Specific Generation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numeric-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Numeric Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Boolean Generation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-processing-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Processing Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Processing Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-summarization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Summarization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Translation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentiment-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sentiment Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-answering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question Answering
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedding-vector-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embedding Vector Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-configuration-and-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Configuration and Customization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Configuration and Customization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Metadata Table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-non-openai-compatible-format-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Non-OpenAI Compatible Format Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-management-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Management Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guc-parameter-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUC Parameter List
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    TXSQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            TXSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-txsql_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-txsql_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    架构说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-txsql_deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deploy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-txsql_access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-txsql_basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-txsql_advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-txsql_faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Peripheral ecosystem
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Peripheral ecosystem
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-opentenbase_monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monitoring visualization with Prometheus/Grafana
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-kubeblocks-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run opentenbase on kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-docker-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building simple cluster with docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Releases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-6-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-5-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-4-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.4.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-3-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release/v2-2-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.2.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            FAQ
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TXSQL FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to contribute
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribution/docs-format-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation format guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Download
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-using-hunyuan-model-as-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start (Using Hunyuan Model as Example)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start (Using Hunyuan Model as Example)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-hunyuan-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Hunyuan Model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the LLM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-existing-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managing Existing Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-default-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Default Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polymorphic-generate-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Polymorphic Generate Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-specific-generation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type-Specific Generation Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-Specific Generation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numeric-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Numeric Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Boolean Generation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-processing-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Processing Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Processing Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-summarization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Summarization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Translation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentiment-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sentiment Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-answering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question Answering
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedding-vector-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embedding Vector Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-configuration-and-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Configuration and Customization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Configuration and Customization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Metadata Table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-non-openai-compatible-format-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Non-OpenAI Compatible Format Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-management-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Management Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guc-parameter-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUC Parameter List
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/OpenTenBase/docs/edit/main/docs/guide/23-opentenbase_ai.en.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/OpenTenBase/docs/raw/main/docs/guide/23-opentenbase_ai.en.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="opentenbase_ai-plugin-documentation">opentenbase_ai Plugin Documentation</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The opentenbase_ai plugin provides an interface for integrating large language model AI capabilities into PostgreSQL databases, allowing you to use AI features directly in SQL. The plugin supports multiple AI model providers (including OpenAI, DeepSeek, Tencent Hunyuan, Alibaba Tongyi Qianwen, etc.), offering text generation, translation, sentiment analysis, question answering, text summarization, embedding vector generation, and image analysis capabilities.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>HTTP extension (the plugin depends on HTTP extension for API calls)</li>
+</ul>
+<h3 id="installation-steps">Installation Steps</h3>
+<ol>
+<li>Ensure your instance has the HTTP extension installed</li>
+<li>Install the opentenbase_ai plugin:</li>
+</ol>
+<pre><code class="language-sql">CREATE EXTENSION opentenbase_ai;
+</code></pre>
+<p>Or install with the pgsql-http plugin together:</p>
+<pre><code class="language-sql">CREATE EXTENSION opentenbase_ai CASCADE;
+</code></pre>
+<h2 id="quick-start-using-hunyuan-model-as-example">Quick Start (Using Hunyuan Model as Example)</h2>
+<h3 id="configure-hunyuan-model">Configure Hunyuan Model</h3>
+<ol>
+<li>
+<p>Obtain an API token for the Hunyuan model</p>
+</li>
+<li>
+<p>Add the Hunyuan model definition to the model metadata table</p>
+</li>
+</ol>
+<p><code>sql
+   SELECT ai.add_completion_model(
+       model_name =&gt; 'hunyuan_chat',
+       uri =&gt; 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions',
+       default_args =&gt; '{"model": "hunyuan-lite"}'::jsonb,
+       token =&gt; 'your_hunyuan_api_key',
+       model_provider =&gt; 'tencent'
+   );</code></p>
+<ol>
+<li>Configure Hunyuan as the default model</li>
+</ol>
+<p><code>sql
+   SET ai.completion_model = 'hunyuan_chat';</code></p>
+<h3 id="using-the-llm">Using the LLM</h3>
+<p>After configuring the Hunyuan model, you can start using it:</p>
+<p><strong>Text Generation</strong></p>
+<pre><code class="language-sql">SELECT ai.generate_text('Write an attractive description for the following product: Smart Watch');
+</code></pre>
+<p><strong>Sentiment Analysis</strong></p>
+<pre><code class="language-sql">SELECT ai.sentiment('This product is very good, I am satisfied');
+</code></pre>
+<p><strong>Text Summarization</strong> </p>
+<pre><code class="language-sql">SELECT ai.summarize('Here is a long product description text...');
+</code></pre>
+<p><strong>Generate with Specific Return Type</strong></p>
+<pre><code class="language-sql">SELECT ai.generate('9*9 = ?',NULL::integer);
+</code></pre>
+<h3 id="model-management">Model Management</h3>
+<h4 id="adding-models">Adding Models</h4>
+<p>The plugin provides multiple ways to add AI models:</p>
+<ol>
+<li><strong>Add OpenAI-compatible completion model</strong>:</li>
+</ol>
+<pre><code class="language-sql">SELECT ai.add_completion_model(
+    model_name =&gt; 'gpt-4',
+    uri =&gt; 'https://api.openai.com/v1/chat/completions',
+    default_args =&gt; '{&quot;model&quot;: &quot;gpt-4&quot;, &quot;temperature&quot;: 0.7}'::jsonb,
+    token =&gt; 'your_openai_api_key',
+    model_provider =&gt; 'openai'
+);
+</code></pre>
+<ol>
+<li><strong>Add OpenAI-compatible embedding model</strong>:</li>
+</ol>
+<pre><code class="language-sql">SELECT ai.add_embedding_model(
+    model_name =&gt; 'text-embedding-ada-002',
+    uri =&gt; 'https://api.openai.com/v1/embeddings',
+    default_args =&gt; '{&quot;model&quot;: &quot;text-embedding-ada-002&quot;}'::jsonb,
+    token =&gt; 'your_openai_api_key',
+    model_provider =&gt; 'openai'
+);
+</code></pre>
+<ol>
+<li><strong>Add OpenAI-compatible image model</strong>:</li>
+</ol>
+<pre><code class="language-sql">SELECT ai.add_image_model(
+    model_name =&gt; 'gpt-4-vision',
+    uri =&gt; 'https://api.openai.com/v1/chat/completions',
+    default_args =&gt; '{&quot;model&quot;: &quot;gpt-4-vision-preview&quot;, &quot;max_tokens&quot;: 300}'::jsonb,
+    token =&gt; 'your_openai_api_key',
+    model_provider =&gt; 'openai'
+);
+</code></pre>
+<ol>
+<li><strong>Examples of adding other LLM models</strong>:</li>
+</ol>
+<pre><code class="language-sql">-- DeepSeek
+SELECT ai.add_completion_model(
+    model_name =&gt; 'deepseek-chat',
+    uri =&gt; 'https://api.deepseek.com/v1/chat/completions',
+    default_args =&gt; '{&quot;model&quot;: &quot;deepseek-chat&quot;, &quot;temperature&quot;: 0.7}'::jsonb,
+    token =&gt; 'your_deepseek_api_key',
+    model_provider =&gt; 'deepseek'
+);
+
+-- Tencent Hunyuan
+SELECT ai.add_completion_model(
+    model_name =&gt; 'hunyuan_chat',
+    uri =&gt; 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions',
+    default_args =&gt; '{&quot;model&quot;: &quot;hunyuan-lite&quot;}'::jsonb,
+    token =&gt; 'your_hunyuan_api_key',
+    model_provider =&gt; 'tencent'
+);
+
+SELECT ai.add_completion_model(
+    model_name =&gt; 'hunyuan_generate',
+    uri =&gt; 'https://api.hunyuan.cloud.tencent.com/v1/chat/completions',
+    default_args =&gt; '{
+        &quot;model&quot;: &quot;hunyuan-lite&quot;
+    }'::jsonb,
+    model_provider =&gt; 'tencent',
+    token =&gt; 'your_hunyuan_api_key'
+);
+
+-- Alibaba Tongyi Qianwen
+SELECT ai.add_completion_model(
+    model_name =&gt; 'qwen_chat',
+    uri =&gt; 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+    default_args =&gt; '{&quot;model&quot;: &quot;qwen-turbo&quot;}'::jsonb,
+    token =&gt; 'your_qwen_api_key',
+    model_provider =&gt; 'aliyun'
+);
+</code></pre>
+<blockquote>
+<p>:bulb: <strong>Tip:</strong> Note that the 'model' field in default_args must be filled in.</p>
+</blockquote>
+<h4 id="managing-existing-models">Managing Existing Models</h4>
+<pre><code class="language-sql">-- List all configured models
+SELECT * FROM ai.list_models();
+
+-- Get details for a specific model
+SELECT * FROM ai.get_model_details('model_name');
+
+-- Update model configuration
+SELECT ai.update_model('model_name', 'config_field', 'new_value');
+
+-- Delete a model
+SELECT ai.delete_model('model_name');
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<h3 id="setting-default-models">Setting Default Models</h3>
+<p>You can configure the default AI models by setting the following GUC (Grand Unified Configuration) parameters:</p>
+<pre><code class="language-sql">-- Set the default text completion model
+SET ai.completion_model = 'model_name';
+
+-- Set the default embedding vector model
+SET ai.embedding_model = 'embedding_model_name';
+
+-- Set the default image analysis model
+SET ai.image_model = 'image_model_name';
+</code></pre>
+<p>You can set these parameters at different levels:</p>
+<pre><code class="language-sql">-- Session level (only effective for the current session)
+SET ai.completion_model = 'gpt-4';
+
+-- User level (effective for all sessions of a specific user)
+ALTER USER username SET ai.completion_model = 'gpt-4';
+
+-- Database level (effective for all sessions in a specific database)
+ALTER DATABASE dbname SET ai.completion_model = 'gpt-4';
+
+-- Global level (needs to be configured in postgresql.conf)
+-- Add to postgresql.conf: ai.completion_model = 'gpt-4'
+</code></pre>
+<h2 id="basic-features">Basic Features</h2>
+<h3 id="polymorphic-generate-function">Polymorphic Generate Function</h3>
+<p>The core of opentenbase_ai is its polymorphic <code>generate</code> function, which can return different data types as needed. This function is the foundation for all type-specific generation functions:</p>
+<pre><code class="language-sql">-- Complete signature of the polymorphic generate function
+ai.generate(
+    prompt text,             -- Prompt text
+    dummy anyelement,        -- Placeholder to determine return type
+    model_name text = NULL,  -- Optional: model name to use
+    config jsonb = '{}'      -- Optional: additional configuration parameters
+) RETURNS anyelement;        -- Returns a result of the same type as the dummy parameter
+</code></pre>
+<p>Usage examples:</p>
+<pre><code class="language-sql">-- Return text
+SELECT ai.generate('What are the main features of PostgreSQL?', NULL::text);
+
+-- Return integer
+SELECT ai.generate('Calculate the result of 123 + 456', NULL::integer);
+
+-- Return floating point
+SELECT ai.generate('What is the value of pi?', NULL::double precision);
+
+-- Return boolean
+SELECT ai.generate('Is the Earth round?', NULL::boolean);
+
+-- Specify model
+SELECT ai.generate('What is artificial intelligence?', NULL::text, 'gpt-4');
+
+-- Specify configuration
+SELECT ai.generate(
+    'Explain the basic principles of quantum computing',
+    NULL::text,
+    'gpt-4',
+    '{&quot;temperature&quot;: 0.2, &quot;max_tokens&quot;: 1000}'::jsonb
+);
+</code></pre>
+<p>The polymorphic generate function currently supports the following return types:
+- Text types: text
+- Integer types: integer, bigint
+- Floating point types: real, double precision
+- Boolean type: boolean</p>
+<h3 id="type-specific-generation-functions">Type-Specific Generation Functions</h3>
+<p>opentenbase_ai provides various type-specific generation functions, which are wrappers around the polymorphic <code>generate</code> function, generating different types of results based on your needs:</p>
+<h4 id="text-generation">Text Generation</h4>
+<pre><code class="language-sql">-- Basic text generation
+SELECT ai.generate_text('Please introduce the main features of PostgreSQL database');
+
+-- Specify model
+SELECT ai.generate_text('Please introduce the main features of PostgreSQL database', 'gpt-4');
+
+-- Custom configuration parameters
+SELECT ai.generate_text(
+    'Please introduce the main features of PostgreSQL database',
+    'gpt-4',
+    '{&quot;temperature&quot;: 0.3, &quot;max_tokens&quot;: 500}'::jsonb
+);
+</code></pre>
+<h4 id="numeric-generation">Numeric Generation</h4>
+<pre><code class="language-sql">-- Integer generation
+SELECT ai.generate_int('What is the world population?');
+
+-- Floating point generation
+SELECT ai.generate_double('What is the value of pi?');
+</code></pre>
+<h4 id="boolean-generation">Boolean Generation</h4>
+<pre><code class="language-sql">-- Boolean generation
+SELECT ai.generate_bool('Is the Earth round?');
+</code></pre>
+<h3 id="text-processing-functions">Text Processing Functions</h3>
+<h4 id="text-summarization">Text Summarization</h4>
+<pre><code class="language-sql">-- Basic usage
+SELECT ai.summarize('Here is a long text content...');
+
+-- Specify model
+SELECT ai.summarize('Here is a long text content...', 'gpt-4');
+
+-- Custom configuration
+SELECT ai.summarize(
+    'Here is a long text content...',
+    'gpt-4',
+    '{&quot;temperature&quot;: 0.3}'::jsonb
+);
+</code></pre>
+<h4 id="text-translation">Text Translation</h4>
+<pre><code class="language-sql">-- Basic usage
+SELECT ai.translate('Hello, world!', 'Chinese');
+
+-- Translate to specific language
+SELECT ai.translate('你好，世界！', 'English');
+
+-- Specify model and configuration
+SELECT ai.translate(
+    '你好，世界！',
+    'English',
+    'gpt-4',
+    '{&quot;temperature&quot;: 0.3}'::jsonb
+);
+</code></pre>
+<h4 id="sentiment-analysis">Sentiment Analysis</h4>
+<pre><code class="language-sql">-- Basic usage
+SELECT ai.sentiment('This product is very good, I am satisfied!');
+
+-- Specify model
+SELECT ai.sentiment('This product is very good, I am satisfied!', 'gpt-4');
+</code></pre>
+<h4 id="question-answering">Question Answering</h4>
+<pre><code class="language-sql">-- Basic usage
+SELECT ai.extract_answer(
+    'Question: Who invented relativity?',
+    'Einstein published the general theory of relativity in 1915, which was a major breakthrough in physics.'
+);
+
+-- Specify model and configuration
+SELECT ai.extract_answer(
+    'Question: Who invented relativity?',
+    'Einstein published the general theory of relativity in 1915, which was a major breakthrough in physics.',
+    'gpt-4',
+    '{&quot;temperature&quot;: 0.1}'::jsonb
+);
+</code></pre>
+<h3 id="embedding-vector-generation">Embedding Vector Generation</h3>
+<pre><code class="language-sql">-- Basic usage
+SELECT ai.embedding('This is a text that needs to generate embedding vectors');
+
+-- Specify model
+SELECT ai.embedding('This is a text that needs to generate embedding vectors', 'text-embedding-ada-002');
+</code></pre>
+<h3 id="image-analysis">Image Analysis</h3>
+<pre><code class="language-sql">-- Using image URL
+SELECT ai.image('What is in this image?', 'https://example.com/image.jpg');
+
+-- Using binary image data
+SELECT ai.image('What is in this image?', image_data_column)
+FROM images_table
+WHERE id = 1;
+
+-- Specify model and configuration
+SELECT ai.image(
+    'What is in this image?',
+    'https://example.com/image.jpg',
+    'gpt-4-vision',
+    '{&quot;max_tokens&quot;: 500}'::jsonb
+);
+</code></pre>
+<blockquote>
+<p>:bulb: <strong>Tip:</strong> Note that when calling a model, it will first use the model name specified in the function parameters. If not specified, it will use the default model set in the current GUC settings.</p>
+</blockquote>
+<h2 id="advanced-configuration-and-customization">Advanced Configuration and Customization</h2>
+<h3 id="model-metadata-table">Model Metadata Table</h3>
+<p>The opentenbase_ai plugin uses the ai_model_list table to store configuration information for all models. The structure of this table is as follows:</p>
+<pre><code class="language-sql">CREATE TABLE public.ai_model_list (
+    model_name TEXT PRIMARY KEY,        -- Model name
+    model_provider TEXT,                -- Model provider
+    request_type TEXT NOT NULL,         -- Request type (GET/POST etc.)
+    request_header http_header[],       -- HTTP request headers
+    uri TEXT NOT NULL,                  -- API endpoint URL
+    content_type TEXT NOT NULL,         -- Content type
+    default_args JSONB NOT NULL,        -- Default parameters
+    json_path TEXT NOT NULL             -- JSON response path
+)
+</code></pre>
+<h3 id="adding-non-openai-compatible-format-models">Adding Non-OpenAI Compatible Format Models</h3>
+<p>The opentenbase_ai plugin supports adding models with non-OpenAI compatible formats through the ai.add_model function. This allows you to integrate model services with any custom API format:</p>
+<pre><code class="language-sql">SELECT ai.add_model(
+    model_name =&gt; 'custom_model',           -- Model name
+    request_header =&gt; ARRAY[                -- Request headers
+        http_header('Authorization', 'Bearer your_token'),
+        http_header('X-Custom-Header', 'value')
+    ],
+    uri =&gt; 'https://api.example.com/v1/endpoint',  -- API endpoint
+    default_args =&gt; '{&quot;key&quot;: &quot;value&quot;}'::jsonb,     -- Default parameters
+    model_provider =&gt; 'custom',                    -- Provider
+    request_type =&gt; 'POST',                        -- Request type
+    content_type =&gt; 'application/json',            -- Content type
+    json_path =&gt; 'SELECT %L::jsonb-&gt;''result''-&gt;''text''::TEXT'  -- Response parsing path (fill according to actual http response path)
+);
+</code></pre>
+<h2 id="network-configuration">Network Configuration</h2>
+<p>opentenbase_ai makes HTTP calls to remote models through the pgsql-http plugin, so HTTP-related configuration can be modified through parameters related to the pgsql-http plugin.</p>
+<p>Common parameter configurations are as follows:</p>
+<pre><code class="language-sql">-- Set request timeout in milliseconds
+SET http.timeout_msec TO 200000;
+
+SELECT http.http_set_curlopt('CURLOPT_TIMEOUT', '200000');
+
+-- Set connection timeout
+SELECT http.http_set_curlopt('CURLOPT_CONNECTTIMEOUT_MS', '200000')
+</code></pre>
+<p>For more detailed configuration, refer to the community pgsql-http plugin official website:</p>
+<p>https://github.com/pramsey/pgsql-http</p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="function-list">Function List</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Function</th>
+<th>Return Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Polymorphic Generation</td>
+<td><code>ai.generate(prompt, dummy, model_name, config)</code></td>
+<td>anyelement</td>
+</tr>
+<tr>
+<td>Text Generation</td>
+<td><code>ai.generate_text(prompt, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Integer Generation</td>
+<td><code>ai.generate_int(prompt, model_name, config)</code></td>
+<td>INTEGER</td>
+</tr>
+<tr>
+<td>Float Generation</td>
+<td><code>ai.generate_double(prompt, model_name, config)</code></td>
+<td>DOUBLE PRECISION</td>
+</tr>
+<tr>
+<td>Boolean Generation</td>
+<td><code>ai.generate_bool(prompt, model_name, config)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>Text Summarization</td>
+<td><code>ai.summarize(text_content, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Text Translation</td>
+<td><code>ai.translate(text_content, target_language, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Sentiment Analysis</td>
+<td><code>ai.sentiment(text_content, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Question Answering</td>
+<td><code>ai.extract_answer(question, context, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Embedding Vector Generation</td>
+<td><code>ai.embedding(input, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Image Analysis</td>
+<td><code>ai.image(prompt, image_url, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Image Analysis</td>
+<td><code>ai.image(prompt, image_bytea, model_name, config)</code></td>
+<td>TEXT</td>
+</tr>
+</tbody>
+</table>
+<h3 id="model-management-functions">Model Management Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Function</th>
+<th>Return Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add Generic Model</td>
+<td><code>ai.add_model(...)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>Add Completion Model</td>
+<td><code>ai.add_completion_model(...)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>Add Embedding Model</td>
+<td><code>ai.add_embedding_model(...)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>Add Image Model</td>
+<td><code>ai.add_image_model(...)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>Delete Model</td>
+<td><code>ai.delete_model(model_name)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>Update Model Config</td>
+<td><code>ai.update_model(model_name, config, value)</code></td>
+<td>BOOLEAN</td>
+</tr>
+<tr>
+<td>List All Models</td>
+<td><code>ai.list_models()</code></td>
+<td>SETOF ai_model_list</td>
+</tr>
+</tbody>
+</table>
+<h3 id="advanced-usage">Advanced Usage</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Function</th>
+<th>Return Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low-level Model Call</td>
+<td><code>ai.invoke_model(model_name, user_args)</code></td>
+<td>TEXT</td>
+</tr>
+<tr>
+<td>Raw HTTP Response</td>
+<td><code>ai.raw_invoke_model(model_name, user_args)</code></td>
+<td>http_response</td>
+</tr>
+</tbody>
+</table>
+<h3 id="guc-parameter-list">GUC Parameter List</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+<th>Default Value</th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ai.completion_model</code></td>
+<td>Default text completion model</td>
+<td>NULL</td>
+<td>USERSET</td>
+</tr>
+<tr>
+<td><code>ai.embedding_model</code></td>
+<td>Default embedding vector model</td>
+<td>NULL</td>
+<td>USERSET</td>
+</tr>
+<tr>
+<td><code>ai.image_model</code></td>
+<td>Default image analysis model</td>
+<td>NULL</td>
+<td>USERSET</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
