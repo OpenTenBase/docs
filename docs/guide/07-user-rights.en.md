@@ -1,8 +1,8 @@
 # User Management 
 
-## Create User 
+## Create User
 
-### Create Regular User 
+### Create Regular User
 
 Using the administrator "opentenbase" to connect to a specific "cn" node, the following operations are the same:
 
@@ -17,11 +17,11 @@ CREATE ROLE
 
 Explanation:
 
--  The above command creates a user named `user1` with specified attributes using the `with` clause.
-- 	`login` specifies that the user can log in.
--  	password  'user1@123' specifies the user's password. 
+- The above command creates a user named `user1` with specified attributes using the `with` clause.
+- `login` specifies that the user can log in.
+- password 'user1@123' specifies the user's password.
 
-###  Create an administrator user 
+### Create an administrator user
 
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
@@ -35,9 +35,9 @@ CREATE ROLE
 
 Explanation:
 
--	`with superuser` specifies that this user is an administrator 
+-	`with superuser` specifies that this user is an administrator
 
-### Additional User Attribute Configuration 
+### Additional User Attribute Configuration
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -49,11 +49,11 @@ CREATE ROLE
 
 Explanation:
 
--	`createdb` specifies that the user can create databases
+-	`createdb` specifies that the user can create databases.
 -	`createrole`specifies that the user can create other users.
 -	`replication`specifies that the user can be used for data synchronization replication.
 -	`CONNECTION LIMIT 100`indicates that the user's maximum connection limit is 100. Note that connections between opentenbase dn nodes will also connect to each other; `-1` (default) indicates no limit.
--	`VALID UNTIL '2023-09-30 23:59:59'`ndicates the expiration time for the user's password,Use `VALID UNTIL 'infinity'` to make a password valid indefinitely.
+-	`VALID UNTIL '2023-09-30 23:59:59'` indicates the expiration time for the user's password. Use `VALID UNTIL 'infinity'` to make a password valid indefinitely.
 
 ## Modify User Attributes
 ### Disallow User Login 
@@ -69,7 +69,7 @@ postgres=# alter role user1 with login ;
 ALTER ROLE
 ```
 
-### Set User as Administrator and Non-Administrator 
+### Set User as Administrator and Non-Administrator
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -99,7 +99,7 @@ Explanation:
 
 -	`CONNECTION LIMIT 100` indicates that the user's maximum connection limit is 100. Note that connections between opentenbase dn nodes will also connect to each other; `-1` (default) indicates no limit.
 
-### Set User Password Expiry Time 
+### Set User Password Expiry Time
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -111,11 +111,12 @@ ALTER ROLE
 postgres=# alter role user1 with VALID UNTIL 'infinity'; 
 ALTER ROLE
 ```
+
 Explanation:
 
--	`VALID UNTIL '2023-09-30 23:59:59'`indicates the expiration time for the user's password. Use `VALID UNTIL 'infinity'`  to make a password valid indefinitely.
+-	`VALID UNTIL '2023-09-30 23:59:59'` indicates the expiration time for the user's password. Use `VALID UNTIL 'infinity'` to make a password valid indefinitely.
 
-### Change User Password 
+### Change User Password
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -132,9 +133,10 @@ Enter new password:
 Enter it again: 
 postgres=#  
 ```
-Enter the new password twice. Changing the password using `\password` is more secure because the password information is not recorded in the log file.  
 
-### Additional User Attribute Configuration 
+Enter the new password twice. Changing the password using `\password` is more secure because the password information is not recorded in the log file. 
+
+### Additional User Attribute Configuration
 ```
 [opentenbase@VM_0_29_centos  ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -151,7 +153,7 @@ Explanation:
 
 -	`createdb/nocreatedb` specifies whether the user can create databases.
 -	`createrole/nocreaterole` specifies whether the user can create other users.
--	`replication/nocreaterole`specifies whether the user can be used for data synchronization replication.
+-	`replication/nocreaterole` specifies whether the user can be used for data synchronization replication.
 
 ## Query User 
 ### psql Shortcut Commands for Querying 
@@ -174,9 +176,9 @@ postgres=# \du
 
 Explanation:
 
--	`Attributes` displayed the user's attributes 
+-	`Attributes` displayed the user's attributes
 
-### Query User System Table 
+### Query User System Table
 ```
 [opentenbase@VM_0_29_centos  ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -199,7 +201,7 @@ rolconfig      |
 oid            | 10
 ```
 
-## Drop User 
+## Drop User
 ```
 [opentenbase@VM_0_29_centos  ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -213,7 +215,7 @@ Explanation:
 
 - If the user has existing tables, the removal may be restricted. To prevent user logins without completely removing the user, consider using `nologin` to disable user login.
 
-## User and Resource Search Path Management 
+## User and Resource Search Path Management
 
 The default resource search path in OpenTenBase is:
 
@@ -227,7 +229,7 @@ postgres=# show search_path ;
 
 When accessing resources such as tables and views, the system first searches for objects in a schema with a name matching the user's name. If no matching schema is found, the system then searches in the public schema.
 
-### Configuring User's Default Search Path 
+### Configuring User's Default Search Path
 
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
@@ -242,10 +244,10 @@ ALTER ROLE
 postgres=# 
 
 ```
-Explanation: 
+Explanation:
 
 -	Configures the search path for the user `user1` to include the schemas `opentenbase`, `user1`, and `public`.
--	Setting the search path for `user1` to `DEFAULT` restores the search mode to the system's default value. 
+-	Setting the search path for `user1` to `DEFAULT` restores the search mode to the system's default value.
 
 ### Adding a Schema to a User
 
@@ -261,9 +263,9 @@ Explanation:
 
 -	The command creates a schema named `user1` with `user1` as its owner.
 
-# Permission Management 
-## Schema Permission Management 
-### Granting User Access to a Schema 
+# Permission Management
+## Schema Permission Management
+### Granting User Access to a Schema
 
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
@@ -273,14 +275,14 @@ Type "help" for help.
 postgres=# grant usage on SCHEMA mysch to user1;
 GRANT
 postgres=#
-``` 
+```
 
 Explanation:
 
 -	By default, regular users cannot access schemas without proper authorization. Therefore, granting usage permission on a schema (mysch in this case) is necessary for a user to access tables within that schema
 -	If there is no permission for schema access, an error will occur: `ERROR: permission denied for schema mysch`
 
-### Revoking User Access to a Schema 
+### Revoking User Access to a Schema
 
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
@@ -291,7 +293,7 @@ postgres=# revoke usage on SCHEMA mysch from user1;
 REVOKE
 ```
 
-### Modifying the Owner of a Schema 
+### Modifying the Owner of a Schema
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -301,7 +303,7 @@ postgres=# alter schema mysch owner to user1;
 ALTER SCHEMA
 ```
 
-## Table Permission Management 
+## Table Permission Management
 ### Granting User Permissions to Insert, Delete, Update, and Select Records in a Table
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
@@ -320,7 +322,7 @@ Explanation:
 -	`ALL` permission includes the ability to insert, delete, update, and select records.
 -	If granting specific permissions, ALL can be replaced with INSERT, DELETE, UPDATE, or SELECT accordingly.
 
-### Revoking User Access Permissions 
+### Revoking User Access Permissions
 ```
 [opentenbase@VM_0_29_centos ~]$ psql -h 172.16.0.29 -U opentenbase -d postgres -p 15432
 psql (PostgreSQL 10.0 opentenbase V2)
@@ -385,5 +387,5 @@ postgres=# revoke ALL ON ALL TABLES IN SCHEMA  mysch  FROM user1;
 REVOKE
 ```
 
-# Conclusion 
-OpenTenBase is an enterprise-level distributed HTAP database management system. It provides high consistency distributed database services and high-performance data warehouse services for customers through a single database cluster, forming a comprehensive enterprise solution. Feel free to leave us a message if you encounter any related issues in the field of databases.
+# Conclusion
+OpenTenBase is an enterprise-level distributed HTAP database management system. It provides high-consistency distributed database services and high-performance data warehouse services for customers through a single database cluster, forming a comprehensive enterprise solution. Feel free to leave us a message if you encounter any related issues in the field of databases.
