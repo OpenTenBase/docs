@@ -1,0 +1,3216 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../column_compression/">
+      
+      
+        <link rel="next" href="../RETURNING/">
+      
+      
+      <link rel="icon" href="../../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>闪回查询 - OpenTenBase Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="OpenTenBase Documentation" class="md-header__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTenBase Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              闪回查询
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../../guide/usecase/Flashback/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../01-quickstart/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../release/v2-6-0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Releases
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../faq/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  FAQ
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../contribution/how-to/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Contributing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Download
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../" title="OpenTenBase Documentation" class="md-nav__button md-logo" aria-label="OpenTenBase Documentation" data-md-component="logo">
+      
+  <img src="../../../../assets/logo.svg" alt="logo">
+
+    </a>
+    OpenTenBase Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OpenTenBase/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OpenTenBase/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-basic-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-advanced-use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Switching
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-user-rights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Rights Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-dump-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Dump and Restore
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-problem-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Problem tracking and Performance Optimization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-pg_clean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_clean
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-pg_unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature pg_unlock
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-opentenbase_subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V2.3.0 Feature opentenbase_subscription
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-opentenbase_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    V5.0 Feature opentenbase_ai
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    TXSQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            TXSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16-txsql_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17-txsql_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    架构说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-txsql_deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deploy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-txsql_access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Application Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20-txsql_basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../21-txsql_advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_7" id="__nav_2_2_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    使用案例
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            使用案例
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../column_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    列压缩功能说明
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    闪回查询
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    闪回查询
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      业界情况调研
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="业界情况调研">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tdsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      TDSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      方案设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方案设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      语法设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      读取历史数据
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="读取历史数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      保存read view信息
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      查询历史数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-selectinsert-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      create select，insert select支持
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#undo" class="md-nav__link">
+    <span class="md-ellipsis">
+      延迟undo清理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="延迟undo清理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge" class="md-nav__link">
+    <span class="md-ellipsis">
+      二级索引purge
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二级索引purge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#undo-purge" class="md-nav__link">
+    <span class="md-ellipsis">
+      undo purge流程修改
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      一阶段purge细节
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      一阶段purge worker流程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#undo-truncate" class="md-nav__link">
+    <span class="md-ellipsis">
+      undo truncate流程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用说明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      变量说明
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态变量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用示例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它说明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      create select
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      insert select
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      功能测试
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功能测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试5
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存占用测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      性能测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      稳定性测试
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#undo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      开关关闭时Undo扫描优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开关关闭时Undo扫描优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      优化方式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RETURNING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RETURNING设计文档
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Thread_poll/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线程池动态切换方案
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_DDL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAST DDL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Parallel_Copy_DDL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Parallel Copy DDL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../22-txsql_faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Peripheral ecosystem
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Peripheral ecosystem
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-opentenbase_monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monitoring visualization with Prometheus/Grafana
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-kubeblocks-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run opentenbase on kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-docker-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building simple cluster with docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Releases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTenBase
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTenBase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release/v2-6-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release/v2-5-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release/v2-4-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.4.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release/v2-3-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release/v2-2-0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.2.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            FAQ
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TXSQL FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contribution/how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to contribute
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contribution/docs-format-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation format guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Download
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      业界情况调研
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="业界情况调研">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tdsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      TDSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      方案设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方案设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      语法设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      读取历史数据
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="读取历史数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      保存read view信息
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      查询历史数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-selectinsert-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      create select，insert select支持
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#undo" class="md-nav__link">
+    <span class="md-ellipsis">
+      延迟undo清理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="延迟undo清理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge" class="md-nav__link">
+    <span class="md-ellipsis">
+      二级索引purge
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二级索引purge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#undo-purge" class="md-nav__link">
+    <span class="md-ellipsis">
+      undo purge流程修改
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      一阶段purge细节
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      一阶段purge worker流程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#undo-truncate" class="md-nav__link">
+    <span class="md-ellipsis">
+      undo truncate流程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用说明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      变量说明
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态变量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用示例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它说明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其它说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      create select
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      insert select
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      功能测试
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功能测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      测试5
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存占用测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      性能测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      稳定性测试
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#undo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      开关关闭时Undo扫描优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开关关闭时Undo扫描优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      优化方式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/OpenTenBase/docs/edit/main/docs/guide/usecase/Flashback.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/OpenTenBase/docs/raw/main/docs/guide/usecase/Flashback.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="_1">闪回查询</h1>
+<h2 id="_2">业界情况调研</h2>
+<h3 id="tdsql">TDSQL</h3>
+<p>在undo purge的时候将记录存放到另一张历史表。</p>
+<h3 id="_3">其它</h3>
+<p>利用触发器，记录插入和删除操作（类似于binlog flashback，insert对应delete，delete对应insert，update将新旧值替换）。</p>
+<h2 id="_4">方案设计</h2>
+<h3 id="_5">语法设计</h3>
+<pre><code class="language-sql">select * from t1 as of timestamp 'xxxx-xx-xx xx:xx:xx';
+select * from t1 as of timestamp 'xxxx-xx-xx xx:xx:xx' where id in (select id from t2 as of timestamp 'xxxx-xx-xx xx:xx:xx');
+</code></pre>
+<p>为PT_table_factor_table_ident添加用于记录闪回查询时间的Item成员（实际类型为Item_string），在调用SELECT_LEX::add_table_to_list的时候将字符串时间转换为unix时间戳，在SELECT_LEX::setup_tables中调用引擎层接口获取对应时间点的readview并保存在thd对象中。</p>
+<h3 id="_6">读取历史数据</h3>
+<h4 id="_7">概要设计</h4>
+<p>全局维护历史read view与创建read view的时间，在判断一行记录是否可见的时候使用对应时间点的readview。</p>
+<h4 id="read-view">保存read view信息</h4>
+<p>为了减少资源消耗，由一个后台线程每隔一段时间，产生一个该时刻的read view，时间间隔可通过一个变量进行配置（innodb_backquery_trackpoint_create_interval）。产生的read view存放在全局的一个数据结构里面，称为history_views，按照时间顺序排序，innodb_backquery_window用来限制history_views的大小，如果最老的view的时间距离现在的时间超过了window设定的范围，需要清除最老的view。innodb_backquery_history_limit用来限制undo的history长度，当history长度超过了这个值后会忽略window的限制，触发清理最老的read view。</p>
+<p>后台线程工作流程：</p>
+<p>在同一个线程里需要执行两个任务：</p>
+<ul>
+<li>调用 ReadView::snapshot创建历史readview，记录时间戳，周期由innodb_backquery_trackpoint_create_interval控制。</li>
+<li>过期readview清理，周期由innodb_backquery_trackpoint_clean_interval控制。
+这里可以设置为两个时间周期是因为如果历史readview的周期很长，可能导致过期readview不能被及时清理。如何在同一个线程实现两种不同周期的任务？</li>
+<li>基准sleep 1s</li>
+<li>到了每个任务的执行周期再执行对应的任务</li>
+</ul>
+<p>历史readview清理规则：</p>
+<ul>
+<li>innodb_backquery_window用来限制history_views的大小，如果最老的view的时间距离现在的时间超过了window设定的范围，需要清除最老的view。</li>
+<li>innodb_backquery_history_limit用来限制undo的history长度，当history长度超过了这个值后会忽略window的限制，触发清理最老的readview。</li>
+<li>如果一个历史readview正在被使用则不能清理。</li>
+</ul>
+<p>如何判断一个readview是否被使用？</p>
+<ul>
+<li>对保存的readview添加一个引用计数，如果引用计数大于1则表示正在使用。当查询完成后需要递减引用计数。</li>
+<li>全局维护一个计数，记录readview被使用的总次数，用于debug或者快速判断是否还有readview在使用。</li>
+</ul>
+<p>是否有必要清空ReadView::m_ids（保存了创建readview时活跃事务的id）？</p>
+<ul>
+<li>如果实例比较繁忙，每一时刻活跃的事务较多，可能这些id占用的内存较多（等待具体测试）</li>
+</ul>
+<h4 id="_8">查询历史数据</h4>
+<p>一个语句如果指定了闪回查询，那么在判断行记录可见性的时候，需要使用指定时间点的readview。修改trx_get_read_view函数，根据当前语句是否是闪回查询来控制使用的readview:</p>
+<ol>
+<li>非闪回查询，返回原有的readview</li>
+<li>闪回查询，根据table id去thd对象中寻找对应的readview</li>
+</ol>
+<p>修改代码中所有需要判断行记录可见性的地方（仅针对记录可见性），由直接使用trx-&gt;readview修改为调用trx_get_read_view函数。当闪回查询语句结束的时候需要释放readview，对它的引用计数减1，以便及时清理readview，这个过程在语句执行结束的时候进行，新增一个函数ha_end_backquery，在mysql_execute_command函数的末尾调用。释放readview的过程：</p>
+<ol>
+<li>遍历thd所有的用于闪回查询的readview，减少引用计数</li>
+<li>清空thd与闪回查询有关的信息</li>
+</ol>
+<h4 id="create-selectinsert-select">create select，insert select支持</h4>
+<p>原本create select等语句是非一致性读，不会分配readview，考虑到可能有create table ... select ... from tb as of timestamp这种需要，因此需要修改相关逻辑，让create select等语句在指定闪回时使用一致性读的方式。具体的修改是在</p>
+<p>ha_innobase::store_lock函数中增加一个判断条件，如果是闪回查询，则使用一致性读。</p>
+<p>另外，这些语句都会记录binlog，如果是statement格式的日志，在slave上可能没有开启闪回查询开关，也可能slave不支持闪回查询，这时候slave会因此而中断。为了防止这样的清空，需要添加一个unsafe因素，在判断binlog格式的时候尽可能将闪回查询的日志写出为row格式。具体修改在THD::decide_logging_format中完成。</p>
+<h3 id="undo">延迟undo清理</h3>
+<h4 id="_9">概要设计</h4>
+<p>修改purge线程逻辑，控制历史数据回收。</p>
+<h4 id="purge">二级索引purge</h4>
+<p>二级索引上的记录是没有trx_id，不能直接判断可见性，可能需要回查主索引并遍历历史版本，某些情况下会有O(N^2)的时间复杂度（<a href="https://bugs.mysql.com/bug.php?id=84958">相关bug</a>），为了减少大量回查带来的性能影响，供闪回查询的数据不提供二级索引，PolarDB这里设计为两次purge（不妨称为两阶段purge）：</p>
+<ul>
+<li>第一次，从当前活跃的readview中获取最老的readview，只删除二级索引上被delete mark的记录</li>
+<li>第二次，从闪回查询的history_views中获取最老的read view，删除过期的聚集索引记录</li>
+</ul>
+<p>注意：由于二级索引被purge，因此在闪回查询的过程中只能使用聚集索引。</p>
+<h5 id="undo-purge">undo purge流程修改</h5>
+<p>原有的purge coordinator线程调用栈：</p>
+<pre><code class="language-sql">srv_do_purge
+  trx_purge
+    clone_oldest_view // 获取最老的ReadView
+    trx_purge_attach_undo_recs // 获取可以purge的undo记录
+    que_fork_scheduler_round_robin // 分发purge任务给worker(如果有worker)
+    trx_purge_wait_for_workers_to_complete
+    trx_purge_truncate // 从rollback segment中释放不必要的历史数据
+      trx_purge_truncate_history
+</code></pre>
+<p>我们的目标是第一次purge只清理二级索引的delete mark的记录，这里有两种实现方案：</p>
+<ol>
+<li>新增一个purge queue：pre_purge_queue，如果开启了闪回查询，事务提交的时候先将对应的undo添加到新增的pre_purge_queue,purge完二级索引上的delete mark记录后再将对应的TrxUndoRsegs添加到原来的purge_queue，第二次purge从原有的purge_queue中取出事务号最小的TrxUndoRsegs进行purge，注意，此时使用的readview是从闪回查询的history_views中获取的最老的readview。</li>
+<li>新增一个purge queue：pre_purge_queue，不论是否开启了闪回查询，在向purge_queue添加内容的时候都需要同等添加到pre_purge_queue中；在purge的过程中，不论是否开启闪回查询都需要遍历pre_purge_queue中的undo日志；开启闪回查询后，第一次purge使用当前最老readview，只删除二级索引记录，第二次purge和原有purge流程保持一致（为了实现动态开关，也会尝试删除二级索引记录，这个过程会根据聚集索引判断二级索引是否可以删除，理论上不存在安全问题）。</li>
+</ol>
+<p>第一个方案有一个致命缺陷就是，会将一个回滚段所有的undo信息都push到purge_queue中，极端情况下可能导致OOM。这里采用第二种方案，两个purge queue并行且互不相干。</p>
+<h5 id="purge_1">一阶段purge细节</h5>
+<p>trx_purge_t的成员记录了purge相关的信息，关键成员：</p>
+<pre><code class="language-sql">ReadView view; // 控制purge的readview，每次purge开始前调用clone_oldest_view进行赋值
+purge_iter_t iter; // 当前进行purge的TrxUndoRsegs的迭代器
+trx_rseg_t *rseg;  // 下一个需要被purge的undo log的回滚段
+page_no_t page_no;  // 下一个需要被purge的undo log的log header所在页面
+ulint offset;  // 下一个需要被purge的undo log的页面偏移
+page_no_t hdr_page_no;  // 下一个需要被purge的undo log的undo header所在页面
+ulint hdr_offset;  // 下一个需要被purge的undo log的undo header页面偏移
+/* ... */
+</code></pre>
+<p>rollback segment的内存结构trx_rseg_t也有一些数据记录当前purge的进度</p>
+<pre><code class="language-sql">// 历史链表中最老未被purge的undo log header所在页面
+page_no_t last_page_no;
+// 历史链表中最老未被purge的undo log header所在页面偏移
+size_t last_offset;
+// 历史链表中最老未被purge的undo log的事务号
+trx_id_t last_trx_no;
+// 历史链表中最老未被purge的undo log是否需要purge（有delete undo）
+bool last_del_marks;
+</code></pre>
+<p>purge流程：</p>
+<p>purge的时候从队列中取出一个TrxUndoRsegs对象（保存了事务使用的所有rollback segment），遍历其中的rollback segment（每一个rollback segment都有成员last_page_no和last_offset来表示该回滚段中最老未被purge的undo日志header所在的页面与偏移），根据last_page_no和last_offset来定位需要purge的undo日志，再遍历undo日志中的每一个undo记录进行purge。</p>
+<p>为了支持两阶段purge，需要在trx_purge_t和trx_rseg_t中为back query增加相应的内容来记录第一次purge的进度，这里的处理方式和原生的purge流程相似（代码和原生purge几乎一样），如果关闭了闪回查询，这个过程是只遍历undo记录，不做任何操作。</p>
+<h5 id="purge-worker">一阶段purge worker流程</h5>
+<p>purge worker的第一次purge流程（如果有worker数量大于1，否则coordinator线程自己负责purge）需要做一些改变：</p>
+<p>第一次purge流程：</p>
+<ul>
+<li>获取一批undo日志</li>
+<li>尝试删除二级索引记录，不删除主索引记录（开关打开）</li>
+<li>不删除被更新的external存储的内容</li>
+</ul>
+<p>第二次purge流程和原生purge流程一样：</p>
+<ul>
+<li>获取一批undo日志</li>
+<li>尝试删除二级索引记录</li>
+<li>删除主索引记录</li>
+<li>删除被更新的external存储的内容</li>
+</ul>
+<h4 id="undo-truncate">undo truncate流程</h4>
+<p>purge是删除delete mark的记录，事务产生的undo内容在truncate过程中清理。函数trx_purge_truncate中:</p>
+<pre><code class="language-cpp">if (purge_sys-&gt;limit.trx_no == 0) {
+  trx_purge_truncate_history(&amp;purge_sys-&gt;iter, &amp;purge_sys-&gt;view);
+} else {
+  trx_purge_truncate_history(&amp;purge_sys-&gt;limit, &amp;purge_sys-&gt;view);
+}
+</code></pre>
+<p>可以通过控制trx_purge_truncate_history使用的readview来控制是否truncate undo内容，这里直接使用backquery_history_view_list最老的的readview来延缓undo truncate。</p>
+<h2 id="_10">使用说明</h2>
+<h3 id="_11">变量说明</h3>
+<table>
+<tr>
+<td rowspan="1" colSpan="1" >名称</td>
+<td rowspan="1" colSpan="1" >类型</td>
+<td rowspan="1" colSpan="1" >有效值</td>
+<td rowspan="1" colSpan="1" >默认值</td>
+<td rowspan="1" colSpan="1" >说明</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >innodb_backquery_enable</td>
+<td rowspan="1" colSpan="1" >bool</td>
+<td rowspan="1" colSpan="1" >ON\|OFF</td>
+<td rowspan="1" colSpan="1" >OFF</td>
+<td rowspan="1" colSpan="1" >开关</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >innodb_backquery_window</td>
+<td rowspan="1" colSpan="1" >LONG</td>
+<td rowspan="1" colSpan="1" >1~2592000</td>
+<td rowspan="1" colSpan="1" >86400</td>
+<td rowspan="1" colSpan="1" >闪回支持的时间范围，单位：秒</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >innodb_backquery_history_limit</td>
+<td rowspan="1" colSpan="1" >ULONG</td>
+<td rowspan="1" colSpan="1" >1~INT_MAX64</td>
+<td rowspan="1" colSpan="1" >8000000</td>
+<td rowspan="1" colSpan="1" >闪回支持的undo日志历史链表长度，超过这个长度，会忽略innodb_backquery_window，进行purge，直到长度低于设定值</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >innodb_backquery_trackpoint_create_interval</td>
+<td rowspan="1" colSpan="1" >LONG</td>
+<td rowspan="1" colSpan="1" >1~86400</td>
+<td rowspan="1" colSpan="1" >1</td>
+<td rowspan="1" colSpan="1" >闪回查询的时间粒度（创建readview快照的时间间隔），单位：秒</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >innodb_backquery_trackpoint_clean_interval</td>
+<td rowspan="1" colSpan="1" >LONG</td>
+<td rowspan="1" colSpan="1" >1~86400</td>
+<td rowspan="1" colSpan="1" >1</td>
+<td rowspan="1" colSpan="1" >闪回清理readview快照的时间间隔，单位：秒</td>
+</tr>
+</table>
+
+<h3 id="_12">状态变量</h3>
+<table>
+<tr>
+<td rowspan="1" colSpan="1" >名称</td>
+<td rowspan="1" colSpan="1" >说明</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >Innodb_backquery_history_views</td>
+<td rowspan="1" colSpan="1" >存储在内存中的历史readview个数</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >Innodb_backquery_up_time</td>
+<td rowspan="1" colSpan="1" >最老的readview的创建时间（带时区）</td>
+</tr>
+
+<tr>
+<td rowspan="1" colSpan="1" >Innodb_backquery_low_time</td>
+<td rowspan="1" colSpan="1" >最新的readview的创建时间（带时区）</td>
+</tr>
+</table>
+
+<h3 id="_13">使用示例</h3>
+<pre><code class="language-sql">MySQL [(none)]&gt; set global innodb_backquery_enable=ON;
+Query OK, 0 rows affected (0.00 sec)
+MySQL [test]&gt; create table t1(id int,c1 int) engine=innodb;
+Query OK, 0 rows affected (0.06 sec)
+
+MySQL [test]&gt; insert into t1 values(1,1),(2,2),(3,3),(4,4);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MySQL [test]&gt; select now();
++---------------------+
+| now()               |
++---------------------+
+| 2022-02-17 16:01:01 |
++---------------------+
+1 row in set (0.00 sec)
+
+MySQL [test]&gt; delete from t1 where id=4;
+Query OK, 1 row affected (0.00 sec)
+
+MySQL [test]&gt; select * from t1;
++------+------+
+| id   | c1   |
++------+------+
+|    1 |    1 |
+|    2 |    2 |
+|    3 |    3 |
++------+------+
+3 rows in set (0.00 sec)
+
+MySQL [test]&gt; select * from t1 as of timestamp '2022-02-17 16:01:01';
++------+------+
+| id   | c1   |
++------+------+
+|    1 |    1 |
+|    2 |    2 |
+|    3 |    3 |
+|    4 |    4 |
++------+------+
+4 rows in set (0.00 sec)
+</code></pre>
+<h3 id="_14">其它说明</h3>
+<h4 id="create-select">create select</h4>
+<pre><code class="language-sql">create table t2 select * from t1 as of timestamp 'xxx';
+</code></pre>
+<h4 id="insert-select">insert select</h4>
+<pre><code class="language-sql">insert into t3 select * from t1 as of timestamp 'xxx';
+</code></pre>
+<p>注意：暂不支持prepared statement和stored procedure</p>
+<h2 id="_15">测试</h2>
+<h3 id="_16">功能测试</h3>
+<p>数据准备</p>
+<pre><code class="language-sql">create table t1(id int primary key, c1 varchar(20));
+insert into t1 values(1,'aaa'),(2,'bbb'),(3,'ccc'),(4,'ddd'),(5,'eee');
+
+create table t2(id int primary key, c1 varchar(20));
+insert into t2 values(1,'adaa'),(2,'bdbb'),(3,'cdcc'),(4,'ddcd'),(5,'eefe');
+
+select now();
+2022-02-28 15:01:31
+</code></pre>
+<h4 id="1">测试1</h4>
+<pre><code class="language-sql">update t1 set c1='abcdefg' where id=5;
+
+select * from t1 as of timestamp '2022-02-28 15:01:31';
+1 aaa
+2 bbb
+3 ccc
+4 ddd
+5 eee
+</code></pre>
+<p>符合预期</p>
+<h4 id="2">测试2</h4>
+<pre><code class="language-sql">select t1.c1,t2.id from t1,t2 where t1.id=t2.id;
+aaa   1
+bbb   2
+ccc   3
+ddd   4
+abcedfg 5
+</code></pre>
+<p>符合预期</p>
+<h4 id="3">测试3</h4>
+<pre><code class="language-sql">select t1.c1,t2.id from t1 as of timestamp '2022-02-28 15:01:31',t2 where t1.id=t2.id;
+aaa   1
+bbb   2
+ccc   3
+ddd   4
+eee   5
+</code></pre>
+<p>符合预期</p>
+<h4 id="4">测试4</h4>
+<pre><code class="language-sql">select now();
+2022-02-28 15:03:33
+select t1.c1,t2.id from t1 as of timestamp '2022-02-28 15:01:31',t2 as of timestamp '2022-02-28 15:03:33' where t1.id=t2.id;
+aaa   1
+bbb   2
+ccc   3
+ddd   4
+eee   5
+</code></pre>
+<h4 id="5">测试5</h4>
+<pre><code class="language-sql">select * from t2;
+1 adaa
+2 bdbb
+3 cdcc
+4 ddcd
+5 eefe
+select now();
+2022-02-28 15:05:14
+update t2 set c1= 'newabcd' where id=1;
+select now();
+2022-02-28 15:05:42
+select t1.c1,t2.id,t2.c1 from t1 as of timestamp '2022-02-28 15:01:31',t2 as of timestamp '2022-02-28 15:05:42' where t1.id=t2.id;
+aaa 1 newabcd
+bbb 2 bdbb
+ccc 3 cdcc
+ddd 4 ddcd
+eee 5 eefe
+select t1.c1,t2.id,t2.c1 from t1 as of timestamp '2022-02-28 15:05:42',t2 as of timestamp '2022-02-28 15:05:42' where t1.id=t2.id;
+aaa   1 newabcd
+bbb   2 bdbb
+ccc   3 cdcc
+ddd   4 ddcd
+abcdefg 5 eefe
+</code></pre>
+<h3 id="_17">内存占用测试</h3>
+<p>sysbench read_write 1024并发，测试内存占用。历史链表长度很快就到达了innodb_backquery_history_limit的限制，实际上整个测试过程中保存的views的数量只有几百个，内存占用可以忽略不计。</p>
+<h3 id="_18">性能测试</h3>
+<p>机器配置：96核心，700G+内存。测试：bp 100G，100张表，单表100000数据，测试时间10分钟。backquery开关打开后的配置：innodb_backquery_window=3600，其它默认值。</p>
+<p>测试结果：</p>
+<p>sysbench read-only</p>
+<p><img alt="" src="../../../../guide/images/flashback_sysbench_read_only.png" /></p>
+<p>sysbench read-write</p>
+<p><img alt="" src="../../../../guide/images/flashback_sysbench_read_write.png" /></p>
+<p>从结果来看没有明显性能下降，基本保持一致。</p>
+<h3 id="_19">稳定性测试</h3>
+<p>sysbench read-write；1024并发；时间：1小时；sysbench运行过程中使用脚本文件随机打开和关闭 innodb_backquery_enable 开关，实例稳定运行，未crash。</p>
+<h2 id="undo_1">开关关闭时Undo扫描优化</h2>
+<p>现有实现方式，在开关关闭后仍然会扫描undo来维持第一次purge的进度的正确性，会带来一些开销。</p>
+<h3 id="_20">优化方式</h3>
+<p>开关关闭后不扫描undo，在开关打开时，遍历所有回滚段（这期间需要阻止purge线程运行），将所有回滚段的第一次purge的进度设置为和第二次purge进度一致（可能会有进度回退）。打开开关的过程中可能存在这样的一些情形：</p>
+<p>场景1</p>
+<pre><code class="language-sql">|                             |
+|                             |
+|                             set backquery on
+trx 1 rseg-&gt;latch()           |
+push queue                    |
+trx 1 rseg-&gt;unlatch()         |
+|                             |
+|                             rseg-&gt;latch()
+|                             rseg-&gt;pre_last_page_no=FIL_NULL
+|                             rseg-&gt;unlatch()
+|                             |
+</code></pre>
+<p>上面的情况下，trx1 push到queue中的内容是不需要的。</p>
+<p>场景2</p>
+<pre><code class="language-sql">|                                  |
+|                                  |
+set backquery on                   |
+rseg-&gt;latch()                      |
+rseg-&gt;pre_last_page_no=FIL_NULL    |
+rseg-&gt;unlatch()                    |
+|                                  |
+|                                 trx 2 rseg-&gt;latch()
+|                                 push queue
+|                                 trx 2 rseg-&gt;unlatch()
+|                                  |
+</code></pre>
+<p>上面的情况下，trx 2 push到queue中的内容是需要的。</p>
+<p>由于上面这两种情况的存在，所以pre_queue中的内容是否全部需要是不能判断的，因此我们直接将purge_queue中的内容拷贝到pre_purge_queue中，同时需要拷贝其它表示purge进度的变量。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
