@@ -6,13 +6,13 @@ TXSQL内核基于[MySQL 8.0开源版本](https://dev.mysql.com/doc/refman/8.0/en
 
 - 服务层主要包括以下核心模块：
 
-| | |
-|:--| :--|
-| **模块**	| **作用** |
-|查询缓存  | 命中缓存则直接返回结果 |
-|SQL解析器 | 对客户端发送的SQL进行词法分析，语法分析 |
-|查询优化器 | 负责生成执行计划、索引选择 |
-|执行器| 操作存储引擎，返回结果|
+|            |                                         |
+| :--------- | :-------------------------------------- |
+| **模块**   | **作用**                                |
+| 查询缓存   | 命中缓存则直接返回结果                  |
+| SQL解析器  | 对客户端发送的SQL进行词法分析，语法分析 |
+| 查询优化器 | 负责生成执行计划、索引选择              |
+| 执行器     | 操作存储引擎，返回结果                  |
 
 
 - 存储引擎层负责数据的存储和提取。支持多种存储引擎，如InnoDB、MyiSam、Memory等，用户可根据实际需求进行选择。默认存储引擎为能够支持事务ACID、支持行锁、支持外检约束的InnoDB引擎。存储引擎对上负责执行服务层发送的数据查找和数据修改操作，向下与物理文件进行交互，实现数据的存储与修改需求。
@@ -58,10 +58,116 @@ TXSQL 也提供了这种“按需使用”的方式。你可以将参数 query_c
 做完了这些识别以后，就要做“语法分析”。根据词法分析的结果，语法分析器会根据语法规则，判断你输入的这个 SQL 语句是否满足 TXSQL 语法。
 
 如果你的语句不对，就会收到类似“You have an error in your SQL syntax; xxxxxx”的错误提醒;
-```
+```sql
 TXSQL> seelect * from p_nic where Id = 1;ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your sql server version for the right syntax to use near 'seelect * from p_nic where Id = 1' at line 1
 ```
 一般语法错误会提示第一个出现错误的位置，所以你要关注的是紧接“use near”的内容。
+
+词法解析器核心代码为`sql/sql_lex.h`中的`Lex_input_stream`类:
+`yyGet()`:获取`m_ptr`指向的字符,移动`m_ptr`指向下一个字符
+```c++
+  /**
+    Get a character, and advance in the stream.
+    @return the next character to parse.
+  */
+  unsigned char yyGet() {
+    assert(m_ptr <= m_end_of_query);
+    char c = *m_ptr++;
+    if (m_echo) *m_cpp_ptr++ = c;
+    return c;
+  }
+```
+`yyPeek()`:获取`m_ptr`指向的字符,不移动`m_ptr`
+```c++
+  /**
+    Look at the next character to parse, but do not accept it.
+  */
+  unsigned char yyPeek() const {
+    assert(m_ptr <= m_end_of_query);
+    return m_ptr[0];
+  }
+```
+`yyUnget()`:撤销`yyGet()`或`yySkip()`的影响,将`m_ptr`指向上一个字符
+```c++
+  /**
+    Cancel the effect of the last yyGet() or yySkip().
+    Note that the echo mode should not change between calls to yyGet / yySkip
+    and yyUnget. The caller is responsible for ensuring that.
+  */
+  void yyUnget() {
+    m_ptr--;
+    if (m_echo) m_cpp_ptr--;
+  }
+  ```
+  `yySkip()`:移动`m_ptr`指向下一个字符,不返回字符以跳过
+  ```c++
+    /**
+    Accept a character, by advancing the input stream.
+  */
+  void yySkip() {
+    assert(m_ptr <= m_end_of_query);
+    if (m_echo)
+      *m_cpp_ptr++ = *m_ptr++;
+    else
+      m_ptr++;
+  }
+  ```
+  `yyUnput()`:将字符`ch`放回`stream`中,撤销`yyGet()`或`yySkip()`的影响,将`m_ptr`指向上一个字符
+  ```c++
+    /**
+    Puts a character back into the stream, canceling
+    the effect of the last yyGet() or yySkip().
+    Note that the echo mode should not change between calls
+    to unput, get, or skip from the stream.
+  */
+  char *yyUnput(char ch) {
+    *--m_ptr = ch;
+    if (m_echo) m_cpp_ptr--;
+    return m_ptr;
+  }
+  ```
+  缓冲区管理
+  `raw buffer`:原始查询文本缓冲区,可能包含超出边界的注释
+  `cpp buffer`:预处理查询文本缓冲区,不包含超出边界的注释
+  `m_ptr`:原始查询文本缓冲区指针
+  `m_cpp_ptr`:预处理查询文本缓冲区指针
+  `m_echo`:是否开启回显,默认开启
+  ```c++
+  Two buffers, with pointers inside each, are maintained in parallel. The
+  'raw' buffer is the original query text, which may contain out-of-bound
+  comments. The 'cpp' (for comments pre processor) is the pre-processed buffer
+  that contains only the query text that should be seen once out-of-bound data
+  is removed.
+```
+`Token`管理
+`start_token()`:标记新token的初始位置
+```c++
+  /** Mark the stream position as the start of a new token. */
+  void start_token() {
+    m_tok_start = m_ptr;
+    m_tok_end = m_ptr;
+
+    m_cpp_tok_start = m_cpp_ptr;
+    m_cpp_tok_end = m_cpp_ptr;
+  }
+```
+`get_tok_start()`和`get_tok_end()`：获取token的起始和结束位置
+```c++
+  /** Get the token start position, in the raw buffer. */
+  const char *get_tok_start() const { return m_tok_start; }
+
+  /** Get the token start position, in the pre-processed buffer. */
+  const char *get_cpp_tok_start() const { return m_cpp_tok_start; }
+
+  /** Get the token end position, in the raw buffer. */
+  const char *get_tok_end() const { return m_tok_end; }
+
+  /** Get the token end position, in the pre-processed buffer. */
+  const char *get_cpp_tok_end() const { return m_cpp_tok_end; }
+```
+语法解析器核心代码为`sql/sql_yacc.yy`
+`sql/sql_yacc.yy`中定义了完整的SQL语法规则集合，这些规则指导Bison生成状态机驱动的解析器；同时指定了如何为每个SQL语法结构创建对应的解析树节点
+
 
 ### 查询优化器
 
@@ -75,6 +181,28 @@ select * from p_cpu join server_physical_info using(SvrAssetId) where p_cpu.SN =
 ```
 既可以先从表 p_cpu 里面取出 SN='sn1'的记录的 SvrAssetId，再根据 SvrAssetId 值关联到表 server_physical_info， 再判断 server_physical_info 里面 SvrIsSpecial 的值是否等于 1。也可以先从表 server_physical_info里面取出SvrIsSpecial=1的记录的SvrAssetId值，再根据 SvrAssetId 值关联 p_cpu，再判断 p_cpu里面sn的值是否等于sn1。这两种执行方法的逻辑结果是一样的，但是执行的效率会有不同，而优化器的作用就是根据代价估计来决定选择使用哪一个方案。
 
+优化器核心代码为`sql/sql_optimizer.cc`以及`sql\sql_resolver.cc`
+将外连接转化为内连接(外连接的空值可以排除)
+```c++
+      if (table->outer_join) {
+        *changelog |= OUTER_JOIN_TO_INNER;
+        table->outer_join = false;
+      }
+```
+将连接条件合并到WHERE条件中，简化查询执行计划
+```c++
+      if (table->outer_join) {
+        *changelog |= OUTER_JOIN_TO_INNER;
+        table->outer_join = false;
+      }
+```
+处理和合并 WHERE 子句或连接条件，以生成更高效的执行计划
+```c++
+          Item_cond_and *new_cond =
+              down_cast<Item_cond_and *>(and_conds(i1, i2));
+          if (!new_cond) return true;
+          new_cond->apply_is_true();
+```
 ### 执行器
 
 TXSQL 通过SQL解析器知道了你要做什么，通过查询优化器知道了该怎么做，于是就进入了执行器阶段，开始执行语句。
@@ -85,6 +213,83 @@ TXSQL 通过SQL解析器知道了你要做什么，通过查询优化器知道�
 2、调用引擎接口取下一行，重复直到取到表的最后一行；
 3、将结果集返回客户端；
 对于查询条件 sn 若有索引，执行逻辑类似，只是第一次调用的是“取满足条件的第一行”这个接口，之后循环取“满足条件的下一行”这个接口，这些接口都是引擎中已经定义好的；
+
+在执行前，系统会进行权限检查。`Sql_cmd_select::check_privileges()` 函数负责验证用户对表的访问权限
+```c++
+bool Sql_cmd_select::check_privileges(THD *thd) {
+  /*
+    lex->exchange != nullptr implies SELECT .. INTO OUTFILE and this
+    requires FILE_ACL access.
+  */
+  if (result->needs_file_privilege() &&
+      check_access(thd, FILE_ACL, any_db, nullptr, nullptr, false, false))
+    return true;
+
+  if (check_all_table_privileges(thd)) return true;
+
+  if (check_locking_clause_access(thd, Global_tables_list(lex->query_tables)))
+    return true;
+
+  Query_expression *const unit = lex->unit;
+  for (Query_block *sl = unit->first_query_block(); sl;
+       sl = sl->next_query_block()) {
+    if (sl->check_column_privileges(thd)) return true;
+  }
+  if (unit->fake_query_block != nullptr) {
+    if (unit->fake_query_block->check_column_privileges(thd)) return true;
+  }
+  return false;
+}
+```
+表打开过程包括元数据锁获取和实际表文件打开
+```c++
+    if (thd->locked_tables_mode == LTM_PRELOCKED)
+      my_error(ER_NO_SUCH_TABLE, MYF(0), table_list->db, table_list->alias);
+    else
+      my_error(ER_TABLE_NOT_LOCKED, MYF(0), alias);
+    return true;
+```
+执行的核心逻辑在 `execute_inner()` 中，包括优化、创建迭代器和实际执行：
+```c++
+bool Sql_cmd_dml::execute_inner(THD *thd) {
+  Query_expression *unit = lex->unit;
+
+  if (unit->optimize(thd, /*materialize_destination=*/nullptr,
+                     /*finalize_access_paths=*/true))
+    return true;
+
+  DBUG_EXECUTE_IF("ast", { unit->DebugPrintQueryPlan(thd, "ast"); });
+
+  // Perform secondary engine optimizations, if needed.
+  if (optimize_secondary_engine(thd)) return true;
+
+  // Create iterators for the chosen query plan before execution.
+  if (unit->create_iterators(thd)) return true;
+
+  // We know by now that execution will complete (successful or with error)
+  lex->set_exec_completed();
+  if (lex->is_explain()) {
+    for (Table_ref *ref = lex->query_tables; ref != nullptr;
+         ref = ref->next_global) {
+      if (ref->table != nullptr && ref->table->file != nullptr) {
+        handlerton *hton = ref->table->file->ht;
+        if (hton->external_engine_explain_check != nullptr) {
+          if (hton->external_engine_explain_check(thd)) return true;
+        }
+      }
+    }
+
+    if (explain_query(thd, thd, unit)) return true; /* purecov: inspected */
+  } else {
+    if (unit->execute(thd)) return true;
+
+    notify_plugins_after_select(thd, lex->m_sql_cmd);
+  }
+
+  return false;
+}
+```
+
 
 ## 3. 存储引擎层
 存储引擎层负责存储数据和执行服务层的请求。TXSQL默认使用InnoDB存储引擎。InnoDB引擎是一个事务型存储引擎，提供了对数据库 ACID 事务的支持，并实现了 SQL 标准的四种隔离级别，具有行级锁定（这一点说明锁的粒度小，在写数据时，不需要锁住整个表，因此适用于高并发情形）及外键支持（所有数据库引擎中独一份，仅有它支持外键）该引擎的设计目标便是处理大容量数据的数据库系统。
