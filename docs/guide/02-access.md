@@ -1421,7 +1421,7 @@ func main() {
 功能描述：写入日志处理
  
 参数说明：
-log_level -- 日志级别，只能是是Error或Log
+log_level -- 日志级别，只能是Error或Log
 error_msg -- 日志内容
  
 返回值说明：无
