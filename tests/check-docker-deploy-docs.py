@@ -122,29 +122,39 @@ def parse_compose(path, errors):
         return None
 
 
-def main_dispatch_case(script):
-    function = re.search(
-        r"(?ms)^main\(\)[ \t]*\{[ \t]*\n(?P<body>.*?)^\}[ \t]*$",
-        script,
-    )
-    if function is None:
-        return None
-    case = re.search(
-        r'(?ms)^(?P<indent>[ \t]*)case[ \t]+"\$1"[ \t]+in[ \t]*\n'
-        r"(?P<body>.*?)^(?P=indent)esac(?:[ \t]*#.*)?$",
-        function.group("body"),
-    )
-    return None if case is None else case.group("body")
+def main_dispatch_labels(script):
+    in_main = False
+    in_dispatch = False
+    nested_depth = 0
+    labels = set()
+    for line in script.splitlines():
+        if not in_main:
+            in_main = re.fullmatch(r"[ \t]*main\(\)[ \t]*\{[ \t]*", line) is not None
+            continue
+        if not in_dispatch:
+            if re.fullmatch(r'[ \t]*case[ \t]+"\$1"[ \t]+in[ \t]*', line):
+                in_dispatch = True
+            elif re.fullmatch(r"[ \t]*\}[ \t]*", line):
+                return None
+            continue
+        if re.fullmatch(r"[ \t]*esac(?:[ \t]*#.*)?", line):
+            if nested_depth == 0:
+                return labels
+            nested_depth -= 1
+            continue
+        if re.fullmatch(r"[ \t]*case(?:[ \t]+.*)?[ \t]+in[ \t]*", line):
+            nested_depth += 1
+            continue
+        if nested_depth == 0:
+            arm = re.fullmatch(r"[ \t]*([^()]+)\)[ \t]*(?:#.*)?", line)
+            if arm is not None:
+                labels.update(value.strip() for value in arm.group(1).split("|"))
+    return None
 
 
 def dispatches(script, label):
-    case_body = main_dispatch_case(script)
-    if case_body is None:
-        return False
-    return re.search(
-        rf"(?m)^[ \t]*{re.escape(label)}(?:\|[a-z]+)*\)",
-        case_body,
-    ) is not None
+    labels = main_dispatch_labels(script)
+    return labels is not None and label in labels
 
 
 def check_devenv(directory, bash_command="bash"):
@@ -203,7 +213,7 @@ def check_devenv(directory, bash_command="bash"):
             port.get("target") == 11000
             and str(port.get("published")) == "11000"
             and port.get("protocol") == "tcp"
-            and port.get("host_ip") in (None, "", "0.0.0.0", "::")
+            and port.get("host_ip") in (None, "", "0.0.0.0", "127.0.0.1")
             for port in ports
             if isinstance(port, dict)
         )
@@ -277,6 +287,12 @@ def self_test(source):
             "external: CN port",
         ),
         (
+            "CN port IPv6 only",
+            "docker-compose.yml",
+            (('"11000:11000"', '"[::]:11000:11000"'),),
+            "external: CN port",
+        ),
+        (
             "x86 package",
             "config.ini",
             ((".x86_64.tar.gz", ".aarch64.tar.gz"),),
@@ -310,6 +326,27 @@ def self_test(source):
             "external: up dispatch",
         ),
         (
+            "nested up dispatch",
+            "otb-dev.sh",
+            (
+                ("\n        up)", "\n        up-broken)"),
+                (
+                    "\n        build)\n            shift\n",
+                    "\n        build)\n"
+                    '            case "$2" in\n'
+                    "                up)\n"
+                    "                    :\n"
+                    "                    ;;\n"
+                    "                *)\n"
+                    "                    :\n"
+                    "                    ;;\n"
+                    "            esac\n"
+                    "            shift\n",
+                ),
+            ),
+            "external: up dispatch",
+        ),
+        (
             "memory",
             "README.md",
             (("5.2 GiB", "memory requirement unknown"),),
@@ -324,6 +361,16 @@ def self_test(source):
                 replace_once(fixture / filename, old, new)
             found = check_devenv(fixture)
             need(errors, expected in found, f"self-test: {name}: {found}")
+    with tempfile.TemporaryDirectory(prefix="issue203-") as temporary:
+        fixture = Path(temporary) / "fixture"
+        copy_fixture(Path(source), fixture)
+        replace_once(
+            fixture / "docker-compose.yml",
+            '"11000:11000"',
+            '"127.0.0.1:11000:11000"',
+        )
+        found = check_devenv(fixture)
+        need(errors, found == [], f"self-test: CN port IPv4 loopback: {found}")
     with tempfile.TemporaryDirectory(prefix="issue203-") as temporary:
         unavailable_bash = str(Path(temporary) / "unavailable-bash")
         found = check_devenv(source, bash_command=unavailable_bash)
