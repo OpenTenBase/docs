@@ -4,6 +4,7 @@ import configparser
 import json
 import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -30,6 +31,7 @@ COMMANDS = (
     "./otb-dev.sh build",
     "./otb-dev.sh up",
 )
+SANDBOX_ERROR = "external: dispatch sandbox"
 
 
 def need(errors, condition, label):
@@ -122,15 +124,6 @@ def parse_compose(path, errors):
         return None
 
 
-def command_log_calls(path):
-    calls = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        fields = line.split("\t")
-        if fields and fields[0] == "docker":
-            calls.append(tuple(fields[1:]))
-    return calls
-
-
 def has_prefix(calls, prefix):
     return any(call[: len(prefix)] == prefix for call in calls)
 
@@ -187,8 +180,39 @@ def valid_dispatch_log(command, calls):
     return False
 
 
-def check_script_dispatches(source, bash_command):
-    errors = []
+def parse_harness_output(output):
+    architecture = None
+    syntax_statuses = {}
+    command_statuses = {}
+    calls = {command: [] for command in ("status", "up", "enter", "build")}
+    for line in output.splitlines():
+        fields = line.split("\t")
+        if len(fields) == 2 and fields[0] == "ARCH":
+            architecture = fields[1]
+        elif len(fields) == 3 and fields[0] == "SYNTAX":
+            try:
+                syntax_statuses[fields[1]] = int(fields[2])
+            except ValueError:
+                return None
+        elif len(fields) == 3 and fields[0] == "RESULT":
+            try:
+                command_statuses[fields[1]] = int(fields[2])
+            except ValueError:
+                return None
+        elif len(fields) >= 4 and fields[0] == "CALL" and fields[2] == "docker":
+            if fields[1] in calls:
+                calls[fields[1]].append(tuple(fields[3:]))
+    commands = set(calls)
+    if (
+        architecture != "aarch64"
+        or set(syntax_statuses) != commands
+        or set(command_statuses) != commands
+    ):
+        return None
+    return syntax_statuses, command_statuses, calls
+
+
+def check_script_dispatches(source, docker_command="docker", timeout=120):
     fake_docker = r"""#!/bin/sh
 printf 'docker' >> "$COMMAND_LOG"
 for argument in "$@"; do
@@ -205,44 +229,109 @@ fi
 exit 0
 """
     fake_sleep = "#!/bin/sh\nexit 0\n"
-    with tempfile.TemporaryDirectory(prefix="issue203-dispatch-") as temporary:
-        fixture = Path(temporary) / "fixture"
-        copy_fixture(Path(source), fixture)
-        fakebin = Path(temporary) / "fakebin"
-        fakebin.mkdir()
+    harness_script = r"""#!/usr/bin/env bash
+set -u
+
+printf 'ARCH\t%s\n' "$(uname -m)"
+for command in status up enter build; do
+    fixture="$(mktemp -d "/tmp/${command}.XXXXXX")" || exit 70
+    for name in README.md config.ini docker-compose.yml otb-dev.sh; do
+        cp -p "/input/$name" "$fixture/$name" || exit 71
+    done
+    command_log="$fixture/commands.log"
+    : > "$command_log"
+    bash -n "$fixture/otb-dev.sh" \
+        >"$fixture/syntax.stdout" 2>"$fixture/syntax.stderr"
+    syntax_status=$?
+    command_status=125
+    if [ "$syntax_status" -eq 0 ]; then
+        (
+            cd "$fixture" || exit 72
+            COMMAND_LOG="$command_log" \
+                PATH="/harness/fakebin:$PATH" \
+                bash "$fixture/otb-dev.sh" "$command"
+        ) >"$fixture/command.stdout" 2>"$fixture/command.stderr"
+        command_status=$?
+    fi
+    printf 'SYNTAX\t%s\t%s\n' "$command" "$syntax_status"
+    printf 'RESULT\t%s\t%s\n' "$command" "$command_status"
+    while IFS= read -r call || [ -n "$call" ]; do
+        printf 'CALL\t%s\t%s\n' "$command" "$call"
+    done < "$command_log"
+done
+"""
+    with tempfile.TemporaryDirectory(prefix="issue203-harness-") as temporary:
+        harness = Path(temporary) / "harness"
+        fakebin = harness / "fakebin"
+        fakebin.mkdir(parents=True)
         docker = fakebin / "docker"
         sleep = fakebin / "sleep"
+        runner = harness / "run-dispatch-checks"
         docker.write_text(fake_docker, encoding="utf-8")
         sleep.write_text(fake_sleep, encoding="utf-8")
+        runner.write_text(harness_script, encoding="utf-8")
         docker.chmod(0o755)
         sleep.chmod(0o755)
-        command_log = Path(temporary) / "commands.log"
-        environment = os.environ.copy()
-        environment["COMMAND_LOG"] = str(command_log)
-        environment["PATH"] = f"{fakebin}{os.pathsep}{environment.get('PATH', '')}"
-        script = fixture / "otb-dev.sh"
-        for command in ("status", "up", "enter", "build"):
-            command_log.write_text("", encoding="utf-8")
-            try:
-                result = subprocess.run(
-                    [bash_command, str(script), command],
-                    cwd=fixture,
-                    env=environment,
-                    text=True,
-                    capture_output=True,
-                    check=False,
-                    timeout=15,
-                )
-            except (OSError, subprocess.TimeoutExpired):
-                errors.append(f"external: {command} dispatch")
-                continue
-            calls = command_log_calls(command_log)
-            if result.returncode != 0 or not valid_dispatch_log(command, calls):
-                errors.append(f"external: {command} dispatch")
+        runner.chmod(0o755)
+        if isinstance(docker_command, (str, os.PathLike)):
+            docker_parts = [str(docker_command)]
+        else:
+            docker_parts = [str(part) for part in docker_command]
+        sandbox_command = [
+            *docker_parts,
+            "run",
+            "--rm",
+            "--platform",
+            "linux/arm64",
+            "--network",
+            "none",
+            "--read-only",
+            "--cap-drop",
+            "ALL",
+            "--security-opt",
+            "no-new-privileges",
+            "--pids-limit",
+            "64",
+            "--memory",
+            "256m",
+            "--tmpfs",
+            "/tmp:rw,nosuid,size=64m",
+            "--volume",
+            f"{Path(source).resolve()}:/input:ro",
+            "--volume",
+            f"{harness.resolve()}:/harness:ro",
+            "bash:5.2",
+            "bash",
+            "/harness/run-dispatch-checks",
+        ]
+        try:
+            result = subprocess.run(
+                sandbox_command,
+                text=True,
+                capture_output=True,
+                check=False,
+                timeout=timeout,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            return [SANDBOX_ERROR]
+    if result.returncode != 0:
+        return [SANDBOX_ERROR]
+    parsed = parse_harness_output(result.stdout)
+    if parsed is None:
+        return [SANDBOX_ERROR]
+    syntax_statuses, command_statuses, calls = parsed
+    if any(status != 0 for status in syntax_statuses.values()):
+        return ["external: script syntax"]
+    errors = []
+    for command in ("status", "up", "enter", "build"):
+        if command_statuses[command] != 0 or not valid_dispatch_log(
+            command, calls[command]
+        ):
+            errors.append(f"external: {command} dispatch")
     return errors
 
 
-def check_devenv(directory, bash_command="bash"):
+def check_devenv(directory):
     errors = []
     root = Path(directory)
     paths = {name: root / name for name in DEVENV_FILES}
@@ -304,21 +393,7 @@ def check_devenv(directory, bash_command="bash"):
         )
         need(errors, cn_port, "external: CN port")
 
-    syntax_ok = False
-    try:
-        syntax = subprocess.run(
-            [bash_command, "-n", str(paths["otb-dev.sh"])],
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-    except OSError:
-        errors.append("external: script syntax")
-    else:
-        syntax_ok = syntax.returncode == 0
-        need(errors, syntax_ok, "external: script syntax")
-    if syntax_ok:
-        errors.extend(check_script_dispatches(root, bash_command))
+    errors.extend(check_script_dispatches(root))
 
     readme = paths["README.md"].read_text(encoding="utf-8")
     need(errors, "1 GTM + 1 CN + 2 DN" in readme, "external: README topology")
@@ -478,13 +553,40 @@ def self_test(source):
         )
         found = check_devenv(fixture)
         need(errors, found == [], f"self-test: CN port IPv4 loopback: {found}")
-    with tempfile.TemporaryDirectory(prefix="issue203-") as temporary:
-        unavailable_bash = str(Path(temporary) / "unavailable-bash")
-        found = check_devenv(source, bash_command=unavailable_bash)
+    with tempfile.TemporaryDirectory(prefix="issue203-escape-") as temporary:
+        fixture = Path(temporary) / "fixture"
+        probe = Path(temporary) / "host-escape-probe"
+        copy_fixture(Path(source), fixture)
+        replace_once(
+            fixture / "otb-dev.sh",
+            "set -e\n",
+            "set -e\n"
+            f"ESCAPE_PROBE={shlex.quote(str(probe))}\n"
+            ': > "$ESCAPE_PROBE" || true\n',
+        )
+        found = check_devenv(fixture)
+        need(errors, found == [], f"self-test: host escape contract: {found}")
+        need(errors, not probe.exists(), "self-test: host escape created probe")
+    with tempfile.TemporaryDirectory(prefix="issue203-docker-error-") as temporary:
+        unavailable_docker = str(Path(temporary) / "unavailable-docker")
+        found = check_script_dispatches(source, docker_command=unavailable_docker)
         need(
             errors,
-            found == ["external: script syntax"],
-            f"self-test: bash command: {found}",
+            found == [SANDBOX_ERROR],
+            f"self-test: Docker command: {found}",
+        )
+        hanging_docker = Path(temporary) / "hanging-docker"
+        hanging_docker.write_text("#!/bin/sh\nexec sleep 2\n", encoding="utf-8")
+        hanging_docker.chmod(0o755)
+        found = check_script_dispatches(
+            source,
+            docker_command=hanging_docker,
+            timeout=0.05,
+        )
+        need(
+            errors,
+            found == [SANDBOX_ERROR],
+            f"self-test: Docker timeout: {found}",
         )
     return errors
 
