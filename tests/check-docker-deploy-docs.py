@@ -94,6 +94,13 @@ def parse_config(path, errors):
     return parser
 
 
+def direct_section_value(parser, section, option):
+    values = parser._sections.get(section)
+    if values is None:
+        return ""
+    return values.get(parser.optionxform(option), "")
+
+
 def parse_compose(path, errors):
     try:
         result = subprocess.run(
@@ -115,14 +122,32 @@ def parse_compose(path, errors):
         return None
 
 
+def main_dispatch_case(script):
+    function = re.search(
+        r"(?ms)^main\(\)[ \t]*\{[ \t]*\n(?P<body>.*?)^\}[ \t]*$",
+        script,
+    )
+    if function is None:
+        return None
+    case = re.search(
+        r'(?ms)^(?P<indent>[ \t]*)case[ \t]+"\$1"[ \t]+in[ \t]*\n'
+        r"(?P<body>.*?)^(?P=indent)esac(?:[ \t]*#.*)?$",
+        function.group("body"),
+    )
+    return None if case is None else case.group("body")
+
+
 def dispatches(script, label):
+    case_body = main_dispatch_case(script)
+    if case_body is None:
+        return False
     return re.search(
         rf"(?m)^[ \t]*{re.escape(label)}(?:\|[a-z]+)*\)",
-        script,
+        case_body,
     ) is not None
 
 
-def check_devenv(directory):
+def check_devenv(directory, bash_command="bash"):
     errors = []
     root = Path(directory)
     paths = {name: root / name for name in DEVENV_FILES}
@@ -134,10 +159,10 @@ def check_devenv(directory):
 
     config = parse_config(paths["config.ini"], errors)
     if config is not None:
-        package = config.get("instance", "package", fallback="")
+        package = direct_section_value(config, "instance", "package")
         need(
             errors,
-            config.get("instance", "type", fallback="") == "distributed",
+            direct_section_value(config, "instance", "type") == "distributed",
             "external: distributed type",
         )
         need(
@@ -147,15 +172,15 @@ def check_devenv(directory):
         )
         need(
             errors,
-            config.get("gtm", "master", fallback="") == IPS["gtm"],
+            direct_section_value(config, "gtm", "master") == IPS["gtm"],
             "external: GTM address",
         )
         need(
             errors,
-            config.get("coordinators", "master", fallback="") == IPS["cn"],
+            direct_section_value(config, "coordinators", "master") == IPS["cn"],
             "external: CN address",
         )
-        datanodes = config.get("datanodes", "master", fallback="").replace(" ", "")
+        datanodes = direct_section_value(config, "datanodes", "master").replace(" ", "")
         need(
             errors,
             datanodes == f'{IPS["dn01"]},{IPS["dn02"]}',
@@ -177,19 +202,25 @@ def check_devenv(directory):
         cn_port = any(
             port.get("target") == 11000
             and str(port.get("published")) == "11000"
+            and port.get("protocol") == "tcp"
+            and port.get("host_ip") in (None, "", "0.0.0.0", "::")
             for port in ports
             if isinstance(port, dict)
         )
         need(errors, cn_port, "external: CN port")
 
     script = paths["otb-dev.sh"].read_text(encoding="utf-8")
-    syntax = subprocess.run(
-        ["bash", "-n", str(paths["otb-dev.sh"])],
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    need(errors, syntax.returncode == 0, "external: script syntax")
+    try:
+        syntax = subprocess.run(
+            [bash_command, "-n", str(paths["otb-dev.sh"])],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    except OSError:
+        errors.append("external: script syntax")
+    else:
+        need(errors, syntax.returncode == 0, "external: script syntax")
     for label in ("build", "up", "enter", "status"):
         need(errors, dispatches(script, label), f"external: {label} dispatch")
 
@@ -230,39 +261,77 @@ def self_test(source):
         (
             "CN port",
             "docker-compose.yml",
-            '"11000:11000"',
-            '"11001:11000"',
+            (('"11000:11000"', '"11001:11000"'),),
+            "external: CN port",
+        ),
+        (
+            "CN port UDP",
+            "docker-compose.yml",
+            (('"11000:11000"', '"11000:11000/udp"'),),
+            "external: CN port",
+        ),
+        (
+            "CN port loopback alias",
+            "docker-compose.yml",
+            (('"11000:11000"', '"127.0.0.2:11000:11000"'),),
             "external: CN port",
         ),
         (
             "x86 package",
             "config.ini",
-            ".x86_64.tar.gz",
-            ".aarch64.tar.gz",
+            ((".x86_64.tar.gz", ".aarch64.tar.gz"),),
+            "external: x86 package",
+        ),
+        (
+            "inherited x86 package",
+            "config.ini",
+            (
+                (
+                    "package=/data/opentenbase/opentenbase-5.21.8-i.x86_64.tar.gz\n",
+                    "",
+                ),
+                (
+                    "# 分布式集群配置",
+                    "[DEFAULT]\n"
+                    "package=/data/opentenbase/"
+                    "opentenbase-5.21.8-i.x86_64.tar.gz\n\n"
+                    "# 分布式集群配置",
+                ),
+            ),
             "external: x86 package",
         ),
         (
             "up dispatch",
             "otb-dev.sh",
-            "\n        up)",
-            "\n        up-broken)",
+            (
+                ("\n        up)", "\n        up-broken)"),
+                ("Commands:\n", "Commands:\nup)\n"),
+            ),
             "external: up dispatch",
         ),
         (
             "memory",
             "README.md",
-            "5.2 GiB",
-            "memory requirement unknown",
+            (("5.2 GiB", "memory requirement unknown"),),
             "external: memory",
         ),
     )
-    for name, filename, old, new, expected in mutations:
+    for name, filename, replacements, expected in mutations:
         with tempfile.TemporaryDirectory(prefix="issue203-") as temporary:
             fixture = Path(temporary) / "fixture"
             copy_fixture(Path(source), fixture)
-            replace_once(fixture / filename, old, new)
+            for old, new in replacements:
+                replace_once(fixture / filename, old, new)
             found = check_devenv(fixture)
             need(errors, expected in found, f"self-test: {name}: {found}")
+    with tempfile.TemporaryDirectory(prefix="issue203-") as temporary:
+        unavailable_bash = str(Path(temporary) / "unavailable-bash")
+        found = check_devenv(source, bash_command=unavailable_bash)
+        need(
+            errors,
+            found == ["external: script syntax"],
+            f"self-test: bash command: {found}",
+        )
     return errors
 
 
