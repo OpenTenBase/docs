@@ -137,16 +137,31 @@ def has_prefix(calls, prefix):
 
 def valid_dispatch_log(command, calls):
     if command == "status":
-        return ("compose", "ps") in calls
+        return calls == [("compose", "ps")]
     if command == "up":
-        return ("compose", "up", "-d") in calls and ("compose", "ps") in calls
+        return calls == [("compose", "up", "-d"), ("compose", "ps")]
     if command == "enter":
-        return any(
-            call
-            and call[0] == "exec"
-            and "otb-gtm" in call
-            for call in calls
-        )
+        return calls == [
+            (
+                "exec",
+                "otb-gtm",
+                "su",
+                "-",
+                "opentenbase",
+                "-c",
+                "cd /data/opentenbase && ./opentenbase_ctl status",
+            ),
+            (
+                "exec",
+                "-it",
+                "-u",
+                "opentenbase",
+                "-w",
+                "/data/opentenbase",
+                "otb-gtm",
+                "bash",
+            ),
+        ]
     if command == "build":
         required = (
             ("build", "-t", "otb-base:latest"),
@@ -419,6 +434,24 @@ def self_test(source):
                 ),
             ),
             "external: up dispatch",
+        ),
+        (
+            "status routed through up",
+            "otb-dev.sh",
+            (
+                ("\n        status|ps)", "\n        status-broken|ps)"),
+                ("\n        up)", "\n        up|status)"),
+            ),
+            "external: status dispatch",
+        ),
+        (
+            "enter routed through build",
+            "otb-dev.sh",
+            (
+                ("\n        enter|exec)", "\n        enter-broken|exec)"),
+                ("\n        build)", "\n        build|enter)"),
+            ),
+            "external: enter dispatch",
         ),
         (
             "memory",
