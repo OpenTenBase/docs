@@ -102,7 +102,7 @@ def check_guides():
             f"{prefix} host psql prerequisite",
         )
         quick_start_claim = (
-            "可继续参考[快速入门](01-quickstart.md#使用)创建数据库和分片表。"
+            "可继续参考[快速入门](01-quickstart.md#_9)创建数据库和分片表。"
             if language == "zh"
             else "continue with the [Quick Start](01-quickstart.en.md#usage) "
             "to create a database and a sharded table."
