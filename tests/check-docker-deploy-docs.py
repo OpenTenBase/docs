@@ -122,39 +122,109 @@ def parse_compose(path, errors):
         return None
 
 
-def main_dispatch_labels(script):
-    in_main = False
-    in_dispatch = False
-    nested_depth = 0
-    labels = set()
-    for line in script.splitlines():
-        if not in_main:
-            in_main = re.fullmatch(r"[ \t]*main\(\)[ \t]*\{[ \t]*", line) is not None
-            continue
-        if not in_dispatch:
-            if re.fullmatch(r'[ \t]*case[ \t]+"\$1"[ \t]+in[ \t]*', line):
-                in_dispatch = True
-            elif re.fullmatch(r"[ \t]*\}[ \t]*", line):
-                return None
-            continue
-        if re.fullmatch(r"[ \t]*esac(?:[ \t]*#.*)?", line):
-            if nested_depth == 0:
-                return labels
-            nested_depth -= 1
-            continue
-        if re.fullmatch(r"[ \t]*case(?:[ \t]+.*)?[ \t]+in[ \t]*", line):
-            nested_depth += 1
-            continue
-        if nested_depth == 0:
-            arm = re.fullmatch(r"[ \t]*([^()]+)\)[ \t]*(?:#.*)?", line)
-            if arm is not None:
-                labels.update(value.strip() for value in arm.group(1).split("|"))
-    return None
+def command_log_calls(path):
+    calls = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        fields = line.split("\t")
+        if fields and fields[0] == "docker":
+            calls.append(tuple(fields[1:]))
+    return calls
 
 
-def dispatches(script, label):
-    labels = main_dispatch_labels(script)
-    return labels is not None and label in labels
+def has_prefix(calls, prefix):
+    return any(call[: len(prefix)] == prefix for call in calls)
+
+
+def valid_dispatch_log(command, calls):
+    if command == "status":
+        return ("compose", "ps") in calls
+    if command == "up":
+        return ("compose", "up", "-d") in calls and ("compose", "ps") in calls
+    if command == "enter":
+        return any(
+            call
+            and call[0] == "exec"
+            and "otb-gtm" in call
+            for call in calls
+        )
+    if command == "build":
+        required = (
+            ("build", "-t", "otb-base:latest"),
+            ("tag", "otb-base:latest", "otb-distributed:latest"),
+            ("compose", "-f", "docker-compose.build.yml", "up", "-d"),
+            (
+                "exec",
+                "otb-gtm",
+                "su",
+                "-",
+                "opentenbase",
+                "-c",
+                "cd /data/opentenbase && "
+                "./opentenbase_ctl install -c config.ini",
+            ),
+            ("commit", "otb-gtm", "otb-gtm:installed"),
+            ("commit", "otb-cn", "otb-cn:installed"),
+            ("commit", "otb-dn01", "otb-dn01:installed"),
+            ("commit", "otb-dn02", "otb-dn02:installed"),
+            ("images",),
+        )
+        return all(has_prefix(calls, prefix) for prefix in required)
+    return False
+
+
+def check_script_dispatches(source, bash_command):
+    errors = []
+    fake_docker = r"""#!/bin/sh
+printf 'docker' >> "$COMMAND_LOG"
+for argument in "$@"; do
+    printf '\t%s' "$argument" >> "$COMMAND_LOG"
+done
+printf '\n' >> "$COMMAND_LOG"
+if [ "${1:-}" = "images" ]; then
+    printf '%s\n' \
+        'otb-gtm installed' \
+        'otb-cn installed' \
+        'otb-dn01 installed' \
+        'otb-dn02 installed'
+fi
+exit 0
+"""
+    fake_sleep = "#!/bin/sh\nexit 0\n"
+    with tempfile.TemporaryDirectory(prefix="issue203-dispatch-") as temporary:
+        fixture = Path(temporary) / "fixture"
+        copy_fixture(Path(source), fixture)
+        fakebin = Path(temporary) / "fakebin"
+        fakebin.mkdir()
+        docker = fakebin / "docker"
+        sleep = fakebin / "sleep"
+        docker.write_text(fake_docker, encoding="utf-8")
+        sleep.write_text(fake_sleep, encoding="utf-8")
+        docker.chmod(0o755)
+        sleep.chmod(0o755)
+        command_log = Path(temporary) / "commands.log"
+        environment = os.environ.copy()
+        environment["COMMAND_LOG"] = str(command_log)
+        environment["PATH"] = f"{fakebin}{os.pathsep}{environment.get('PATH', '')}"
+        script = fixture / "otb-dev.sh"
+        for command in ("status", "up", "enter", "build"):
+            command_log.write_text("", encoding="utf-8")
+            try:
+                result = subprocess.run(
+                    [bash_command, str(script), command],
+                    cwd=fixture,
+                    env=environment,
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                    timeout=15,
+                )
+            except (OSError, subprocess.TimeoutExpired):
+                errors.append(f"external: {command} dispatch")
+                continue
+            calls = command_log_calls(command_log)
+            if result.returncode != 0 or not valid_dispatch_log(command, calls):
+                errors.append(f"external: {command} dispatch")
+    return errors
 
 
 def check_devenv(directory, bash_command="bash"):
@@ -219,7 +289,7 @@ def check_devenv(directory, bash_command="bash"):
         )
         need(errors, cn_port, "external: CN port")
 
-    script = paths["otb-dev.sh"].read_text(encoding="utf-8")
+    syntax_ok = False
     try:
         syntax = subprocess.run(
             [bash_command, "-n", str(paths["otb-dev.sh"])],
@@ -230,9 +300,10 @@ def check_devenv(directory, bash_command="bash"):
     except OSError:
         errors.append("external: script syntax")
     else:
-        need(errors, syntax.returncode == 0, "external: script syntax")
-    for label in ("build", "up", "enter", "status"):
-        need(errors, dispatches(script, label), f"external: {label} dispatch")
+        syntax_ok = syntax.returncode == 0
+        need(errors, syntax_ok, "external: script syntax")
+    if syntax_ok:
+        errors.extend(check_script_dispatches(root, bash_command))
 
     readme = paths["README.md"].read_text(encoding="utf-8")
     need(errors, "1 GTM + 1 CN + 2 DN" in readme, "external: README topology")
@@ -333,6 +404,9 @@ def self_test(source):
                 (
                     "\n        build)\n            shift\n",
                     "\n        build)\n"
+                    "            cat <<'FORGED_USAGE' >/dev/null\n"
+                    "up)\n"
+                    "FORGED_USAGE\n"
                     '            case "$2" in\n'
                     "                up)\n"
                     "                    :\n"
