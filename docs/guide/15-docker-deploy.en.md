@@ -42,19 +42,26 @@ The build takes several minutes. After startup, inspect the four containers:
 
 ## Connect to the database and enter containers
 
-The coordinator's port `11000` is published to the host, so connect through
-`127.0.0.1:11000`:
+No database client is required on the host. Enter the coordinator first, and
+then connect to `172.20.0.3:11000` from inside the container:
+
+```shell
+./otb-dev.sh enter cn
+psql -h 172.20.0.3 -p 11000 -U opentenbase postgres
+```
+
+The coordinator's port `11000` is also published to the host. If `psql` is installed on the host,
+you can connect directly through `127.0.0.1:11000`:
 
 ```shell
 psql -h 127.0.0.1 -p 11000 -U opentenbase postgres
 ```
 
-`enter` opens the GTM container by default. You can also select the
-coordinator or a datanode:
+Without a node argument, `enter` opens the GTM container. You can also select
+a datanode:
 
 ```shell
 ./otb-dev.sh enter
-./otb-dev.sh enter cn
 ./otb-dev.sh enter dn01
 ./otb-dev.sh enter dn02
 ```
@@ -99,10 +106,9 @@ instance. Before changing the topology, read the
 ./otb-dev.sh down
 ```
 
-After the cluster starts, continue with the [Quick Start](01-quickstart.en.md)
-to create a node group, database, and sharded table. The example branch
-documentation also covers the build process, image import/export, and
-troubleshooting.
+After the cluster starts, continue with the [Quick Start](01-quickstart.en.md#usage) to create a database and a sharded table.
+The example branch documentation also covers the build process, image
+import/export, and troubleshooting.
 
 ## Legacy configuration filename
 

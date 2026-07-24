@@ -40,18 +40,25 @@ git checkout example-distributed
 
 ## 连接数据库和进入容器
 
-CN 的 `11000` 端口映射到宿主机，因此可从宿主机连接
-`127.0.0.1:11000`：
+无需在宿主机安装数据库客户端。先进入 CN，再从容器内连接
+`172.20.0.3:11000`：
+
+```shell
+./otb-dev.sh enter cn
+psql -h 172.20.0.3 -p 11000 -U opentenbase postgres
+```
+
+CN 的 `11000` 端口也映射到宿主机。如果宿主机已安装 `psql` 客户端，
+也可以通过 `127.0.0.1:11000` 直接连接：
 
 ```shell
 psql -h 127.0.0.1 -p 11000 -U opentenbase postgres
 ```
 
-`enter` 默认进入 GTM，也可以指定 CN 或某个 DN：
+`enter` 不带节点参数时默认进入 GTM，也可以指定某个 DN：
 
 ```shell
 ./otb-dev.sh enter
-./otb-dev.sh enter cn
 ./otb-dev.sh enter dn01
 ./otb-dev.sh enter dn02
 ```
@@ -95,8 +102,8 @@ psql -h 127.0.0.1 -p 11000 -U opentenbase postgres
 ./otb-dev.sh down
 ```
 
-集群启动后，可继续参考[快速入门](01-quickstart.md)创建节点组、数据库和
-分片表。更完整的构建说明、镜像导入导出和故障排查步骤见上述示例分支说明。
+集群启动后，可继续参考[快速入门](01-quickstart.md#使用)创建数据库和分片表。
+更完整的构建说明、镜像导入导出和故障排查步骤见上述示例分支说明。
 
 ## 旧版配置文件名说明
 

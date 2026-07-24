@@ -76,6 +76,40 @@ def check_guides():
         no_rename = "无需重命名" if language == "zh" else "no rename"
         need(errors, no_rename in text.lower(), f"{prefix} missing no-rename statement")
         need(errors, ordered(text, COMMANDS), f"{prefix} command order")
+        container_connection = (
+            "./otb-dev.sh enter cn",
+            "psql -h 172.20.0.3 -p 11000 -U opentenbase postgres",
+        )
+        need(
+            errors,
+            ordered(text, container_connection),
+            f"{prefix} container connection order",
+        )
+        host_requirement = (
+            "如果宿主机已安装 `psql` 客户端"
+            if language == "zh"
+            else "If `psql` is installed on the host"
+        )
+        need(
+            errors,
+            ordered(
+                text,
+                (
+                    host_requirement,
+                    "psql -h 127.0.0.1 -p 11000 -U opentenbase postgres",
+                ),
+            ),
+            f"{prefix} host psql prerequisite",
+        )
+        quick_start_claim = (
+            "可继续参考[快速入门](01-quickstart.md#使用)创建数据库和分片表。"
+            if language == "zh"
+            else "continue with the [Quick Start](01-quickstart.en.md#usage) "
+            "to create a database and a sharded table."
+        )
+        need(errors, quick_start_claim in text, f"{prefix} Quick Start usage link")
+        stale_claim = "节点组、数据库" if language == "zh" else "node group, database"
+        need(errors, stale_claim not in text, f"{prefix} stale Quick Start claim")
         for stale in (
             "example/1c_2d_cluster",
             "copy-ssh-keys",
