@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import uuid
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -212,7 +213,12 @@ def parse_harness_output(output):
     return syntax_statuses, command_statuses, calls
 
 
-def check_script_dispatches(source, docker_command="docker", timeout=120):
+def check_script_dispatches(
+    source,
+    docker_command="docker",
+    timeout=120,
+    container_name=None,
+):
     fake_docker = r"""#!/bin/sh
 printf 'docker' >> "$COMMAND_LOG"
 for argument in "$@"; do
@@ -277,10 +283,17 @@ done
             docker_parts = [str(docker_command)]
         else:
             docker_parts = [str(part) for part in docker_command]
+        if container_name is None:
+            container_name = (
+                f"issue203-dispatch-{os.getpid()}-{uuid.uuid4().hex}"
+            )
+        container_name = str(container_name)
         sandbox_command = [
             *docker_parts,
             "run",
             "--rm",
+            "--name",
+            container_name,
             "--platform",
             "linux/arm64",
             "--network",
@@ -294,6 +307,8 @@ done
             "64",
             "--memory",
             "256m",
+            "--cpus",
+            "1",
             "--tmpfs",
             "/tmp:rw,nosuid,size=64m",
             "--volume",
@@ -304,6 +319,9 @@ done
             "bash",
             "/harness/run-dispatch-checks",
         ]
+        result = None
+        run_failed = False
+        cleanup_failed = False
         try:
             result = subprocess.run(
                 sandbox_command,
@@ -313,7 +331,34 @@ done
                 timeout=timeout,
             )
         except (OSError, subprocess.TimeoutExpired):
-            return [SANDBOX_ERROR]
+            run_failed = True
+        finally:
+            try:
+                cleanup = subprocess.run(
+                    [*docker_parts, "rm", "-f", container_name],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    check=False,
+                    timeout=10,
+                )
+            except (OSError, subprocess.TimeoutExpired):
+                cleanup_failed = True
+            else:
+                if cleanup.returncode != 0:
+                    try:
+                        inspection = subprocess.run(
+                            [*docker_parts, "inspect", container_name],
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                            check=False,
+                            timeout=10,
+                        )
+                    except (OSError, subprocess.TimeoutExpired):
+                        cleanup_failed = True
+                    else:
+                        cleanup_failed = inspection.returncode == 0
+    if run_failed or cleanup_failed or result is None:
+        return [SANDBOX_ERROR]
     if result.returncode != 0:
         return [SANDBOX_ERROR]
     parsed = parse_harness_output(result.stdout)
@@ -567,6 +612,47 @@ def self_test(source):
         found = check_devenv(fixture)
         need(errors, found == [], f"self-test: host escape contract: {found}")
         need(errors, not probe.exists(), "self-test: host escape created probe")
+    with tempfile.TemporaryDirectory(prefix="issue203-blocking-") as temporary:
+        fixture = Path(temporary) / "fixture"
+        copy_fixture(Path(source), fixture)
+        replace_once(
+            fixture / "otb-dev.sh",
+            "set -e\n",
+            "set -e\n/bin/sleep 120\n",
+        )
+        blocking_name = (
+            f"issue203-dispatch-test-{os.getpid()}-{uuid.uuid4().hex[:12]}"
+        )
+        found = check_script_dispatches(
+            fixture,
+            timeout=0.5,
+            container_name=blocking_name,
+        )
+        need(
+            errors,
+            found == [SANDBOX_ERROR],
+            f"self-test: blocking sandbox: {found}",
+        )
+        inspection = subprocess.run(
+            ["docker", "inspect", blocking_name],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+            timeout=5,
+        )
+        need(
+            errors,
+            inspection.returncode != 0,
+            "self-test: blocking sandbox leaked container",
+        )
+        if inspection.returncode == 0:
+            subprocess.run(
+                ["docker", "container", "rm", "--force", blocking_name],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
+                timeout=5,
+            )
     with tempfile.TemporaryDirectory(prefix="issue203-docker-error-") as temporary:
         unavailable_docker = str(Path(temporary) / "unavailable-docker")
         found = check_script_dispatches(source, docker_command=unavailable_docker)
