@@ -1,70 +1,113 @@
-# 使用docker构建一个1C2D的OpenTenbase集群
+# 使用 Docker 部署 1C2D 集群
 
-在这个例子中，我们尝试使用 Docker 技术构建一个包含`1`个协调节点和`2`个数据节点的集群。我们的目标是为用户提供一个使用 Docker 构建 OpenTenbase 分布式集群的基本示例。这将方便用户快速部署，并允许进一步的定制和开发。
+OpenTenBase 的 1C2D Docker 示例由
+[OpenTenBase-DevEnv](https://github.com/OpenTenBase/OpenTenBase-DevEnv)
+仓库的 `example-distributed` 分支持续维护。该示例会部署
+`1 GTM + 1 CN + 2 DN` 共四个容器，适合本地体验和功能验证。
 
-## 1. 构建docker镜像
+## 前置条件
 
-```shell
-export SOURCECODE_PATH=/path/to/your/otb/source/code
-cd ${SOURCECODE_PATH}/docker
-./buildImage.sh
-```
+- 已安装 Git。
+- 已安装 Docker Engine，并可使用 Docker Compose V2（`docker compose`）。
+- 此示例当前仅支持 x86_64；其 OpenTenBase 安装包为 x86_64 架构，
+  不能在 ARM64 主机上原生运行。
+- 空载四节点集群约占用 5.2 GiB 内存，请至少预留 5.2 GiB 可用内存。
 
-上述指令会构建`opentenbasebase`和 `opentenbase`两个镜像。
+## 获取示例
 
-## 2.启动 example 服务，进入 opentenbaseCN 容器
-```shell
-cd ${SOURCECODE_PATH}/example/1c_2d_cluster
-docker-compose up -d
-docker-compose exec opentenbaseCN /bin/bash
-
-```
-
-## 3.SSH 互信配置
-```shell
-su opentenbase
-copy-ssh-keys
-```
-
-输入 "yes"，然后回车。然后输入密码 "qwerty"。
-
-## 4. 部署和初始化
-复制配置文件到指定目录:
+按照下面的顺序克隆仓库并切换到维护分支：
 
 ```shell
-
-mkdir ~/pgxc_ctl
-cp ~/pgxc_conf/pgxc_ctl.conf ~/pgxc_ctl
-```
-使用 `pgxc_ctl`  进行部署，使用`pgxc_ctl`之后，不要敲 `ls` ,`echo` 这种命令。
-```shell
-pgxc_ctl                                # 这一步会进入 --home 位置，默认是/home/$USER/pgxc_ctl, 使用exit退出，或者ctrl + D
-deploy all                              # 会使用/home/$USER/pgxc_ctl/pgxc.conf 这个配置文件
-init all
-
-exit
+git clone https://github.com/OpenTenBase/OpenTenBase-DevEnv.git
+cd OpenTenBase-DevEnv
+git checkout example-distributed
 ```
 
+## 构建并启动集群
 
-## 5.使用psql连接OpenTenbase
+构建四个节点镜像，然后启动集群：
 
 ```shell
-psql -h 172.16.200.10 -p 30004 -d postgres -U opentenbase
+./otb-dev.sh build
+./otb-dev.sh up
 ```
 
-这一段sql语句在[Quick Start](https://docs.opentenbase.org/guide/01-quickstart/#_3)有详细的解释:
-```sql
--- 使用 dn001, dn002 存储节点组成默认存储组
-create default node group default_group  with (dn001,dn002); 
-create sharding group to group default_group;      -- 设置 shard 类型的表使用的存储组
-create database test;                              -- 创建 test 数据库
-create user test with password 'test';             -- 创建一个 test 用户密码为 test
-alter database test owner to test;                 -- 修改 test 数据库 owner 为 test 用户
-\c test test                                       -- 切换到 test 数据库
--- 创建一个 shard 表 foo, 使用 id 作为分布键
-create table foo(id bigint, str text) distribute by shard(id);
-insert into foo values(1, 'tencent'), (2, 'shenzhen');
-select * from foo;
+构建需要几分钟。启动后可查看四个容器的状态：
+
+```shell
+./otb-dev.sh status
 ```
 
-部署成功后, 用户可以继续阅读官方文档的其他的内容。
+## 连接数据库和进入容器
+
+无需在宿主机安装数据库客户端。先进入 CN，再从容器内连接
+`172.20.0.3:11000`：
+
+```shell
+./otb-dev.sh enter cn
+psql -h 172.20.0.3 -p 11000 -U opentenbase postgres
+```
+
+CN 的 `11000` 端口也映射到宿主机。如果宿主机已安装 `psql` 客户端，
+也可以通过 `127.0.0.1:11000` 直接连接：
+
+```shell
+psql -h 127.0.0.1 -p 11000 -U opentenbase postgres
+```
+
+`enter` 不带节点参数时默认进入 GTM，也可以指定某个 DN：
+
+```shell
+./otb-dev.sh enter
+./otb-dev.sh enter dn01
+./otb-dev.sh enter dn02
+```
+
+进入容器后，当前目录为 `/data/opentenbase`，可用
+`opentenbase_ctl` 查看或管理集群：
+
+```shell
+./opentenbase_ctl status
+./opentenbase_ctl stop
+./opentenbase_ctl start
+```
+
+## 拓扑和配置
+
+示例使用 `config.ini` 描述分布式拓扑：
+
+| 节点 | 地址 | 说明 |
+| --- | --- | --- |
+| GTM | `172.20.0.2` | 全局事务管理器 |
+| CN | `172.20.0.3:11000` | 协调节点，端口映射到宿主机 |
+| DN01 | `172.20.0.4` | 数据节点 1 |
+| DN02 | `172.20.0.5` | 数据节点 2 |
+
+构建阶段通过 `opentenbase_ctl install -c config.ini` 安装集群；运行时，
+各节点容器也通过 `opentenbase_ctl` 启动对应实例。修改拓扑前，请先阅读
+[示例分支说明](https://github.com/OpenTenBase/OpenTenBase-DevEnv/tree/example-distributed)。
+
+## 常用生命周期命令
+
+```shell
+# 停止或重新启动现有容器
+./otb-dev.sh stop
+./otb-dev.sh start
+
+# 持续查看全部日志，或只查看 CN 日志
+./otb-dev.sh logs
+./otb-dev.sh logs cn
+
+# 停止并删除容器
+./otb-dev.sh down
+```
+
+集群启动后，可继续参考[快速入门](01-quickstart.md#_9)创建数据库和分片表。
+更完整的构建说明、镜像导入导出和故障排查步骤见上述示例分支说明。
+
+## 旧版配置文件名说明
+
+旧版 2.x Docker 示例使用的是 `pgxc_ctl`，其默认配置文件名为
+`pgxc_ctl.conf`。旧文档中提到的 `pgxc.conf` 是笔误，实际文件无需重命名。
+当前维护的示例不使用这两个旧版文件名，而是使用 `opentenbase_ctl` 和
+`config.ini`。
