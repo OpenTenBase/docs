@@ -98,7 +98,9 @@ InnoDB的底层结构主要由两部分组成：内存结构和物理文件。
 - 日志缓冲区（Log Buffer）：主要用于缓存事务的redo log，保证事务的持久性。日志缓冲区的大小受参数innodb_log_buffer_size控制。当事务提交时，会将日志缓冲区的日志刷到日志文件中去，刷新策略受innodb_flush_log_at_trx_commit控制。
 
 ### 物理文件
+
 TXSQL的物理文件主要有如下集中类型：
+
 - 数据文件（data file）是存储引擎存储数据的主要文件，它是由一个或多个固定大小的数据页（data page）组成的文件，每个数据页的大小默认为16KB。数据文件可以是单个文件（ibdata1）或多个文件（ibdata1, ibdata2, …），也可以是按表分割的文件（table_name.ibd）。数据文件中存储了表的数据、索引、元数据等信息。
 - 日志文件（log file）是存储日志的主要文件，它是由两个或多个固定大小的日志段（log segment）组成的循环文件，每个日志段的大小默认为48MB。日志文件可以是单个文件（ib_logfile0）或多个文件（ib_logfile0, ib_logfile1, …）。日志文件中存储了事务的修改记录，用于保证事务的持久性和原子性。
 - 索引文件（index file）是存储索引的辅助文件，它是由一个或多个固定大小的索引页（index page）组成的文件，每个索引页的大小默认为16KB。索引文件可以是单个文件（table_name.MYI）或多个文件（table_name.MYI, table_name.MYI.1, …）。索引文件中存储了表的辅助索引，用于加速数据查询和排序等操作。
