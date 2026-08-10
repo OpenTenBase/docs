@@ -113,6 +113,7 @@ nav:
       - 使用docker构建一个简单集群: guide/15-docker-deploy.md
   - 版本说明:
     - OpenTenBase:
+      - v5.0: release/v5-0.md
       - v2.6.0: release/v2-6-0.md
       - v2.5.0: release/v2-5-0.md
       - v2.4.0: release/v2-4-0.md
