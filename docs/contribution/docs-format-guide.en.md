@@ -7,7 +7,7 @@ This page lists the some rules that should be followed when writing OpenTenBase 
 1. **File names are written in lowercase letters, and words are separated by `-`.** For example: `docs-format-guide.md`.
 2. **Add `.en` after the file name of an English documentation.** For example: `docs-format-guide.en.md`. Files for English documentations are stored in the same directory as Chinese documentations.
 3. Use relative paths for internal links, for example: `[Format Guide](docs-format-guide.md)`, `[FAQ](../faq.md)`.
-4. All the images used are stored in the `docs/assets` directory of the repository and have a meaningful file names. Use relative paths for image references, for example: `![OpenTenBase favicon](./assets/favicon.png)`.
+4. All the images used are stored in the `docs/assets` directory of the repository and have meaningful file names. Use relative paths for image references, for example: `![OpenTenBase favicon](../assets/favicon.png)`.
 
 ## Basic format requirements for documents
 
@@ -20,4 +20,3 @@ This page lists the some rules that should be followed when writing OpenTenBase 
 - The content added to the same level list should have an indentation of 4 spaces, and two blank lines should be added before and after the content.
 - For admonitions using the `???` or `!!!` syntax, an identation of 4 spaces is required for each line of text, even if it is a blank line. An empty line is required before and after the admonitions, but not before and after the content.
 - Code blocks used in form of ```` ``` ```` should have a language specified. For example: ```` ``` shell ````. If the code content is plain text, specify `text` as the language.
-
