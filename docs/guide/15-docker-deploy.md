@@ -13,6 +13,9 @@ cd ${SOURCECODE_PATH}/docker
 上述指令会构建`opentenbasebase`和 `opentenbase`两个镜像。
 
 ## 2.启动 example 服务，进入 opentenbaseCN 容器
+
+> **注意**：`example/1c_2d_cluster` 示例目录已在主仓库 master 分支中移除（commit `aca7e2c`，2025-08-07）。本节步骤仅适用于仍包含该目录的旧版本源码；如使用最新代码，请参考 [Quick Start](01-quickstart.md) 或主仓库 README 中基于 `opentenbase_ctl` 的部署流程。
+
 ```shell
 cd ${SOURCECODE_PATH}/example/1c_2d_cluster
 docker-compose up -d
@@ -39,7 +42,7 @@ cp ~/pgxc_conf/pgxc_ctl.conf ~/pgxc_ctl
 使用 `pgxc_ctl`  进行部署，使用`pgxc_ctl`之后，不要敲 `ls` ,`echo` 这种命令。
 ```shell
 pgxc_ctl                                # 这一步会进入 --home 位置，默认是/home/$USER/pgxc_ctl, 使用exit退出，或者ctrl + D
-deploy all                              # 会使用/home/$USER/pgxc_ctl/pgxc.conf 这个配置文件
+deploy all                              # 会使用/home/$USER/pgxc_ctl/pgxc_ctl.conf 这个配置文件
 init all
 
 exit
