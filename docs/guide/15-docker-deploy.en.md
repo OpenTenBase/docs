@@ -13,6 +13,9 @@ cd ${SOURCECODE_PATH}/docker
 Commands above will build `opentenbasebase` and `opentenbase` images.
 
 ## 2.Start the example service and enter the CN contaioner
+
+> **Note**: The `example/1c_2d_cluster` directory has been removed from the `master` branch of the main repository (commit `aca7e2c`, 2025-08-07). The steps below only apply to older source trees that still contain it. For the latest code, follow the `opentenbase_ctl` based deployment flow in the [Quick Start](01-quickstart.en.md) or the main repository README.
+
 ```shell
 cd ${SOURCECODE_PATH}/example/1c_2d_cluster
 docker-compose up -d
@@ -39,7 +42,7 @@ cp ~/pgxc_conf/pgxc_ctl.conf ~/pgxc_ctl
 Use `pgxc_ctl` for deployment. Avoid using commands like `ls` or `echo` after entering `pgxc_ctl`.
 ```shell
 pgxc_ctl                                # This step will enter --home location, which is by default /home/$USER/pgxc_ctl. Type exit to exit or Ctrl + D
-deploy all                              # This will use pgxc.conf located in /home/$USER/pgxc_ctl/pgxc.conf for deployment
+deploy all                              # This will use pgxc_ctl.conf located in /home/$USER/pgxc_ctl/pgxc_ctl.conf for deployment
 init all
 
 exit
