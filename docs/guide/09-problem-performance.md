@@ -393,6 +393,42 @@ dn002 --- psql -h 172.16.0.42 -p 11012 -d postgres -U opentenbase -c "explain se
 
 如果有可能的话，DBA可以配置在系统空闲时执行全库analyze和vacuum。  
 
+#### V5 中读取 DN 局部执行计划
+
+在 OpenTenBase V5.21 中，CN 的 JSON 计划可能只显示 `Remote Fast Query Execution` 等远程执行节点，没有完整展开 DN 内部的扫描方式。需要分析索引条件、过滤行数和缓冲块访问时，可以直接连接各个 DN，采集相同 SQL 的局部计划。
+
+先在 CN 查询实际节点名称、地址和 SQL 服务端口：
+
+```sql
+SELECT node_name, node_type, node_host, node_port
+FROM pgxc_node
+WHERE node_type = 'D'
+ORDER BY node_name;
+```
+
+不要把 `EXPLAIN` 放在 `EXECUTE DIRECT` 中执行。该版本会把 `EXPLAIN` 视为非 SELECT 命令，返回以下错误：
+
+```text
+ERROR:  (XX000) EXECUTE DIRECT non select command cannot be executed on Datanode
+```
+
+使用节点元数据中的地址和 `node_port` 直接连接 DN，并指定与 CN 相同的数据库和用户。以下 SQL 使用[分片表索引优化实践](usecase/shard-index-optimization.md)中的实验表；采集其他查询时，替换为相应的 Schema、表和条件。
+
+```shell
+psql -X -h DN_HOST -p DN_PORT -U DB_USER -d DB_NAME
+```
+
+```sql
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT JSON)
+SELECT id, customer_id, order_date, amount
+FROM otb_index_case.orders
+WHERE customer_id = 4243;
+```
+
+分别检查各 DN 的扫描方式、`Index Cond`、`Filter`、实际行数和缓冲块访问。比较时还应核对各节点的统计信息和相关参数。`EXPLAIN ANALYZE` 会实际执行 SQL，本文示例使用只读 SELECT。
+
+DN 直连计划来自独立的局部执行，用于解释节点访问路径。业务请求的端到端延迟仍应从 CN 入口测量，不能把这些局部耗时相加后作为同一次 CN 请求的耗时。
+
 ## 优化实例  
 ### count(distinct xx)优化 
 ```

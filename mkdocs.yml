@@ -88,6 +88,7 @@ nav:
       - 用户权限管理: guide/07-user-rights.md
       - 数据导入导出: guide/08-data-dump-restore.md
       - 问题定位及性能优化: guide/09-problem-performance.md
+      - 分片表索引优化实践: guide/usecase/shard-index-optimization.md
       - V2.3.0升级特性pg_clean使用说明: guide/10-pg_clean.md
       - V2.3.0升级特性pg_unlock使用说明: guide/11-pg_unlock.md
       - V2.3.0升级特性opentenbase_subscription使用说明: guide/12-opentenbase_subscription.md
@@ -152,6 +153,7 @@ plugins:
               用户权限管理: User Rights Management
               数据导入导出: Data Dump and Restore
               问题定位及性能优化: Problem tracking and Performance Optimization
+              分片表索引优化实践: Shard index optimization
               V2.3.0升级特性pg_clean使用说明: V2.3.0 Feature pg_clean
               V2.3.0升级特性pg_unlock使用说明: V2.3.0 Feature pg_unlock
               V2.3.0升级特性opentenbase_subscription使用说明: V2.3.0 Feature opentenbase_subscription
