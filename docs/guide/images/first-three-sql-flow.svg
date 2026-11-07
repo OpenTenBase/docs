@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="392" viewBox="0 0 960 392" role="img" aria-label="三条 SQL 语句的阅读顺序与执行路径">
+  <title>三条 SQL 语句的阅读顺序与执行路径</title>
+  <desc>客户端通过 psql 连接 CN 协调节点，CN 把语句下发到多个 DN 数据节点。三条语句按建表、插入、查询的顺序执行，每一步都依赖上一步成功。</desc>
+
+  <rect x="0.5" y="0.5" width="959" height="391" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="40" y="42" font-family="'Noto Sans SC','Microsoft YaHei','PingFang SC',sans-serif" font-size="17" font-weight="700" fill="#111827">三条语句：阅读顺序与执行路径</text>
+  <text x="40" y="66" font-family="'Noto Sans SC','Microsoft YaHei','PingFang SC',sans-serif" font-size="12" fill="#6b7280">先建表，再插入，最后查询；后一步依赖前一步成功。原文把这三条语句和执行输出放在同一个代码块里。</text>
+
+  <!-- 执行路径 -->
+  <rect x="40" y="88" width="140" height="56" rx="8" fill="#f9fafb" stroke="#d1d5db"/>
+  <text x="110" y="112" text-anchor="middle" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="13" font-weight="600" fill="#111827">psql 客户端</text>
+  <text x="110" y="130" text-anchor="middle" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7280">提示符 test=&gt;</text>
+
+  <line x1="184" y1="116" x2="222" y2="116" stroke="#9ca3af" stroke-width="1.5"/>
+  <path d="M222 116 l-7 -4 v8 z" fill="#9ca3af"/>
+
+  <rect x="226" y="88" width="168" height="56" rx="8" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="310" y="112" text-anchor="middle" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="13" font-weight="600" fill="#312e81">CN 协调节点</text>
+  <text x="310" y="130" text-anchor="middle" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#4338ca">SQL 从这里下发</text>
+
+  <line x1="398" y1="116" x2="436" y2="116" stroke="#9ca3af" stroke-width="1.5"/>
+  <path d="M436 116 l-7 -4 v8 z" fill="#9ca3af"/>
+
+  <rect x="440" y="88" width="212" height="56" rx="8" fill="#f9fafb" stroke="#d1d5db"/>
+  <text x="546" y="112" text-anchor="middle" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="13" font-weight="600" fill="#111827">DN 数据节点（多个）</text>
+  <text x="546" y="130" text-anchor="middle" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7280">数据按分片存放</text>
+
+  <rect x="676" y="88" width="244" height="56" rx="8" fill="#fffbeb" stroke="#fcd34d"/>
+  <text x="692" y="108" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#92400e">distribute by shard(id) 只规定</text>
+  <text x="692" y="125" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#92400e">“按 id 计算落点”，不规定具体</text>
+  <text x="692" y="141" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#92400e">落在哪个 DN。</text>
+
+  <!-- 三步 -->
+  <rect x="40" y="188" width="277" height="112" rx="10" fill="#ffffff" stroke="#d1d5db"/>
+  <circle cx="64" cy="218" r="13" fill="#4f46e5"/>
+  <text x="64" y="223" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="13" font-weight="700" fill="#ffffff">1</text>
+  <text x="88" y="223" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="700" fill="#111827">建表</text>
+  <text x="60" y="252" font-family="'Roboto Mono',Consolas,monospace" font-size="11.5" fill="#374151">CREATE TABLE foo(</text>
+  <text x="60" y="268" font-family="'Roboto Mono',Consolas,monospace" font-size="11.5" fill="#374151">  id, str) …shard(id)</text>
+  <text x="60" y="288" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7280">来源展示：CREATE TABLE</text>
+
+  <line x1="321" y1="244" x2="337" y2="244" stroke="#9ca3af" stroke-width="1.5"/>
+  <path d="M337 244 l-7 -4 v8 z" fill="#9ca3af"/>
+  <text x="329" y="234" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#6b7280">依赖</text>
+
+  <rect x="341" y="188" width="277" height="112" rx="10" fill="#ffffff" stroke="#d1d5db"/>
+  <circle cx="365" cy="218" r="13" fill="#4f46e5"/>
+  <text x="365" y="223" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="13" font-weight="700" fill="#ffffff">2</text>
+  <text x="389" y="223" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="700" fill="#111827">插入两行</text>
+  <text x="361" y="252" font-family="'Roboto Mono',Consolas,monospace" font-size="11.5" fill="#374151">INSERT INTO foo</text>
+  <text x="361" y="268" font-family="'Roboto Mono',Consolas,monospace" font-size="11.5" fill="#374151">VALUES (1,…), (2,…)</text>
+  <text x="361" y="288" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7280">来源展示：COPY 2</text>
+
+  <line x1="622" y1="244" x2="638" y2="244" stroke="#9ca3af" stroke-width="1.5"/>
+  <path d="M638 244 l-7 -4 v8 z" fill="#9ca3af"/>
+  <text x="630" y="234" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#6b7280">依赖</text>
+
+  <rect x="642" y="188" width="277" height="112" rx="10" fill="#ffffff" stroke="#d1d5db"/>
+  <circle cx="666" cy="218" r="13" fill="#4f46e5"/>
+  <text x="666" y="223" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="13" font-weight="700" fill="#ffffff">3</text>
+  <text x="690" y="223" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="700" fill="#111827">查询</text>
+  <text x="662" y="252" font-family="'Roboto Mono',Consolas,monospace" font-size="11.5" fill="#374151">SELECT * FROM foo</text>
+  <text x="662" y="268" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7280">无 ORDER BY ⇒ 顺序不保证</text>
+  <text x="662" y="288" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7280">预期结果：两行</text>
+
+  <text x="40" y="330" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#6b7280">说明：本图只表示执行路径与阅读顺序，不表示数据分布的具体落点；三条语句均未在本文中实际执行。</text>
+  <text x="40" y="350" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#6b7280">可运行 python3 tools/sql_guide/check.py --root . 检查本文引用的三条语句是否仍与来源文档逐字一致。</text>
+  <text x="40" y="370" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#9ca3af">图 1　三条语句的阅读顺序与执行路径</text>
+</svg>
