@@ -2,7 +2,16 @@
 
 ## 什么是OpenTenBase
 
-OpenTenBase 是一个提供写可靠性，多主节点数据同步的关系数据库集群平台。你可以将 OpenTenBase 配置一台或者多台主机上， OpenTenBase 数据存储在多台物理主机上面。数据表的存储有两种方式， 分别是 distributed 或者 replicated ，当向OpenTenBase发送查询 SQL时， OpenTenBase 会自动向数据节点发出查询语句并获取最终结果。
+OpenTenBase 是一个关系型数据库集群平台，提供写可靠性与多节点数据同步能力。
+
+你可以把 OpenTenBase 部署在一台或多台主机上；集群中的数据由多个数据节点（DN）共同存储，这些节点可以分布在不同的物理主机上。
+
+数据表有两种存储方式，在本站的[基本使用](03-basic-use.md)中分别称为分片表和复制表：
+
+- `distributed`（对应 `distribute by shard`）：按分布键计算分片，把数据分散存放在多个 DN 上；
+- `replicated`（对应 `distribute by replication`）：每个节点都保存一份相同的全量数据。
+
+发送查询 SQL 时，请求先到达协调节点（CN）：由 CN 完成查询规划，把查询分发给相关的数据节点（DN）执行，再汇总各节点的结果返回给客户端。
 
 OpenTenBase 采用分布式集群架构（如下图）， 该架构分布式为无共享(share nothing)模式，节点之间相应独立，各自处理自己的数据，处理后的结果可能向上层汇总或在节点间流转，各处理单元之间通过网络协议进行通信，并行处理和扩展能力更好，这也意味着只需要简单的x86服务器就可以部署 OpenTenBase 数据库集群
 
