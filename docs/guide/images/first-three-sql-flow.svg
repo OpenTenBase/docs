@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="392" viewBox="0 0 960 392" role="img" aria-label="三条 SQL 语句的阅读顺序与执行路径">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="368" viewBox="0 0 960 368" role="img" aria-label="三条 SQL 语句的阅读顺序与执行路径">
   <title>三条 SQL 语句的阅读顺序与执行路径</title>
   <desc>客户端通过 psql 连接 CN 协调节点，CN 把语句下发到多个 DN 数据节点。三条语句按建表、插入、查询的顺序执行，每一步都依赖上一步成功。</desc>
 
-  <rect x="0.5" y="0.5" width="959" height="391" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="0.5" y="0.5" width="959" height="367" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
   <text x="40" y="42" font-family="'Noto Sans SC','Microsoft YaHei','PingFang SC',sans-serif" font-size="17" font-weight="700" fill="#111827">三条语句：阅读顺序与执行路径</text>
   <text x="40" y="66" font-family="'Noto Sans SC','Microsoft YaHei','PingFang SC',sans-serif" font-size="12" fill="#6b7280">先建表，再插入，最后查询；后一步依赖前一步成功。原文把这三条语句和执行输出放在同一个代码块里。</text>
 
@@ -65,5 +65,4 @@
 
   <text x="40" y="330" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#6b7280">说明：本图只表示执行路径与阅读顺序，不表示数据分布的具体落点；三条语句均未在本文中实际执行。</text>
   <text x="40" y="350" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#6b7280">可运行 python3 tools/sql_guide/check.py --root . 检查本文引用的三条语句是否仍与来源文档逐字一致。</text>
-  <text x="40" y="370" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif" font-size="11" fill="#9ca3af">图 1　三条语句的阅读顺序与执行路径</text>
 </svg>
