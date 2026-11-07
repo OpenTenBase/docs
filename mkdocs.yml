@@ -80,6 +80,7 @@ nav:
   - 用户指南:
     - OpenTenBase:
       - 快速入门: guide/01-quickstart.md
+      - SQL 入门手册: guide/24-sql-primer.md
       - 应用接入: guide/02-access.md
       - 基本使用: guide/03-basic-use.md
       - 高级使用: guide/04-advanced-use.md
@@ -142,6 +143,7 @@ plugins:
               首页: Home
               用户指南: Guide
               快速入门: Quick Start
+              SQL 入门手册: SQL Primer
               概述: Overview
               安装指南: Deploy
               应用接入: Application Access
