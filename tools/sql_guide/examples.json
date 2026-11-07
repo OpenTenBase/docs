@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "source_document": "docs/guide/01-quickstart.md",
+  "guide_document": "docs/guide/first-three-sql.md",
+  "allowed_prompts": [
+    "postgres=#",
+    "test=>"
+  ],
+  "guide_marker": "sql-guide-example",
+  "examples": [
+    {
+      "id": "create-foo-table",
+      "statement_prefix": "create table foo"
+    },
+    {
+      "id": "insert-foo-rows",
+      "statement_prefix": "insert into foo values"
+    },
+    {
+      "id": "select-foo-all",
+      "statement_prefix": "select * from foo"
+    }
+  ]
+}
