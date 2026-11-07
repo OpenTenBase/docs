@@ -322,6 +322,128 @@ test=> select * from foo;
 
 ```
 
+### SQL 示例逐条讲解
+
+上例输入共 7 条：`\c test test` 是 psql 元命令（非 SQL），其余 6 条为 SQL。下文详解建表、插入、查询 3 条，建库/建用户/改属主见下文速览表。凡标注 **预期结果** 的内容为架构推导，未在真实集群执行；SQL 文本与回显逐字对照上方示例。
+
+#### ① `create table foo(id bigint, str text) distribute by shard(id);`
+
+**逐步拆解**
+
+| 片段 | 含义 |
+|---|---|
+| `create table foo` | 在数据库 `test` 中创建表 `foo` |
+| `id bigint` | 列 `id`，类型 bigint（8 字节有符号整数，约 ±9.2×10¹⁸） |
+| `str text` | 列 `str`，类型 text（变长字符串） |
+| `distribute by shard(id)` | **OpenTenBase 特有**：分布键为 `id`，每行按 id 哈希落到某个 DN 的分片 |
+
+**集群视角（预期结果，CN/DN/GTM 角色见文档开头「三大模块」）**：建表只登记 CN 上的全局元数据；写入的数据按 `id` 哈希分布到各 DN——即文档开头两种存储方式之一 **distributed（分片）**：
+
+| 存储方式 | 写法 | 存放方式 | 场景 |
+|---|---|---|---|
+| distributed（分片） | `distribute by shard(id)` | 每行按分布键哈希存于一个 DN 的分片 | 大业务表 |
+| replicated（复制） | `distribute by replication` | 整表在每个 DN 各存一份副本 | 小维表 / 配置表 |
+
+分布键建议（预期结果）：用最常过滤/连接的列做分布键，`where id=...` 可路由到单个 DN；不带分布键的查询需全部 DN 参与。
+
+**语法标注**
+
+```text
+create table foo ( id  bigint , str  text ) distribute by shard ( id );
+  ①建表   ②表名  ③列名 ④类型  ⑤列名 ⑥类型   ⑦分布子句   ⑧分布键
+                 └── 列定义列表（逗号分隔）──┘
+```
+
+#### ② `insert into foo values(1, 'tencent'), (2, 'shenzhen');`
+
+**逐步拆解**
+
+| 片段 | 含义 |
+|---|---|
+| `insert into foo` | 向表 `foo` 写入数据 |
+| `values(1,'tencent'), (2,'shenzhen')` | 一次 2 行：第 1 行 id=1、str='tencent'；第 2 行 id=2、str='shenzhen'。未写列名，按建表列序（id, str）一一对应 |
+| 返回 `COPY 2` | 2 行写入成功 |
+
+**语法标注**
+
+```text
+insert into foo values ( 1 , 'tencent' ), ( 2 , 'shenzhen' );
+ ①插入   ②表名     ③第1行 id=1、str='tencent'  ④第2行 id=2、str='shenzhen'
+                    └── 多行之间用逗号分隔 ──┘
+```
+
+回显 `COPY 2` 而非标准 PostgreSQL 的 `INSERT 0 2`，请以你所在版本的实测输出为准；两种写法都表示“成功写入 2 行”，对照说明见下文「新手原本不易理解的例子」。
+
+#### ③ `select * from foo;`
+
+**逐步拆解**
+
+| 片段 | 含义 |
+|---|---|
+| `select *` | 选取所有列（id、str） |
+| `from foo` | 查询对象是分片表 `foo` |
+
+**执行流程（预期结果，按文档开头架构图推导）**
+
+```text
+客户端 ──SQL──▶ CN（解析、生成计划）
+                │ 并行下发
+                ▼
+       DN1 分片     DN2 分片   （各自只算自己的分片）
+                ▼
+           结果合并回 CN ──▶ 客户端
+```
+
+输出 2 行。示例中顺序恰好同插入顺序，但**无 `ORDER BY` 时分片表行序不保证**，需稳定顺序应写 `select * from foo order by id;`（预期结果）。
+
+#### 附带 3 条语句速览
+
+| 输入 | 是什么 | 说明 |
+|---|---|---|
+| `create database test;` | SQL（DDL） | 建库 `test`。数据库是全局元数据，由 CN 统一管理、各 CN 视图相同 |
+| `create user test with password 'test';` | SQL（DDL） | 建可登录角色 `test`（`create user` ≡ `create role ... login`），全集群生效 |
+| `alter database test owner to test;` | SQL（DDL） | 把 `test` 库的属主改为用户 `test` |
+| `\c test test` | **psql 元命令（非 SQL）** | 以 `test` 用户连 `test` 库；提示符 `postgres=#`（超管）→ `test=>`（普通用户） |
+
+#### 新手原本不易理解的例子：原版 vs 改进版
+
+原版（上方示例原文摘录）：
+
+```text
+test=> insert into foo values(1, 'tencent'), (2, 'shenzhen');
+COPY 2
+```
+
+新手第一反应：执行的是 INSERT，为何回显 COPY？是不是抄错了？
+
+改进后的说明：
+
+```text
+test=> insert into foo values(1, 'tencent'), (2, 'shenzhen');
+COPY 2
+   ▲ └─ 2：成功写入 2 行
+   └── COPY：OpenTenBase 底层用批量复制通道向各 DN 分发数据的回显风格
+        （等价于标准 PostgreSQL 的 INSERT 0 2；并非执行了 COPY 命令）
+```
+
+一句话记住：**看到 `COPY n` 就当作“写入了 n 行”。**
+
+#### 小练习（答案均为预期结果，未实际执行）
+
+* **练习 1**：建一个与 `foo` 同结构的复制表 `bar`，怎么写？
+  预期结果：`create table bar(id bigint, str text) distribute by replication;`
+* **练习 2**：`select * from foo where id = 1;` 涉及哪些节点？
+  预期结果：CN 按 id=1 的哈希定位到唯一 DN，仅向该 DN 下发——这正是分布键的路由收益。
+* **练习 3**：连续两次执行 `select * from foo;`，输出顺序一定相同吗？
+  预期结果：不一定。加 `order by id;` 才能稳定输出。
+* **练习 4**：一次插入 `(3,'beijing'),(4,'shanghai'),(5,'guangzhou')` 三行，回显是什么？
+  预期结果：`COPY 3`。
+
+#### 核对与试读说明
+
+* 上述 SQL 与回显（`CREATE TABLE`、`COPY 2`、`(2 rows)` 等）逐字对照本页示例原文，一致；架构推导均标注「预期结果」。
+* 自查说明：缩写 CN/DN 在本页开头「三大模块」已给出定义，讲解与此保持一致；示例输入共 7 条（6 条 SQL + 1 条 psql 元命令），已按此表述。
+
 
 - **结语**	
     本文档只是给用户一个简单的指引，演示如何从源码开始，一步一步搭建一个完整的OpenTenBase集群，后续会有更多的文章来介绍OpenTenBase的特性使用，优化，问题定位等内容。
