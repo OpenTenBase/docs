@@ -295,10 +295,10 @@ pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -n 'public' -d opentenbase opent
 pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -t 't_txt' -d opentenbase opentenbase.dump
 ```
 
-恢复所有模式下的t_txt表和t表
+恢复所有模式下的 t_txt 表和 t 表。使用多组 `-t` 选择表，并通过 `-d opentenbase` 指定恢复目标数据库。省略 `-d` 时，命令会将恢复 SQL 输出到标准输出。
 
 ```
-pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -t 't_txt' -t 't' opentenbase.dump
+pg_restore -h 127.0.0.1 -U opentenbase -p 15432 -t 't_txt' -t 't' -d opentenbase opentenbase.dump
 ```
 
 恢复public模式下的t_txt表  
